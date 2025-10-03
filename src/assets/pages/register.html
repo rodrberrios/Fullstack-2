@@ -33,16 +33,39 @@
     </main>
 
     
+    <section>      
+
         <div>
-            <a href="../src/assets/pages/login.html"><button>Iniciar sesion</button></a>
+            <label>Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Francisco">
+        </div>
 
-            <a href="../src/assets/pages/register.html"><button>Registrarse</button></a>
-
-
-        
+        <div>
+            <label>Correo</label>
+            <input type="text" id="correo" name="correo" placeholder="Francisco@duocuc.cl">
         </div>
         
+        <div>
+            <label>Contraseña</label>
+            <input type="text" id="clave" name="clave" placeholder="Contraseña">    
+        </div>
 
+        <div>
+            <label>Confirmar Contraseña</label>
+            <input type="text" id="clave2" name="clave2" placeholder="Contraseña">    
+        </div>        
+        
+        <div>
+            <label>Fecha de nacimiento</label>
+            <input type="date" id="fecha" name="fecha">
+            <label id="fecha_label"></label>
+
+        </div>
+
+
+        <button onclick="Registrarse()">Registrarse</button>
+    
+    </section>
 
 
     <footer>
@@ -64,6 +87,6 @@
         </div>
         
     </footer>
-    <script src="../src/assets/js/script.js"></script>
+    <script src="../js/LoginRegister.js"></script>
 </body>
 </html>
