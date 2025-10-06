@@ -14,9 +14,6 @@ function Registrarse(){
 
 }
 
-
-
-
 function iniciarSesion(){
     validarUser();
     validarClave();
@@ -28,7 +25,6 @@ function iniciarSesion(){
         return false;
     }
 }
-
 
 function validarEmail(){ 
     const correo = document.getElementById("correo");
@@ -112,5 +108,4 @@ function validarFecha(){
     }else{
         fecha_label.innerText = ""
     }
-
 }
