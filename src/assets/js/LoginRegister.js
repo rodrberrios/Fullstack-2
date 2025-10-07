@@ -101,6 +101,7 @@ function validarFecha(){
     const fecha = document.getElementById("fecha");
     const fecha_label = document.getElementById("fecha_label");
 
+
     if(fecha.value.trim()===""){
             fecha_label.innerText = "Ingrese una fecha"
             fecha_label.style.color = "red"
@@ -108,4 +109,17 @@ function validarFecha(){
     }else{
         fecha_label.innerText = ""
     }
+}
+
+function validarFecha(fecha){
+    const hoy = new Date();
+    const fechaNacimiento = new Date(fecha);
+
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+
+    if(mes<0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())){
+        edad --;
+    }
+    return edad >=18;
 }
