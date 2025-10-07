@@ -1,5 +1,4 @@
 
-
 function Registrarse(){
     validarEmail();
     validarClave();
@@ -7,6 +6,7 @@ function Registrarse(){
     validarNombre();
     validarFecha();
     if( validarEmail() && validarClave() && mismaClave() && validarNombre() && validarFecha()){
+        /* tiene que devolvernos a la pagina de login */
         return true;
     }else{
         return false;
