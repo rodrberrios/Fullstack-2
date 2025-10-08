@@ -69,8 +69,8 @@ document.getElementById("formUsuario").addEventListener("submit", function(e){
     if (mensaje === "Formulario enviado correctamente") {
         let nombreUsuario = nombre;
         const destino = correo.toLowerCase() === "admin@duoc.cl" ? 
-                             `assets/page/perfilAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
-                             `assets/page/perfilCliente.html?nombre=${encodeURIComponent(nombreUsuario)}`;
+                             `./vistaAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
+                             `./vistaCliente.html?nombre=${encodeURIComponent(nombreUsuario)}`;
         
         document.getElementById("mensaje").innerText = `Bienvenido ${nombreUsuario}!`; // Usar innerText para actualizar el mensaje antes de redirigir
 
