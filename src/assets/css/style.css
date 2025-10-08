@@ -1,0 +1,139 @@
+@font-face {
+  font-family: 'FuentePrincipal';
+  src: url('../fonts/Roboto-VariableFont.ttf') format('truetype');
+  font-weight: 100 900; /* rango de pesos */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FuentePrincipal';
+  src: url('../fonts/Roboto-Italic-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic; /* estilo de la fuente */
+}
+
+@font-face {
+  font-family: 'FuenteSecundaria';
+  src: url('../fonts/Orbitron-VariableFont.ttf') format('truetype');
+  font-weight: 100 900; 
+  font-style: normal;
+}
+
+* {
+  font-family: 'FuentePrincipal','FuenteSecundaria';
+  font-style: normal;
+}
+
+body {
+  background: #000000;
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+
+html body {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #111;
+  padding: 1rem;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+nav {
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* barra de navegacion ordenada */
+.nav__bar {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+/* Estilos de la imagen */
+.nav__logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover; /* recorta la imagen si no es cuadrada */
+}
+
+/* ajustes al tamanio del titulo */
+.nav__title {
+  font-size: 20px;
+  font-style: italic;
+}
+
+/*  */
+.nav__menu {
+  display: flex;
+  gap: 1rem;
+}
+
+ul li {
+  list-style: none;
+}
+
+.nav__menu li::after {
+    content: "|";
+    margin-left: 0.5em;
+  }
+
+.nav__menu li:last-child::after {
+    content: ""; /* Quita la barra del último elemento */
+}
+
+.carrito__container {
+  margin-right: 10px;
+}
+
+header {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.header__container {
+  gap: 0.5rem;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.header__container a:first-child::after {
+  content: "|";
+  margin-left: 0.3em;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  gap: 10px;
+}
+
+.main__section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

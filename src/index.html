@@ -11,30 +11,44 @@
 </head>
 
 <body>
-    <nav class="nav_bar">
-        <img src="../src/assets/img/icon.png">
-        <a href="#">Level Up Store</a>       
-        <ul>
-            <li><a href="">Inicio</a></li>
-            <li><a href="">Productos</a></li>
-            <li><a href="">Nosotros</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Contacto</a></li>
-        </ul>
+    <div class="container">
+    <nav class="nav__bar">
+        <img class="nav__logo" src="../src/assets/img/icon.png">
+        <h2 class="nav__title"><a href="#">Level UP Store</a></h1>
+        <div class="nav__container">
+            <ul class="nav__menu">
+                <li><a href="">Inicio</a></li>
+                <li><a href="">Productos</a></li>
+                <li><a href="">Nosotros</a></li>
+                <li><a href="">Blog</a></li>
+                <li><a href="">Contacto</a></li>
+            </ul>
+        </div>
+        <div class="carrito__container">
+            <a class="carrito" href="#">Carrito</a>
+        </div>
     </nav>
 
+    <header>
+        <div class="header__container">
+            <a href="../src/assets/pages/login.html">Iniciar sesion</a>
+            <a href="../src/assets/pages/register.html">Registrarse</a>
+        </div>
+    </header>
     <main>
-        <h1>
+        <section class="main__section">
+            <div>
+                <h1>TIENDA ONLINE</h1>
+                <p>a</p>
+            </div>
             <img src="../src/assets/img/icon.png">
-        </h1>
+        </section>
+
+        <section class="productos__section">
+            <div>a</div>
+        </section>
     </main>
 
-    <section>
-        <div style="margin-bottom: 100px;">
-            <a href="../src/assets/pages/login.html"><button>Iniciar sesion</button></a>
-            <a href="../src/assets/pages/register.html"><button>Registrarse</button></a>
-        </div>
-    </section>
 
     <footer>
         <div>
@@ -54,6 +68,7 @@
         </div>
     </footer>
 
+    </div>
     <script src="../src/assets/js/script.js"></script>
 </body>
 </html>
