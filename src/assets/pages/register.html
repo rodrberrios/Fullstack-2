@@ -32,40 +32,35 @@
 
     </main>
 
-    
-    <section>      
 
+
+    <form id="formUsuario">
         <div>
-            <label>Nombre</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Francisco">
+            <label for="run">RUN</label>
+            <input type="text" id="run" name="run" placeholder="run" required>
         </div>
 
         <div>
-            <label>Correo</label>
-            <input type="text" id="correo" name="correo" placeholder="Francisco@duocuc.cl">
-        </div>
-        
-        <div>
-            <label>Contraseña</label>
-            <input type="text" id="clave" name="clave" placeholder="Contraseña">    
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Francisco" required>
         </div>
 
         <div>
-            <label>Confirmar Contraseña</label>
-            <input type="text" id="clave2" name="clave2" placeholder="Contraseña">    
-        </div>        
-        
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" placeholder="Francisco@duocuc.cl" required>
+        </div>
+
         <div>
-            <label>Fecha de nacimiento</label>
-            <input type="date" id="fecha" name="fecha">
+            <label for="fecha">Fecha de nacimiento</label>
+            <input type="date" id="fecha" name="fecha" required>
             <label id="fecha_label"></label>
-
         </div>
 
+        <div id="mensaje" style="color: red; margin-top: 10px;"></div>
+        
+        <button type="submit">Registrarse</button>
 
-        <button onclick="Registrarse()">Registrarse</button>
-    
-    </section>
+    </form>
 
 
     <footer>

@@ -1,114 +1,15 @@
 
-function Registrarse(){
-    validarEmail();
-    validarClave();
-    mismaClave();
-    validarNombre();
-    validarFecha();
-    if( validarEmail() && validarClave() && mismaClave() && validarNombre() && validarFecha()){
-        /* tiene que devolvernos a la pagina de login */
-        return true;
-    }else{
-        return false;
-    }
 
+
+/* VALIDACIONES DE LA PROFE */
+function validarCorreo(correo) {
+    const regex = /^[\w.+-]+@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i; // Acepta dominios duoc.cl, profesor.duoc.cl y gmail.com
+    return regex.test(correo);// Retorna true si el correo es válido, false si no lo es
 }
 
-function iniciarSesion(){
-    validarUser();
-    validarClave();
-    validarEmail();
-
-    if(validarEmail() && validarClave() && validarUser()){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-function validarEmail(){ 
-    const correo = document.getElementById("correo");
-
-    if(correo.value.trim() === ""){
-        correo.placeholder = "Este campo es obligatorio";
-        return false;
-    }else{
-        correo.placeholder = "Francisco@duocuc.cl"; 
-        return true;
-        
-    }
-}
-
-function validarClave(){
-    const clave = document.getElementById("clave");
-
-    if(clave.value.trim() === ""){
-        clave.placeholder = "CAMPO-OBLIGATORIO";
-        return false;
-    }else{
-        clave.placeholder = "contraseña";
-        return true;
-
-    }
-}
-
-function validarUser(){
-    const correo = document.getElementById("correo");
-    const clave = document.getElementById("clave");
-
-
-    if(correo.value === "admin@duoc.cl" && clave.value === "admin"){
-        correo.placeholder = "admin@duoc.cl";
-        clave.placeholder = "admin clave"
-        return true;
-
-    }else if(correo.value === "cliente@duoc.cl" && clave.value === "cliente"){
-        correo.placeholder = "cliente@duoc.cl";
-        clave.placeholder = "clave cliente"
-        return true;
-
-    }else{
-        return false
-    }
-}
-
-function mismaClave(){
-    const clave = document.getElementById("clave");
-    const clave2 = document.getElementById("clave2");
-    
-    if(clave.value === clave2.value){
-        return true;
-    }else{
-        clave2.value = "";
-        clave2.placeholder = "Contraseñas no coinciden"
-    }
-}
-
-function validarNombre(){
-    const nombre = document.getElementById("nombre");
-
-    if(nombre.value.trim()===""){
-        nombre.placeholder="Este campo es obligatorio";
-        return false;
-
-    }else{
-        return true;
-    }
-
-}
-
-function validarFecha(){
-    const fecha = document.getElementById("fecha");
-    const fecha_label = document.getElementById("fecha_label");
-
-
-    if(fecha.value.trim()===""){
-            fecha_label.innerText = "Ingrese una fecha"
-            fecha_label.style.color = "red"
-            return false;
-    }else{
-        fecha_label.innerText = ""
-    }
+function validarRun(run) {
+    const regex  = /^\d{7,8}[0-9K]$/i; //usamos regex para validar el formato del run
+    return regex.test(run);
 }
 
 function validarFecha(fecha){
@@ -123,3 +24,58 @@ function validarFecha(fecha){
     }
     return edad >=18;
 }
+
+
+document.getElementById("formUsuario").addEventListener("submit", function(e){
+    e.preventDefault(); // Evita que la página se recargue
+    
+    let run = document.getElementById("run").value.trim();
+    let nombre = document.getElementById("nombre").value.trim();
+    let correo = document.getElementById("correo").value.trim();
+    let fecha = document.getElementById("fecha").value; // Obtener el valor de la fecha
+    let mensaje = "";
+    
+    const correoInput = document.getElementById("correo");
+    const fechaLabel = document.getElementById("fecha_label"); // Para mostrar el error de fecha
+    
+    // 1. Limpiar mensajes previos
+    correoInput.setCustomValidity("");
+    fechaLabel.innerText = ""; // Limpiar mensaje de fecha
+
+    // 2. Validación de Correo (Prioridad Alta - usa error nativo)
+    if(!validarCorreo(correo)){
+        correoInput.setCustomValidity("El correo debe ser @duoc.cl, @profesor.duoc.cl o @gmail.com.");
+        correoInput.reportValidity(); 
+        return;
+    } 
+
+    
+    if(!validarRun(run)){
+        mensaje = "El RUN es inválido.";
+    }else if(nombre === ""){
+        mensaje = "El nombre es obligatorio.";
+    }else if(!validarFecha(fecha)){ // Llamamos a la función de validación de edad
+        mensaje = "Debes ser mayor de 18 años para registrarte.";
+        fechaLabel.innerText = "Debes ser mayor de 18 años";
+        fechaLabel.style.color = "red";
+    }    else {
+        mensaje = "Formulario enviado correctamente";
+    }
+
+    
+    document.getElementById("mensaje").innerText = mensaje;
+
+    // Si la validación fue exitosa, proceder a la redirección
+    if (mensaje === "Formulario enviado correctamente") {
+        let nombreUsuario = nombre;
+        const destino = correo.toLowerCase() === "admin@duoc.cl" ? 
+                             `assets/page/perfilAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
+                             `assets/page/perfilCliente.html?nombre=${encodeURIComponent(nombreUsuario)}`;
+        
+        document.getElementById("mensaje").innerText = `Bienvenido ${nombreUsuario}!`; // Usar innerText para actualizar el mensaje antes de redirigir
+
+        setTimeout(() => {
+            window.location.href = destino;
+        }, 1500);
+    }
+});
