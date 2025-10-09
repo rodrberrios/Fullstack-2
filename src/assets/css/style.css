@@ -22,6 +22,7 @@
 * {
   font-family: 'FuentePrincipal','FuenteSecundaria';
   font-style: normal;
+  color: #39FF14;
 }
 
 body {
@@ -136,4 +137,83 @@ main {
 .main__section {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 10px;
+  margin: 10px;
+  gap: 15px;
+}
+
+.main__title {
+  font-size: 30px;
+  font-style: italic;
+}
+
+/* Deja la imagen del main a la derecha */
+.main__section img,
+.main__section .main__img {
+  justify-self: end;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 10px;
+  margin-top: 16px;
+  padding: 7px;
+  align-items: center;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1rem;
+}
+
+.footer__links ul {
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.footer__title {
+  font-size: 15px;
+  font-style: italic;
+}
+
+.footer__subscribe {
+  display: flex;
+  justify-self: end;
+  margin: 1rem;
+}
+
+.noticias__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 10px;
+  padding: 7px;
+}
+
+.noticias__card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 5px;
+}
+
+.img__card {
+  display: flex;
+  margin: 5px;
+  justify-self: end;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.noticias__card {
+  background-color: #131313be;
+  border-radius: 8px;
+}
+
+.title__card {
+  text-align: center;
+  font-size: 30px;
+  font-style: italic;
 }

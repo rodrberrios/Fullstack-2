@@ -3,51 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../src/assets/css/style.css">
+    <link rel="stylesheet" href="../../../src/assets/css/style.css">
     <title>Blog</title>
 </head>
 <body>
-    <nav class="nav_bar">
-        <img src="../src/assets/img/icon.png">
-        <a href="#">Level Up Store</a>       
-        <ul>
-            <li><a href="">Inicio</a></li>
-            <li><a href="">Productos</a></li>
-            <li><a href="">Nosotros</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Contacto</a></li>
-        </ul>
+    <div class="container">
+    <nav class="nav__bar">
+        <img class="nav__logo" src="../../../src/assets/img/icon.png">
+        <h2 class="nav__title"><a href="../../../src/index.html">Level UP Store</a></h1>
+        <div class="nav__container">
+            <ul class="nav__menu">
+                <li><a href="">Inicio</a></li>
+                <li><a href="">Productos</a></li>
+                <li><a href="">Nosotros</a></li>
+                <li><a href="../../../src/assets/pages/blog.html">Blog</a></li>
+                <li><a href="">Contacto</a></li>
+            </ul>
+        </div>
+        <div class="carrito__container">
+            <a class="carrito" href="#">Carrito</a>
+        </div>
     </nav>
 
-    <main class="noticias-container">
-        <section class="noticia-card 1">
-            <div class="info-card">
-                <h2>a</h2>
+    <main class="noticias__container">
+        <section class="noticias__card">
+            <div class="info__card">
+                <h2 class="title__card">NOTICIA 1</h2>
                 <p>aa</p>
             </div>
-            <img src="#" alt="imagen noticia">
+            <div class="img__card">
+                <img src="#" alt="img__noticia">
+            </div>
         </section>
 
-        <section class="noticia-card 2">
-            <div class="info-card">
-                <h2>b</h2>
+        <section class="noticias__card">
+            <div class="info__card">
+                <h2 class="title__card">NOTICIA 2</h2>
                 <p>bb</p>
             </div>
-            <img src="#" alt="Imagen noticia">
+            <div class="img__card">
+                <img src="#" alt="img__noticia">
+            </div>
         </section>
 
-        <section class="noticia-card 3">
-            <div class="info-card">
-                <h2>c</h2>
+        <section class="noticias__card">
+            <div class="info__card">
+                <h2 class="title__card">NOTICIA 3</h2>
                 <p>cc</p>
             </div>
-            <img src="#" alt="Imagen noticia">
+            <div class="img__card">
+                <img src="#" alt="img__noticia">
+            </div>
         </section>
     </main>
 
-    <footer>
-        <div>
-            <div>
-                <h5>Level UP Gamer</h5>
+    <footer class="footer">
+        <div class="footer__container">
+            <h5>Level UP Gamer</h5>
+            <div class="footer__links">
                 <ul>
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">Twitter</a></li>
@@ -56,5 +70,6 @@
             </div>
         </div>
     </footer>
+    </div>
 </body>
 </html>
