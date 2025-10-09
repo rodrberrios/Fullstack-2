@@ -10,74 +10,68 @@
 </head>
 
 <body>
-
-    <nav class="nav_bar">
-        <img src="../img/icon.png">
-        <a href="../../index.html">Level Up Store</a>       
-        <ul>
-            <li><a href="">Inicio</a></li>
-            <li><a href="">Productos</a></li>
-            <li><a href="">Nosotros</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Contacto</a></li>
-        </ul>
-    </nav>
-
-
-    <main>
-        <h1>
-            <img src="../img/icon.png">
-        </h1>
-        
-
-    </main>
+    <div class="container">
+        <nav class="nav__bar">
+                <img class="nav__logo" src="../../../public/assets/img/icon.png">
+                <h2 class="nav__title"><a href="../../../src/index.html">Level UP Store</a></h1>
+                <div class="nav__container">
+                    <ul class="nav__menu">
+                        <li><a href="../../index.html">Inicio</a></li>
+                        <li><a href="../../assets/pages/productos.html">Productos</a></li>
+                        <li><a href="../../assets/pages/nosotros.html">Nosotros</a></li>
+                        <li><a href="../../assets/pages/blog.html">Blog</a></li>
+                        <li><a href="../../assets/pages/contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="carrito__container">
+                    <a class="carrito" href="#">Carrito</a>
+                </div>
+            </nav>
 
 
+        <main>
+            <section class="img__register">
+                <img src="../img/icon.png">
+                <h1 class="title__register">
+                    LEVEL UP STORE
+                </h1>
+            </section>
 
-    <form id="formUsuario">
-        <div>
-            <label for="run">RUN</label>
-            <input type="text" id="run" name="run" placeholder="run" required>
-        </div>
+            <section class="form__container">
+                <form id="formUsuario">
+                    <!-- RUT -->
+                    <label for="run">RUN</label>
+                    <input type="text" id="run" name="run" placeholder="run" required>
+                    <!-- NOMBRE COMPLETO -->
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Francisco" required>
+                    <!-- CORREO -->
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo" placeholder="Francisco@duocuc.cl" required>
+                    <!-- FECHA NACIMIENTO -->
+                    <label for="fecha">Fecha de nacimiento</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                    <!-- BOTON DE REGISTRO -->
+                    <button type="submit">Registrarse</button>
+                </form>
+            </section>
 
-        <div>
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Francisco" required>
-        </div>
+            <a href="../../../public/assets/pages/login.html">Iniciar sesión</a>
+        </main>
 
-        <div>
-            <label for="correo">Correo</label>
-            <input type="email" id="correo" name="correo" placeholder="Francisco@duocuc.cl" required>
-        </div>
-
-        <div>
-            <label for="fecha">Fecha de nacimiento</label>
-            <input type="date" id="fecha" name="fecha" required>
-            <label id="fecha_label"></label>
-        </div>
-
-        <div id="mensaje" style="color: red; margin-top: 10px;"></div>
-        
-        <button type="submit">Registrarse</button>
-
-    </form>
-
-
-    <footer>
-
-        <div>
-            <div>
+        <footer class="footer">
+            <div class="footer__container">
                 <h5>Level UP Gamer</h5>
-                <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
-                </ul>
+                <div class="footer__links">
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        
-    </footer>
+        </footer>
+    </div>
     <script src="../js/LoginRegister.js"></script>
 </body>
 </html>

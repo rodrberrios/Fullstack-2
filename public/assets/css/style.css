@@ -122,6 +122,12 @@ header {
   margin-right: 10px;
 }
 
+.header__link:hover {
+  color: #39FF14;
+  font-size: 1.2em;
+  transition: color 0.3s, transform 0.3s;
+}
+
 .header__container a:first-child::after {
   content: "|";
   margin-left: 0.3em;
@@ -216,4 +222,18 @@ main {
   text-align: center;
   font-size: 30px;
   font-style: italic;
+}
+
+.footer__subscribe input {
+  border: #111 2px solid;
+  border-radius: 7px;
+  height: 30px;
+}
+
+.footer__subscribe button {
+  background-color: #39FF14;
+  color: #111;
+  height: 35px;
+  border: #111 2px solid;
+  border-radius: 7px;
 }
