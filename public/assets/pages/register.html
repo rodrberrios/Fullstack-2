@@ -12,34 +12,32 @@
 <body>
     <div class="container">
         <nav class="nav__bar">
-                <img class="nav__logo" src="../../../public/assets/img/icon.png">
-                <h2 class="nav__title"><a href="../../../src/index.html">Level UP Store</a></h1>
-                <div class="nav__container">
-                    <ul class="nav__menu">
-                        <li><a href="../../index.html">Inicio</a></li>
-                        <li><a href="../../assets/pages/productos.html">Productos</a></li>
-                        <li><a href="../../assets/pages/nosotros.html">Nosotros</a></li>
-                        <li><a href="../../assets/pages/blog.html">Blog</a></li>
-                        <li><a href="../../assets/pages/contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="carrito__container">
-                    <a class="carrito" href="#">Carrito</a>
-                </div>
-            </nav>
+            <img class="nav__logo" src="../../../public/assets/img/icon.png">
+            <h2 class="nav__title"><a href="../../../src/index.html">Level UP Store</a></h1>
+            <div class="nav__container">
+                <ul class="nav__menu">
+                    <li><a href="../../index.html">Inicio</a></li>
+                    <li><a href="../../assets/pages/productos.html">Productos</a></li>
+                    <li><a href="../../assets/pages/nosotros.html">Nosotros</a></li>
+                    <li><a href="../../assets/pages/blog.html">Blog</a></li>
+                    <li><a href="../../assets/pages/contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="carrito__container">
+                <a class="carrito" href="#">Carrito</a>
+            </div>
+        </nav>
 
-
-        <main>
-            <section class="img__register">
+        <main class="main__register">
+            <section class="head__main">
                 <img src="../img/icon.png">
-                <h1 class="title__register">
-                    LEVEL UP STORE
-                </h1>
+                <h1 class="title__register">LEVEL UP STORE</h1>
             </section>
 
-            <section class="form__container">
-                <form id="formUsuario">
+            <section class="form__container section__register">
+                <form id="form__register">
                     <!-- RUT -->
+                <div class="div__register">
                     <label for="run">RUN</label>
                     <input type="text" id="run" name="run" placeholder="run" required>
                     <!-- NOMBRE COMPLETO -->
@@ -52,11 +50,11 @@
                     <label for="fecha">Fecha de nacimiento</label>
                     <input type="date" id="fecha" name="fecha" required>
                     <!-- BOTON DE REGISTRO -->
-                    <button type="submit">Registrarse</button>
+                    <button type="submit">REGISTRARSE</button>
+                    <a href="../../../public/assets/pages/login.html">Iniciar sesión</a>
+                </div>
                 </form>
             </section>
-
-            <a href="../../../public/assets/pages/login.html">Iniciar sesión</a>
         </main>
 
         <footer class="footer">

@@ -253,26 +253,67 @@ main {
   font-style: italic;
 }
 
-.form__container {
+.div__login {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 18px;
   font-style: italic;
+  text-align: center;
 }
 
-.form__container label {
+.div__login label {
   margin-bottom: 12px;
 }
 
-.form__container input {
+.div__login input {
   margin-bottom: 10px;
   border: #30e010 3px solid;
   border-radius: 5px;
   height: 25px;
+  color: #111111a6;
 }
 
-.form__container button {
+.div__login button {
+  background-color: #39FF14;
+  margin-bottom: 10px;
+  color: #111;
+  border: #2ed410 3px solid;
+  border-radius: 8px;
+  height: 30px;
+  width: auto;
+}
+
+.div__login a {
+  font-size: 15px;
+}
+
+.main__register {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  
+}
+
+.div__register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.div__register label {
+  margin-bottom: 12px;
+}
+
+.div__register input {
+  margin-bottom: 10px;
+  border: #30e010 3px solid;
+  border-radius: 5px;
+  height: 25px;
+  color: #111111a6;
+}
+
+.div__register button {
   background-color: #39FF14;
   margin-bottom: 10px;
   color: #111;
@@ -281,6 +322,6 @@ main {
   height: 30px;
 }
 
-.form__container a {
+.div__register a {
   font-size: 15px;
 }

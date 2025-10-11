@@ -36,12 +36,16 @@
             </section>
 
             <section class="form__container main__login">     
-                <label>Correo</label>
-                <input type="text" id="correo" name="correo" placeholder="Francisco@duocuc.cl">
-                <label>Contraseña</label>
-                <input type="text" id="clave" name="clave" placeholder="Contraseña">    
-                <button onclick="iniciarSesion()">INICIAR SESIÓN</button> 
-                <a href="../../../public/assets/pages/register.html">Registrarse</a>
+                <form action="" id="form__login">
+                    <div class="div__login">
+                    <label>Correo</label>
+                    <input type="text" id="correo" name="correo" placeholder="Francisco@duocuc.cl">
+                    <label>Contraseña</label>
+                    <input type="text" id="clave" name="clave" placeholder="Contraseña">    
+                    <button onclick="iniciarSesion()" type="submit">INICIAR SESIÓN</button> 
+                    <a href="../../../public/assets/pages/register.html">Registrarse</a>
+                    </div>
+                </form>
             </section>
 
         </main>
