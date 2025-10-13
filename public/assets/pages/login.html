@@ -10,66 +10,59 @@
 </head>
 
 <body>
-
-    <nav class="nav_bar">
-        <img src="../src/assets/img/icon.png">
-        <a href="../../index.html">Level Up Store</a>       
-        <ul>
-            <li><a href="">Inicio</a></li>
-            <li><a href="">Productos</a></li>
-            <li><a href="">Nosotros</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Contacto</a></li>
-        </ul>
-    </nav>
-
-
-    <main>
-        <h1>
-            <img src="../src/assets/img/icon.png">
-        </h1>
-        
-
-    </main>
-
-    
-    <section>
-        
-        <div>
-            <label>Correo</label>
-            <input type="text" id="correo" name="correo" placeholder="Francisco@duocuc.cl">
-        </div>
-        
-        <div>
-            <label>Contraseña</label>
-            <input type="text" id="clave" name="clave" placeholder="Contraseña">    
-        </div>
-
-
-        <button onclick="iniciarSesion()">Iniciar Sesión</button>
-    
-    </section>
-
-
-    <footer>
-
-        <div>
-            <div>
-                <h5>Level UP Gamer</h5>
-                <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
+    <div class="container">
+        <nav class="nav__bar">
+            <img class="nav__logo" src="../../../public/assets/img/icon.png">
+            <h2 class="nav__title"><a href="../../../src/index.html">Level UP Store</a></h1>
+            <div class="nav__container">
+                <ul class="nav__menu">
+                    <li><a href="../../index.html">Inicio</a></li>
+                    <li><a href="../../assets/pages/productos.html">Productos</a></li>
+                    <li><a href="../../assets/pages/nosotros.html">Nosotros</a></li>
+                    <li><a href="../../assets/pages/blog.html">Blog</a></li>
+                    <li><a href="../../assets/pages/contacto.html">Contacto</a></li>
                 </ul>
             </div>
-        </div>
+            <div class="carrito__container">
+                <a class="carrito" href="#">Carrito</a>
+            </div>
+        </nav>
 
-        <div>
-            <input type="text" id="correo" name="correo" placeholder="Ejemplo: Francisco@duocuc.cl">
-            <button>Suscribirse</button>
-        </div>
-        
-    </footer>
+
+        <main class="main__login">
+            <section class="head__main">
+                <img src="../../../public/assets/img/icon.png" alt="Logo">
+                <h1>LEVEL UP GAMER</h1>
+            </section>
+
+            <section class="form__container main__login">     
+                <form action="" id="form__login">
+                    <div class="div__login">
+                    <label>Correo</label>
+                    <input type="text" id="correo" name="correo" placeholder="Francisco@duocuc.cl">
+                    <label>Contraseña</label>
+                    <input type="text" id="clave" name="clave" placeholder="Contraseña">    
+                    <button onclick="iniciarSesion()" type="submit">INICIAR SESIÓN</button> 
+                    <a href="../../../public/assets/pages/register.html">Registrarse</a>
+                    </div>
+                </form>
+            </section>
+
+        </main>
+    
+        <footer class="footer">
+            <div class="footer__container">
+                <h5>Level UP Gamer</h5>
+                <div class="footer__links">
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
     <script src="../js/LoginRegister.js"></script>
 </body>
 </html>
