@@ -28,6 +28,34 @@
             </div>
         </nav>
 
+            <form id="formUsuario">
+        <div>
+            <label for="run">RUN</label>
+            <input type="text" id="run" name="run" placeholder="run" required>
+        </div>
+
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Francisco" required>
+        </div>
+
+        <div>
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" placeholder="Francisco@duocuc.cl" required>
+        </div>
+
+        <div>
+            <label for="fecha">Fecha de nacimiento</label>
+            <input type="date" id="fecha" name="fecha" required>
+            <label id="fecha_label"></label>
+        </div>
+
+        <div id="mensaje" style="color: red; margin-top: 10px;"></div>
+        
+        <button type="submit">Registrarse</button>
+
+    </form>
+
         
     </footer>
     <script src="../js/Script.js"></script>
