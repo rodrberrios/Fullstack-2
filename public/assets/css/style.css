@@ -108,7 +108,7 @@ ul li {
   margin-right: 10px;
 }
 
-ul li:hover, a:hover {
+ul li:hover, a:hover, .form__container a:hover {
   color: #39FF14;
   font-size: 1.2rem;
   transition: color 0.3s, transform 0.3s;
