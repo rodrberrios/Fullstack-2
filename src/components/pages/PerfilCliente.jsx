@@ -1,10 +1,13 @@
-import { useLocation } from "react-router-dom";
-
-function useQuery() { return new URLSearchParams(useLocation().search());}
+import React from "react";
+import Header from "../organisms/Header"
 
 const PerfilCliente = () => {
-    const q = useQuery();
-    return <h1>Bienvenido {q.get("nombre")}</h1>;
+    return(
+        <div>
+            <Header></Header>
+        </div>
+    );
+    
 };
 
 export default PerfilCliente;
