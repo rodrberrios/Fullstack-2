@@ -1,17 +1,24 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "../components/pages/Register";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "../components/pages/Home";
+import Register from "../components/pages/Register";
 import PerfilAdmin from "../components/pages/PerfilAdmin";
 import PerfilCliente from "../components/pages/PerfilCliente";
+import Nosotros from "../components/pages/Nosotros";
+import Contacto from "../components/pages/Contacto";
+import Carrito from "../components/pages/Carrito";
 
 const RouterConfig = () => (
     <Router>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/perfil-admin" component={PerfilAdmin} />
-                <Route path="/perfil-cliente" component={PerfilCliente} />
-            </Switch>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={<PerfilAdmin />} />
+            <Route path="/cliente" element={<PerfilCliente />} />
+            <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/carrito" element={<Carrito />} />
+        </Routes>
     </Router>
 );
 
 export default RouterConfig;
-
