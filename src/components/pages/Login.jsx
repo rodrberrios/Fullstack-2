@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { verificarCredenciales } from '../../services/authService';
 import { validarCorreo } from '../../utils/register';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const Login = () => {
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ OBTENER FUNCIÓN LOGIN DEL CONTEXTO
 
   const handleChange = (e) => {
     setFormData({
@@ -44,6 +46,8 @@ const Login = () => {
     try {
       // Verificar credenciales en Firebase
       const usuario = await verificarCredenciales(correo.trim(), clave.trim());
+
+      login(usuario); //guarda el usuario en contexto global
       
       setMensaje(`¡Bienvenido de vuelta ${usuario.nombre}!`);
 

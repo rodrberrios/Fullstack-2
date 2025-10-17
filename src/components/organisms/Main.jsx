@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 const Main = () => {
     return (
         <div>
-        <Section>
-            <Link to="/Iniciar">Iniciar Sesion</Link>
-            <Link to="/Register">Registrarse</Link>
-        </Section>
+
 
         <Section>
             <div>
