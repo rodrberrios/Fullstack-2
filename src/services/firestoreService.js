@@ -7,6 +7,7 @@ export const createUser = async (userData) => {
             run: userData.run,
             nombre: userData.nombre,
             correo: userData.correo,
+            clave: userData.clave,
             fechaNacimiento: userData.fecha,
             createdAt: new Date()
         });

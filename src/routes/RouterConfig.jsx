@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../components/pages/Home";
 import Register from "../components/pages/Register";
+import Login from "../components/pages/Login";
 import PerfilAdmin from "../components/pages/PerfilAdmin";
 import PerfilCliente from "../components/pages/PerfilCliente";
 import Nosotros from "../components/pages/Nosotros";
@@ -16,6 +17,7 @@ const RouterConfig = () => (
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<PerfilAdmin />} />
             <Route path="/cliente" element={<PerfilCliente />} />
             <Route path="/nosotros" element={<Nosotros />} />
