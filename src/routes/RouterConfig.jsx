@@ -9,6 +9,7 @@ import Contacto from "../components/pages/Contacto";
 import Carrito from "../components/pages/Carrito";
 import Productos from "../components/pages/Productos";
 import Blog from "../components/pages/Blog"
+import Catalogo from "../components/pages/Catalogo";
 
 
 const RouterConfig = () => (
@@ -22,8 +23,9 @@ const RouterConfig = () => (
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/carrito" element={<Carrito />} />
-            <Route path="/productos" element={<Productos />} />
+            <Route path="/productos" element={<Catalogo />} />
             <Route path="/blog" element={<Blog />} />
+            
         </Routes>
     </Router>
 );
