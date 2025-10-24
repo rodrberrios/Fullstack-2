@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../organisms/Header";
-import Main from "../organisms/Main";
+import Footer from "../organisms/Footer";
+import Card from "../atoms/Card/Card"
 
 const Home = () => {
   return (
@@ -8,8 +9,25 @@ const Home = () => {
 
       <Header></Header>
 
-      <Main></Main>
+      <main>
 
+        <section>
+          <h2>Level Up Gamer</h2>
+          <p></p>
+          <img src="" alt="" />
+        </section>
+
+        <section>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+        </section>
+      </main>
+
+      <Footer></Footer>
     </div>
   );
 };

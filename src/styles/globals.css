@@ -1,0 +1,90 @@
+:root {
+  --primary-color: #39FF14;
+  --primary-dark: #30e010;
+  --background: #000000;
+  --surface: #111;
+  --surface-light: #131313be;
+  --text-primary: #FFFFFF;
+  --text-secondary: #39FF14;
+  
+  --font-primary: 'FuentePrincipal', sans-serif;
+  --font-secondary: 'FuenteSecundaria', monospace;
+  
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  --border-radius: 8px;
+  --border-radius-sm: 5px;
+  
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+}
+
+@font-face {
+  font-family: 'FuentePrincipal';
+  src: url('../../public/assets/fonts/Roboto-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FuentePrincipal';
+  src: url('../../public/assets/fonts/Roboto-Italic-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'FuenteSecundaria';
+  src: url('../../public/assets/fonts/Orbitron-VariableFont.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+* {
+  font-family: var(--font-primary);
+  color: var(--text-secondary);
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  padding: 0;
+  margin: 0;
+  line-height: 1.6;
+}
+
+html, body {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-normal);
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-normal);
+}
+
+input {
+  font-family: inherit;
+}

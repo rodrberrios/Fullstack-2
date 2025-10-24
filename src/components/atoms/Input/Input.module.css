@@ -1,0 +1,42 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-md);
+  width: 100%;
+}
+
+.label {
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.input {
+  padding: var(--spacing-sm);
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius-sm);
+  background-color: transparent;
+  color: var(--text-primary);
+  transition: all var(--transition-normal);
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.1);
+}
+
+.input::placeholder {
+  color: rgba(57, 255, 20, 0.6);
+}
+
+.input.error {
+  border-color: #ff4444;
+}
+
+.errorMessage {
+  color: #ff4444;
+  font-size: 0.875rem;
+  margin-top: var(--spacing-xs);
+}

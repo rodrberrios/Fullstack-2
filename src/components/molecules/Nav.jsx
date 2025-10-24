@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // ✅ NUEVO
+import { useAuth } from '../../context/AuthContext';
+import styles from './Nav.module.css'; // Importar CSS Modules
 
 const Nav = () => {
-  const { usuario, logout, estaAutenticado } = useAuth(); // ✅ OBTENER ESTADO
+  const { usuario, logout, estaAutenticado } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -12,13 +13,17 @@ const Nav = () => {
   };
 
   return (
-    <nav className="nav__bar">
-      <img className="nav__logo" src="/assets/img/icon.png" alt="Level UP Store Logo" />
-      <h2 className="nav__title">
+    <nav className={styles.navBar}>
+      <img 
+        className={styles.navLogo} 
+        src="/assets/img/icon.png" 
+        alt="Level UP Store Logo" 
+      />
+      <h2 className={styles.navTitle}>
         <Link to="/">Level UP Store</Link>
       </h2>
-      <div className="nav__container">
-        <ul className="nav__menu">
+      <div className={styles.navContainer}>
+        <ul className={styles.navMenu}>
           <li><Link to="/">Inicio</Link></li>
           <li><Link to="/productos">Productos</Link></li>
           <li><Link to="/nosotros">Nosotros</Link></li>
@@ -26,31 +31,24 @@ const Nav = () => {
           <li><Link to="/contacto">Contacto</Link></li>
         </ul>
       </div>
-      <div className="carrito__container">
-        {/* ✅ MOSTRAR ESTADO DE SESIÓN */}
+      <div className={styles.carritoContainer}>
+        {/* MOSTRAR ESTADO DE SESIÓN */}
         {estaAutenticado ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <span style={{ color: 'white' }}>👤{usuario.nombre}</span>
+          <div className={styles.userInfo}>
+            <span className={styles.userName}>👤{usuario.nombre}</span>
             <button 
               onClick={handleLogout}
-              style={{
-                padding: '5px 10px',
-                background: '#ff4444',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
+              className={styles.logoutButton}
             >
               Cerrar Sesión
             </button>
-            <Link className="carrito" to="/carrito">Carrito</Link>
+            <Link className={styles.carritoLink} to="/carrito">Carrito</Link>
           </div>
         ) : (
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <Link className="header__link" to="/login">Inicio Sesión</Link>
-            <Link className="header__link" to="/register">Registrarse</Link>
-            <Link className="carrito" to="/carrito">Carrito</Link>
+          <div className={styles.authLinks}>
+            <Link to="/login">Inicio Sesión</Link>
+            <Link to="/register">Registrarse</Link>
+            <Link className={styles.carritoLink} to="/carrito">Carrito</Link>
           </div>
         )}
       </div>

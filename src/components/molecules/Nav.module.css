@@ -1,0 +1,179 @@
+/* Nav.module.css */
+.navBar {
+  display: flex;
+  width: 100%;
+  height: auto;
+  min-height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Estilos de la imagen */
+.navLogo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ajustes al tamanio del titulo */
+.navTitle {
+  font-size: 20px;
+  font-style: italic;
+  margin: 0;
+}
+
+.navContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navMenu {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.navMenu li {
+  list-style: none;
+}
+
+.navMenu li::after {
+  content: "|";
+  margin-left: 0.5em;
+}
+
+.navMenu li:last-child::after {
+  content: "";
+}
+
+.carritoContainer {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.userName {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.logoutButton {
+  padding: 5px 10px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s;
+}
+
+.logoutButton:hover {
+  background: #cc3333;
+}
+
+.authLinks {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.carritoLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.navMenu a:hover,
+.authLinks a:hover,
+.carritoLink:hover {
+  color: #39FF14;
+  font-size: 1.1rem;
+  transition: color 0.3s, font-size 0.3s;
+}
+
+.navTitle:hover {
+  color: #39FF14;
+  font-size: 1.3rem;
+  transition: color 0.3s, font-size 0.3s;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .navBar {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .navContainer {
+    order: 3;
+    width: 100%;
+  }
+
+  .navMenu {
+    gap: 0.5rem;
+  }
+
+  .navMenu li {
+    font-size: 0.9rem;
+  }
+
+  .carritoContainer {
+    margin-right: 0;
+    order: 2;
+  }
+
+  .userInfo {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .authLinks {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .navMenu {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .navMenu li::after {
+    content: "";
+    margin-left: 0;
+  }
+
+  .navTitle {
+    font-size: 1.1rem;
+  }
+
+  .userName {
+    font-size: 0.8rem;
+  }
+
+  .logoutButton {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+}
