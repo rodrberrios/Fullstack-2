@@ -10,20 +10,14 @@ const Home = () => {
       <Header></Header>
 
       <main>
-
         <section>
           <h2>Level Up Gamer</h2>
           <p></p>
           <img src="" alt="" />
         </section>
-
+          
         <section>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
+          
         </section>
       </main>
 

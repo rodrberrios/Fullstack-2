@@ -8,7 +8,11 @@ const Productos = () => {
         <div>
             <Header></Header>
             
-            <Main></Main>
+            <main>
+                
+            </main>
+
+            <Footer></Footer>
         </div>
     );
 }

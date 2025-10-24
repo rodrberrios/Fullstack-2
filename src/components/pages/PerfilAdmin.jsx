@@ -1,10 +1,18 @@
 import React from "react";
-import Header from "../organisms/Header"
+import style from "../../styles/PerfilAdmin.module.css"
 
 const PerfilAdmin = () => {
     return(
         <div className="container">
-            <Header></Header>
+            
+
+            <main>
+                <aside></aside>
+
+                <section></section>
+
+                
+            </main>
         </div>
     );
 };

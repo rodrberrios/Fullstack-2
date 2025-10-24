@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../organisms/Header";
-import Main from "../organisms/Main";
+import Footer from "../organisms/Footer";
 
 
 const Carrito = () => {
@@ -8,7 +8,9 @@ const Carrito = () => {
         <div>
             <Header></Header>
             
-            <Main></Main>
+            
+
+            <Footer></Footer>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../organisms/Header";
-import Main from "../organisms/Main";
+import UserFrom from "../molecules/UserFrom";
+import Footer from "../organisms/Footer"
 
 
 const Contacto = () => {
@@ -8,7 +9,9 @@ const Contacto = () => {
         <div>
             <Header></Header>
             
-            <Main></Main>
+            <UserFrom></UserFrom>
+
+            <Footer></Footer>
         </div>
     );
 }
