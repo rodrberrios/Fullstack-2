@@ -7,7 +7,6 @@ import PerfilCliente from "../components/pages/PerfilCliente";
 import Nosotros from "../components/pages/Nosotros";
 import Contacto from "../components/pages/Contacto";
 import Carrito from "../components/pages/Carrito";
-import Productos from "../components/pages/Productos";
 import Blog from "../components/pages/Blog"
 import Catalogo from "../components/pages/Catalogo";
 
