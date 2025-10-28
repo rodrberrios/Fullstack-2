@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { obtenerProductos } from '../../services/productService';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import Header from '../organisms/Header';
-
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
@@ -12,6 +12,7 @@ const Catalogo = () => {
   const [categoriaActiva, setCategoriaActiva] = useState('todos');
   const [carrito, setCarrito] = useState([]);
   const { usuario, estaAutenticado } = useAuth();
+  const navigate = useNavigate();
 
   // Cargar productos al montar el componente
   useEffect(() => {
@@ -33,6 +34,16 @@ const Catalogo = () => {
 
     cargarProductos();
   }, []);
+
+  /**
+   * Calcula el total del carrito para el header
+   */
+  const calcularTotalCarritoHeader = () => {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    return carrito.reduce((total, producto) => {
+      return total + (producto.precio || 0) * (producto.cantidad || 1);
+    }, 0);
+  };
 
   // Obtener categorías únicas
   const categorias = ['todos', ...new Set(productos.map(p => p.categoria).filter(Boolean))];
@@ -66,7 +77,20 @@ const Catalogo = () => {
 
   // Agregar al carrito
   const agregarAlCarrito = (producto) => {
-    const nuevoCarrito = [...carrito, producto];
+    const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+    const productoExistente = carritoActual.find(item => item.id === producto.id);
+    let nuevoCarrito;
+
+    if (productoExistente) {
+      nuevoCarrito = carritoActual.map(item =>
+        item.id === producto.id
+          ? { ...item, cantidad: (item.cantidad || 1) + 1 }
+          : item
+      );
+    } else {
+      nuevoCarrito = [...carritoActual, { ...producto, cantidad: 1 }];
+    }
+
     setCarrito(nuevoCarrito);
     localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
     
@@ -76,30 +100,8 @@ const Catalogo = () => {
 
   // Mostrar notificación
   const mostrarNotificacion = (mensaje) => {
-    // Crear elemento de notificación
-    const notificacion = document.createElement('div');
-    notificacion.style.cssText = `
-      position: fixed;
-      top: 100px;
-      right: 20px;
-      background: #28a745;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 5px;
-      z-index: 10000;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      font-weight: 600;
-    `;
-    notificacion.textContent = mensaje;
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-      notificacion.remove();
-    }, 3000);
+    alert(mensaje);
   };
-
-  // Calcular total del carrito
-  const totalCarrito = carrito.reduce((sum, producto) => sum + (producto.precio || 0), 0);
 
   // Obtener icono de categoría
   const obtenerIconoCategoria = (categoria) => {
@@ -116,19 +118,6 @@ const Catalogo = () => {
       'Belleza': '💄'
     };
     return iconos[categoria] || '📦';
-  };
-
-  // Mostrar resumen del carrito
-  const mostrarResumenCarrito = () => {
-    if (carrito.length === 0) {
-      alert('El carrito está vacío');
-    } else {
-      const productosLista = carrito.map(p => 
-        `• ${p.nombre} - $${(p.precio || 0).toLocaleString('es-CL')}`
-      ).join('\n');
-      
-      alert(`CARRITO (${carrito.length} productos)\n\n${productosLista}\n\nTOTAL: $${totalCarrito.toLocaleString('es-CL')}`);
-    }
   };
 
   if (cargando) {
@@ -168,10 +157,16 @@ const Catalogo = () => {
               <span style={{ color: '#333' }}>Hola, {usuario.nombre}</span>
             ) : (
               <>
-                <button className="btn-login" onClick={() => window.location.href = '/login'}>
+                <button 
+                  className="btn-login" 
+                  onClick={() => navigate('/login')}
+                >
                   Iniciar Sesión
                 </button>
-                <button className="btn-signup" onClick={() => window.location.href = '/register'}>
+                <button 
+                  className="btn-signup" 
+                  onClick={() => navigate('/register')}
+                >
                   Registrarse
                 </button>
               </>
@@ -201,9 +196,12 @@ const Catalogo = () => {
           </div>
           
           <div className="nav-right">
-            <button className="btn-carrito" onClick={mostrarResumenCarrito}>
+            <button 
+              className="btn-carrito" 
+              onClick={() => navigate('/carrito')}
+            >
               <span className="carrito-icon">🛒</span>
-              Carrito: ${totalCarrito.toLocaleString('es-CL')}
+              Carrito: ${calcularTotalCarritoHeader().toLocaleString('es-CL')}
             </button>
           </div>
         </nav>

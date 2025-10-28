@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../organisms/Header";
-import Main from "../organisms/Main";
+
 
 
 const Nosotros = () => {
@@ -8,7 +8,7 @@ const Nosotros = () => {
         <div>
             <Header></Header>
             
-            <Main></Main>
+            
         </div>
     );
 }

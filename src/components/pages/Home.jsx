@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../organisms/Header";
-import Main from "../organisms/Main";
+
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
 
       <Header></Header>
 
-      <Main></Main>
+     
 
     </div>
   );

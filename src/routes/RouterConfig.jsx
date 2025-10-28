@@ -7,9 +7,11 @@ import PerfilCliente from "../components/pages/PerfilCliente";
 import Nosotros from "../components/pages/Nosotros";
 import Contacto from "../components/pages/Contacto";
 import Carrito from "../components/pages/Carrito";
-import Productos from "../components/pages/Productos";
 import Blog from "../components/pages/Blog"
 import Catalogo from "../components/pages/Catalogo";
+import Checkout from "../components/pages/Checkout";
+import CompraExitosa from "../components/pages/CompraExitosa";
+import ErrorPago from "../components/pages/ErrorPago";
 
 
 const RouterConfig = () => (
@@ -25,6 +27,10 @@ const RouterConfig = () => (
             <Route path="/carrito" element={<Carrito />} />
             <Route path="/productos" element={<Catalogo />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/exito" element={<CompraExitosa />} />
+            <Route path="/errorpago" element={<ErrorPago />} />
+
             
         </Routes>
     </Router>
