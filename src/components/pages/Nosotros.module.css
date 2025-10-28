@@ -1,0 +1,28 @@
+/* Contenedor principal */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.nosotrosContainer {
+  display: grid;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+/* Secciones genéricas (placeholder) */
+.section {
+  background: #0b0b0b;
+  border: 1px solid #111318;
+  border-radius: 10px;
+  min-height: 160px;
+}
+
+/* Footer local opcional (si se usa dentro de esta página) */
+.footer {
+  margin-top: 40px;
+  border-top: 1px solid #111318;
+}
+

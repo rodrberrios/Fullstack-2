@@ -25,7 +25,7 @@ const RouterConfig = () => (
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/carrito" element={<Carrito />} />
-            <Route path="/productos" element={<Catalogo />} />
+            <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/exito" element={<CompraExitosa />} />
