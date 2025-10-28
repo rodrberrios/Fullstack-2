@@ -3,7 +3,7 @@ import Header from "../organisms/Header";
 
 
 
-const Blog = () => {
+const Productos = () => {
     return (
         <div>
             <Header></Header>
@@ -13,4 +13,4 @@ const Blog = () => {
     );
 }
 
-export default Blog;
+export default Productos;
