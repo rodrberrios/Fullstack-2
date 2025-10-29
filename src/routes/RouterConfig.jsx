@@ -29,7 +29,7 @@ const RouterConfig = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/exito" element={<CompraExitosa />} />
-            <Route path="/errorpago" element={<ErrorPago />} />
+            <Route path="/error" element={<ErrorPago />} />
 
             
         </Routes>
