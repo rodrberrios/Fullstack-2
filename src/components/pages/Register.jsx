@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../../services/firestoreService';
 import {  validarFormularioCompleto,  validarCorreo } from '../../utils/register';
+import Header from '../organisms/Header';
+import Footer from '../organisms/Footer'
 
 
 
@@ -81,25 +83,8 @@ const Register = () => {
 
   return (
     <div className="container">
-      {/* NAVBAR (igual que antes) */}
-      <nav className="nav__bar">
-        <img className="nav__logo" src="./assets/img/icon.png" alt="Level UP Store" />
-        <h2 className="nav__title">
-          <a href="/">Level UP Store</a>
-        </h2>
-        <div className="nav__container">
-          <ul className="nav__menu">
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/productos">Productos</a></li>
-            <li><a href="/nosotros">Nosotros</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contacto">Contacto</a></li>
-          </ul>
-        </div>
-        <div className="carrito__container">
-          <a className="carrito" href="/carrito">Carrito</a>
-        </div>
-      </nav>
+      
+      <Header />
 
       {/* FORMULARIO */}
       <main className="main__register">
@@ -191,19 +176,7 @@ const Register = () => {
         </section>
       </main>
       
-      {/* FOOTER (igual que antes) */}
-      <footer className="footer">
-        <div className="footer__container">
-          <h4>Level UP Gamer</h4>
-          <div className="footer__links">
-            <ul>
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ul>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

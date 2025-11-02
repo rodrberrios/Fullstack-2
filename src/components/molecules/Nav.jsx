@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Nav.module.css';
 
 const Nav = () => {
+    const { usuario, logout, estaAutenticado } = useAuth();
+    const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const calcularTotalCarrito = () => {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        return carrito.reduce((total, producto) => {
+          return total + (producto.precio || 0) * (producto.cantidad || 1);
+        }, 0);
+      };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
     };
 
     return (
@@ -29,9 +44,21 @@ const Nav = () => {
                 </ul>
 
                 <div className={styles.right}>
-                    <Link to="/carrito" className={styles.cartLink}>🛒</Link>
-                    <Link to="/login" className={styles.linkSecondary}>Ingresar</Link>
-                    <Link to="/registro" className={styles.btnPrimary}>Registrarse</Link>
+                    {estaAutenticado ? (
+                        <>
+                            <span className={styles.user}> <Link to='/perfil'>👤{usuario.nombre}</Link> </span>
+                            <button className={styles.btnLogout} onClick={handleLogout}>
+                                Cerrar Sesión
+                            </button>
+                            <Link className={styles.cartLink} to="/carrito">🛒 {calcularTotalCarrito().toLocaleString('es-CL')}</Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/carrito" className={styles.cartLink}>🛒</Link>
+                            <Link to="/login" className={styles.linkSecondary}>Ingresar</Link>
+                            <Link to="/register" className={styles.btnPrimary}>Registrarse</Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
