@@ -1,3 +1,9 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .header {
   background: #0b0b0b;
   border-bottom: 1px solid #111318;
@@ -94,8 +100,9 @@
 }
 
 .main {
-  margin: 20px auto;
+  flex: 1;
   max-width: 1200px;
+  margin: 20px auto;
   padding: 0 16px;
 }
 
@@ -282,7 +289,12 @@
 
 .carritoIcon { margin-right: 6px; }
 
-.main { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
 
 .categoriasSection { margin-bottom: 24px; }
 .sectionTitle { color: #e5e7eb; margin: 0 0 12px 0; }

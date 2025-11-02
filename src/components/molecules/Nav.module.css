@@ -17,20 +17,142 @@
     gap: 16px;
 }
 
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.logo { width: 36px; height: 36px; object-fit: contain; }
-.title { margin: 0; font-size: 18px; font-weight: 700; color: #e5e7eb; }
+.brand { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    text-decoration: none; 
+}
 
-.menu { list-style: none; display: none; align-items: center; gap: 16px; margin: 0; padding: 0; }
-.menu a { color: #cbd5e1; text-decoration: none; padding: 8px 10px; border-radius: 6px; transition: color 0.2s ease, background 0.2s ease; }
-.menu a:hover { color: #22c55e; background: rgba(34,197,94,0.08); }
+.logo { 
+    width: 36px; 
+    height: 36px; 
+    object-fit: contain; 
+}
 
-.right { display: flex; align-items: center; gap: 12px; }
+.title { 
+    margin: 0; 
+    font-size: 18px; 
+    font-weight: 700; 
+    color: #e5e7eb; 
+}
+
+.menuButton {
+    display: block;
+    background: none;
+    border: none;
+    color: #e5e7eb;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #0b0b0b;
+    border-bottom: 1px solid #111318;
+    transform: translateY(-150%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menu.menuOpen {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu li {
+    width: 100%;
+    text-align: center;
+}
+
+.menu a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 12px 10px;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.menu a:hover {
+    color: #22c55e;
+    background: rgba(34,197,94,0.08);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .user { color: #e5e7eb; }
-.btnLogout { padding: 6px 10px; background: #ef4444; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
-.linkSecondary { color: #cbd5e1; text-decoration: none; }
-.btnPrimary { padding: 6px 10px; background: #22c55e; color: #0b0b0b; border-radius: 6px; text-decoration: none; font-weight: 600; }
-.cartLink { color: #e5e7eb; text-decoration: none; padding-left: 8px; }
+.btnLogout { 
+    padding: 6px 10px; 
+    background: #ef4444; 
+    color: #fff; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+}
 
-@media (min-width: 768px) { .menu { display: flex; } }
+.linkSecondary { 
+    color: #cbd5e1; 
+    text-decoration: none; 
+}
+
+.btnPrimary { 
+    padding: 6px 10px; 
+    background: #22c55e; 
+    color: #0b0b0b; 
+    border-radius: 6px; 
+    text-decoration: none; 
+    font-weight: 600; 
+}
+
+.cartLink { 
+    color: #e5e7eb; 
+    text-decoration: none; 
+    padding-left: 8px; 
+}
+
+@media (max-width: 767px) {
+    .linkSecondary,
+    .btnPrimary {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .menuButton {
+        display: none;
+    }
+
+    .menu {
+        position: static;
+        flex-direction: row;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        border: none;
+        background: none;
+    }
+
+    .menu li {
+        width: auto;
+    }
+
+    .menu a {
+        padding: 8px 10px;
+    }
+}
 

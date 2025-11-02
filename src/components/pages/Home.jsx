@@ -25,10 +25,8 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container">
-
-      <Header></Header>
-
+    <div className={style.container}>  {/* Cambia "container" por style.container */}
+      <Header />
       <main className={style['main-container']}>
         <section className={style['title-container']}>
           <div>
@@ -56,9 +54,7 @@ const Home = () => {
           )}
         </section>
       </main>
-
-      <Footer></Footer>
-
+      <Footer />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../components/pages/Home";
 import Register from "../components/pages/Register";
 import Login from "../components/pages/Login";
-import PerfilAdmin from "../components/pages/PerfilAdmin";
+import PerfilAdmin from "../components/pages/Admin/PerfilAdmin";
 import PerfilCliente from "../components/pages/PerfilCliente";
 import Nosotros from "../components/pages/Nosotros";
 import Contacto from "../components/pages/Contacto";
@@ -12,6 +12,18 @@ import Catalogo from "../components/pages/Catalogo";
 import Checkout from "../components/pages/Checkout";
 import CompraExitosa from "../components/pages/CompraExitosa";
 import ErrorPago from "../components/pages/ErrorPago";
+import Dashboard from "../components/pages/Admin/Dashboard";
+import Inventory from "../components/pages/Admin/Inventory";
+import Orders from "../components/pages/Admin/Orders";
+import Reports from "../components/pages/Admin/Reports";
+import Employees from "../components/pages/Admin/Employees";
+import Customers from "../components/pages/Admin/Customers";
+import Settings from "../components/pages/Admin/Settings";
+import Profile from "../components/pages/Admin/Profile";
+import Works from "../components/pages/Admin/Works";
+import Search from "../components/pages/Admin/Search";
+import Help from "../components/pages/Admin/Help";
+import Details from "../components/pages/Admin/Details";
 
 
 const RouterConfig = () => (
@@ -30,8 +42,18 @@ const RouterConfig = () => (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/exito" element={<CompraExitosa />} />
             <Route path="/error" element={<ErrorPago />} />
-
-            
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/employees" element={<Employees />} />
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/works" element={<Works />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/details" element={<Details />} />
         </Routes>
     </Router>
 );

@@ -8,13 +8,27 @@ import style from "./Nosotros.module.css";
 const Nosotros = () => {
     return (
         <div className={style.container}>
-            <Header></Header>
-            <main className={style.nosotrosContainer}>
-                <section className={style.section}></section>
-                <section className={style.section}></section>
-                <section className={style.section}></section>
+            <Header />
+            <main className={style.mainContainer}>
+                <section className={style.sectionContainer}>
+                    <div className={style.logoContainer}>
+                        <img src="" alt="Logo Tienda Level Up Gamer" />
+                    </div>
+                </section>
+                <section className={style.sectionContainer}>
+                    <div className={style.nosotrosContainer}>
+                        <h2>Quienes Somos?</h2>
+                        <p></p>
+                    </div>
+                </section>
+                <section className={style.sectionContainer}>
+                    <div className={style.nosotrosContainer}>
+                        <h2>Nuestra Mision</h2>
+                        <p></p>
+                    </div>
+                </section>
             </main>
-            <Footer></Footer>
+            <Footer />
         </div>
     );
 }
