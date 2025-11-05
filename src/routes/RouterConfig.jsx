@@ -24,7 +24,9 @@ import Works from "../components/pages/Admin/Works";
 import Search from "../components/pages/Admin/Search";
 import Help from "../components/pages/Admin/Help";
 import Details from "../components/pages/Admin/Details";
-
+import HistorialConsultas from "../components/pages/HistorialConsultas";
+import HistorialCompras from "../components/pages/HistorialCompras";
+import Perfil from "../components/pages/Perfil";
 
 const RouterConfig = () => (
     <Router>
@@ -54,6 +56,9 @@ const RouterConfig = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/help" element={<Help />} />
             <Route path="/details" element={<Details />} />
+            <Route path="/historialConsultas" element={<HistorialConsultas />} />
+            <Route path="/historialCompras" element={<HistorialCompras />} />
+            <Route path="/perfil" element={<Perfil />} />
         </Routes>
     </Router>
 );

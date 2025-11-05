@@ -1,0 +1,532 @@
+/* CompraExitosa.module.css - ESTILOS COHERENTES CON CHECKOUT */
+
+.container {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f0f0f 0%, #050505 100%);
+    color: #fff;
+}
+
+/* Estados de carga */
+.cargando {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 60vh;
+}
+
+.spinner {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.cargando p {
+    color: #9adf8b;
+    font-size: 1.1rem;
+}
+
+/* Contenedor principal */
+.exitoContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 70vh;
+}
+
+/* Encabezado de éxito */
+.exitoHeader {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+    position: relative;
+}
+
+.codigoOrden {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    background: rgba(57,255,20,0.1);
+    color: #39FF14;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid rgba(57,255,20,0.3);
+}
+
+.exitoTitulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.iconoExito {
+    font-size: 3rem;
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 60%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-5px); }
+}
+
+.exitoTitulo h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.exitoTitulo h1 span {
+    color: #39FF14;
+    -webkit-text-fill-color: #39FF14;
+}
+
+.exitoSubtitulo {
+    color: #9adf8b;
+    font-size: 1.1rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* Secciones de información */
+.infoCliente,
+.direccionEntrega {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1.5rem 0;
+}
+
+/* Formularios en modo lectura */
+.formCliente,
+.formDireccion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formCliente.readonly .formGroup input,
+.formDireccion.readonly .formGroup input,
+.formDireccion.readonly .formGroup textarea {
+    background: rgba(30,30,30,0.6);
+    border-color: rgba(57,255,20,0.2);
+    color: #9adf8b;
+    cursor: not-allowed;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formGroup label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.formGroup input,
+.formGroup textarea {
+    background: rgba(15,15,15,0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+/* Tabla de productos */
+.tablaCheckoutContainer {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.tablaCheckout {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(15,15,15,0.6);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tablaCheckout th {
+    background: rgba(57,255,20,0.1);
+    color: #39FF14;
+    font-weight: 600;
+    padding: 1.5rem 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(57,255,20,0.2);
+}
+
+.tablaCheckout td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.tablaCheckout tr:last-child td {
+    border-bottom: none;
+}
+
+.tablaCheckout tr:hover {
+    background: rgba(57,255,20,0.05);
+}
+
+.imagenTabla {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Total pagado */
+.totalPagadoContainer {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.totalPagado {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(57,255,20,0.1);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 2px solid rgba(57,255,20,0.3);
+}
+
+.totalText {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.totalPrecio {
+    color: #39FF14;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Footer con botones */
+.exitoFooter {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btnImprimirPdf,
+.btnEnviarEmail {
+    padding: 1.25rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    border: none;
+}
+
+.btnImprimirPdf {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+}
+
+.btnImprimirPdf:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102,126,234,0.5);
+}
+
+.btnEnviarEmail {
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    color: #000;
+    box-shadow: 0 4px 15px rgba(57,255,20,0.3);
+}
+
+.btnEnviarEmail:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(57,255,20,0.5);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .exitoContainer {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .exitoHeader {
+        padding: 2rem 1.5rem;
+    }
+    
+    .exitoTitulo h1 {
+        font-size: 2rem;
+    }
+    
+    .formRow {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .exitoFooter {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btnImprimirPdf,
+    .btnEnviarEmail {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .exitoContainer {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .exitoHeader,
+    .infoCliente,
+    .direccionEntrega,
+    .tablaCheckoutContainer,
+    .totalPagadoContainer {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .exitoTitulo {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .exitoTitulo h1 {
+        font-size: 1.75rem;
+        text-align: center;
+    }
+    
+    .iconoExito {
+        font-size: 2.5rem;
+    }
+    
+    .codigoOrden {
+        position: static;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+    
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+    
+    /* Tabla responsive */
+    .tablaCheckoutContainer {
+        overflow-x: auto;
+    }
+    
+    .tablaCheckout {
+        min-width: 600px;
+    }
+    
+    .tablaCheckout th,
+    .tablaCheckout td {
+        padding: 1rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .imagenTabla {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .totalPagado {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem;
+    }
+    
+    .totalText {
+        font-size: 1.1rem;
+    }
+    
+    .totalPrecio {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .exitoContainer {
+        padding: 0.5rem;
+    }
+    
+    .exitoHeader,
+    .infoCliente,
+    .direccionEntrega,
+    .tablaCheckoutContainer,
+    .totalPagadoContainer {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+    
+    .exitoTitulo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .exitoSubtitulo {
+        font-size: 1rem;
+    }
+    
+    .sectionTitle {
+        font-size: 1.3rem;
+    }
+    
+    .tablaCheckout th,
+    .tablaCheckout td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .imagenTabla {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .formGroup input,
+    .formGroup textarea {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.9rem;
+    }
+    
+    .btnImprimirPdf,
+    .btnEnviarEmail {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        min-width: 180px;
+    }
+    
+    .cargando {
+        padding: 2rem 1rem;
+    }
+    
+    .spinner {
+        font-size: 2.5rem;
+    }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.exitoContainer > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.exitoContainer > *:nth-child(1) { animation-delay: 0.1s; }
+.exitoContainer > *:nth-child(2) { animation-delay: 0.2s; }
+.exitoContainer > *:nth-child(3) { animation-delay: 0.3s; }
+.exitoContainer > *:nth-child(4) { animation-delay: 0.4s; }
+.exitoContainer > *:nth-child(5) { animation-delay: 0.5s; }
+.exitoContainer > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Efectos de confeti visual */
+.exitoHeader::before {
+    content: '🎉';
+    position: absolute;
+    top: -20px;
+    left: 10%;
+    font-size: 2rem;
+    opacity: 0.7;
+    animation: float 3s ease-in-out infinite;
+}
+
+.exitoHeader::after {
+    content: '✨';
+    position: absolute;
+    bottom: -15px;
+    right: 10%;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    animation: float 3s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}

@@ -3,6 +3,7 @@ import { db } from '../../config/firebase';
 import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import Header from '../organisms/Header';
+import style from './Checkout.module.css';
 
 /**
  * Componente de Checkout - Procesamiento de compra
@@ -74,7 +75,7 @@ const Checkout = () => {
    */
   const validarFormulario = () => {
     const { cliente, direccion } = formData;
-    
+
     // Validar campos requeridos del cliente
     if (!cliente.nombre.trim() || !cliente.apellidos.trim() || !cliente.correo.trim()) {
       alert('Por favor completa todos los campos del cliente');
@@ -106,7 +107,7 @@ const Checkout = () => {
     setProcesando(true);
 
     try {
-      const total = carrito.reduce((sum, producto) => 
+      const total = carrito.reduce((sum, producto) =>
         sum + ((producto.precio || 0) * (producto.cantidad || 1)), 0
       );
 
@@ -133,7 +134,7 @@ const Checkout = () => {
 
       // Simular procesamiento de pago (80% éxito)
       const pagoExitoso = Math.random() > 0.2;
-      
+
       if (pagoExitoso) {
         // PAGO EXITOSO - Actualizar estado en Firestore
         await updateDoc(doc(db, 'compras', docRef.id), {
@@ -181,7 +182,7 @@ const Checkout = () => {
     const fecha = new Date();
     const timestamp = fecha.getTime();
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `ORD${fecha.getFullYear()}${(fecha.getMonth()+1).toString().padStart(2, '0')}${fecha.getDate().toString().padStart(2, '0')}${random}`;
+    return `ORD${fecha.getFullYear()}${(fecha.getMonth() + 1).toString().padStart(2, '0')}${fecha.getDate().toString().padStart(2, '0')}${random}`;
   };
 
   /**
@@ -195,13 +196,13 @@ const Checkout = () => {
 
   if (carrito.length === 0) {
     return (
-      <div className="container">
+      <div className={style.container}>
         <Header />
-        <div className="carrito-vacio">
-          <div className="icono">🛒</div>
+        <div className={style.carritoVacio}>
+          <div className={style.icono}>🛒</div>
           <h3>No hay productos en el carrito</h3>
-          <button 
-            className="btn-ir-catalogo"
+          <button
+            className={style.btnIrCatalogo}
             onClick={() => navigate('/carrito')}
           >
             Volver al Carrito
@@ -212,24 +213,24 @@ const Checkout = () => {
   }
 
   return (
-    <div className="container">
+    <div className={style.container}>
       <Header />
-      
-      <div className="checkout-container">
+
+      <div className={style.checkoutContainer}>
         {/* Encabezado del Checkout */}
-        <div className="checkout-header">
-          <div className="checkout-titulos">
-            <h1 className="checkout-titulo">Carrito de Compra</h1>
-            <p className="checkout-subtitulo">Completa la siguiente información</p>
+        <div className={style.checkoutHeader}>
+          <div className={style.checkoutTitulos}>
+            <h1 className={style.checkoutTitulo}>Carrito de Compra</h1>
+            <p className={style.checkoutSubtitulo}>Completa la siguiente información</p>
           </div>
-          <div className="btn-total-pagar">
+          <div className={style.btnTotalPagar}>
             Total a Pagar: ${calcularTotal().toLocaleString('es-CL')}
           </div>
         </div>
 
         {/* Tabla de Productos */}
-        <div className="tabla-checkout-container">
-          <table className="tabla-checkout">
+        <div className={style.tablaCheckoutContainer}>
+          <table className={style.tablaCheckout}>
             <thead>
               <tr>
                 <th>Imagen</th>
@@ -243,10 +244,10 @@ const Checkout = () => {
               {carrito.map((producto, index) => (
                 <tr key={index}>
                   <td>
-                    <img 
-                      src={producto.imagen} 
+                    <img
+                      src={producto.imagen}
                       alt={producto.nombre}
-                      className="imagen-tabla"
+                      className={style.imagenTabla}
                       onError={(e) => {
                         e.target.src = 'https://via.placeholder.com/100x100/cccccc/969696?text=Imagen';
                       }}
@@ -265,13 +266,13 @@ const Checkout = () => {
         </div>
 
         {/* Información del Cliente */}
-        <section className="info-cliente">
-          <h2 className="section-title">Información del Cliente</h2>
-          <p className="section-subtitle">Completa la siguiente información</p>
-          
-          <div className="form-cliente">
-            <div className="form-row">
-              <div className="form-group">
+        <section className={style.infoCliente}>
+          <h2 className={style.sectionTitle}>Información del Cliente</h2>
+          <p className={style.sectionSubtitle}>Completa la siguiente información</p>
+
+          <div className={style.formCliente}>
+            <div className={style.formRow}>
+              <div className={style.formGroup}>
                 <label htmlFor="nombre">Nombre *</label>
                 <input
                   type="text"
@@ -281,7 +282,7 @@ const Checkout = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className={style.formGroup}>
                 <label htmlFor="apellidos">Apellidos *</label>
                 <input
                   type="text"
@@ -292,7 +293,7 @@ const Checkout = () => {
                 />
               </div>
             </div>
-            <div className="form-group full-width">
+            <div className={`${style.formGroup} ${style.fullWidth}`}>
               <label htmlFor="correo">Correo Electrónico *</label>
               <input
                 type="email"
@@ -306,13 +307,13 @@ const Checkout = () => {
         </section>
 
         {/* Dirección de Entrega */}
-        <section className="direccion-entrega">
-          <h2 className="section-title">Dirección de entrega de los productos</h2>
-          <p className="section-subtitle">Ingrese dirección de forma detallada</p>
-          
-          <div className="form-direccion">
-            <div className="form-row">
-              <div className="form-group">
+        <section className={style.direccionEntrega}>
+          <h2 className={style.sectionTitle}>Dirección de entrega de los productos</h2>
+          <p className={style.sectionSubtitle}>Ingrese dirección de forma detallada</p>
+
+          <div className={style.formDireccion}>
+            <div className={style.formRow}>
+              <div className={style.formGroup}>
                 <label htmlFor="calle">Calle *</label>
                 <input
                   type="text"
@@ -322,7 +323,7 @@ const Checkout = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className={style.formGroup}>
                 <label htmlFor="departamento">Departamento (Opcional)</label>
                 <input
                   type="text"
@@ -332,8 +333,8 @@ const Checkout = () => {
                 />
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group">
+            <div className={style.formRow}>
+              <div className={style.formGroup}>
                 <label htmlFor="region">Región *</label>
                 <select
                   id="region"
@@ -347,7 +348,7 @@ const Checkout = () => {
                   ))}
                 </select>
               </div>
-              <div className="form-group">
+              <div className={style.formGroup}>
                 <label htmlFor="comuna">Comuna *</label>
                 <select
                   id="comuna"
@@ -365,7 +366,7 @@ const Checkout = () => {
                 </select>
               </div>
             </div>
-            <div className="form-group full-width">
+            <div className={`${style.formGroup} ${style.fullWidth}`}>
               <label htmlFor="indicaciones">Indicaciones para la entrega (Opcional)</label>
               <textarea
                 id="indicaciones"
@@ -379,9 +380,9 @@ const Checkout = () => {
         </section>
 
         {/* Botón Final */}
-        <div className="checkout-footer">
-          <button 
-            className="btn-pagar-ahora"
+        <div className={style.checkoutFooter}>
+          <button
+            className={style.btnPagarAhora}
             onClick={procesarPago}
             disabled={procesando}
           >

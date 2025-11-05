@@ -3,6 +3,7 @@ import { db } from '../../config/firebase'
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import Header from '../organisms/Header';
+import style from './Carrito.module.css';
 
 /**
  * Componente del Carrito de Compras
@@ -206,10 +207,10 @@ const Carrito = () => {
 
   if (cargando) {
     return (
-      <div className="container">
+      <div className={style.container}>
         <Header />
-        <div className="cargando">
-          <div className="spinner">🔄</div>
+        <div className={style.cargando}>
+          <div className={style.spinner}>🔄</div>
           <p>Cargando productos en oferta...</p>
         </div>
       </div>
@@ -217,42 +218,42 @@ const Carrito = () => {
   }
 
   return (
-    <div className="container">
+    <div className={style.container}>
       <Header />
       
-      <div className="carrito-container">
+      <div className={style.carritoContainer}>
         {/* Productos en Oferta */}
-        <section className="ofertas-section">
-          <h2 className="section-title">Productos en Oferta</h2>
-          <div className="productos-grid">
+        <section className={style.ofertasSection}>
+          <h2 className={style.sectionTitle}>Productos en Oferta</h2>
+          <div className={style.productosGrid}>
             {productosOferta.length === 0 ? (
-              <p className="sin-ofertas">No hay productos en oferta en este momento.</p>
+              <p className={style.sinOfertas}>No hay productos en oferta en este momento.</p>
             ) : (
               productosOferta.map(producto => (
-                <div key={producto.id} className="producto-card">
+                <div key={producto.id} className={style.productoCard}>
                   <img 
                     src={producto.imagen} 
                     alt={producto.nombre}
-                    className="producto-imagen"
+                    className={style.productoImagen}
                     onError={(e) => {
                       e.target.src = 'https://via.placeholder.com/400x300/cccccc/969696?text=Imagen+No+Disponible';
                     }}
                   />
-                  <div className="producto-info">
-                    <h3 className="producto-nombre">{producto.nombre}</h3>
-                    <div className="precios-oferta">
-                      <span className="precio-anterior">
+                  <div className={style.productoInfo}>
+                    <h3 className={style.productoNombre}>{producto.nombre}</h3>
+                    <div className={style.preciosOferta}>
+                      <span className={style.precioAnterior}>
                         ${producto.precioAnterior?.toLocaleString('es-CL')}
                       </span>
-                      <span className="precio-actual">
+                      <span className={style.precioActual}>
                         ${producto.precio?.toLocaleString('es-CL')}
                       </span>
                     </div>
-                    <p className="stock-disponible">
+                    <p className={style.stockDisponible}>
                       Stock: {producto.stock || 10}
                     </p>
                     <button 
-                      className="btn-agregar-oferta"
+                      className={style.btnAgregarOferta}
                       onClick={() => agregarAlCarrito(producto)}
                     >
                       Añadir
@@ -265,12 +266,12 @@ const Carrito = () => {
         </section>
 
         {/* Resumen del Carrito */}
-        <section className="resumen-carrito">
-          <h2 className="section-title">Resumen del Carrito</h2>
+        <section className={style.resumenCarrito}>
+          <h2 className={style.sectionTitle}>Resumen del Carrito</h2>
           
           {/* Tabla de productos en carrito */}
-          <div className="tabla-carrito-container">
-            <table className="tabla-carrito">
+          <div className={style.tablaCarritoContainer}>
+            <table className={style.tablaCarrito}>
               <thead>
                 <tr>
                   <th>Imagen</th>
@@ -284,12 +285,12 @@ const Carrito = () => {
               <tbody>
                 {carrito.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="carrito-vacio">
-                      <div className="icono">🛒</div>
+                    <td colSpan="6" className={style.carritoVacio}>
+                      <div className={style.icono}>🛒</div>
                       <h3>Tu carrito está vacío</h3>
                       <p>Agrega algunos productos para continuar</p>
                       <button 
-                        className="btn-ir-catalogo"
+                        className={style.btnIrCatalogo}
                         onClick={() => navigate('/productos')}
                       >
                         Ir al Catálogo
@@ -303,7 +304,7 @@ const Carrito = () => {
                         <img 
                           src={producto.imagen} 
                           alt={producto.nombre}
-                          className="imagen-tabla"
+                          className={style.imagenTabla}
                           onError={(e) => {
                             e.target.src = 'https://via.placeholder.com/100x100/cccccc/969696?text=Imagen';
                           }}
@@ -312,18 +313,18 @@ const Carrito = () => {
                       <td>{producto.nombre}</td>
                       <td>${producto.precio?.toLocaleString('es-CL')}</td>
                       <td>
-                        <div className="controles-cantidad">
+                        <div className={style.controlesCantidad}>
                           <button 
-                            className="btn-cantidad"
+                            className={style.btnCantidad}
                             onClick={() => actualizarCantidad(index, (producto.cantidad || 1) - 1)}
                           >
                             -
                           </button>
-                          <span className="cantidad-actual">
+                          <span className={style.cantidadActual}>
                             {producto.cantidad || 1}
                           </span>
                           <button 
-                            className="btn-cantidad"
+                            className={style.btnCantidad}
                             onClick={() => actualizarCantidad(index, (producto.cantidad || 1) + 1)}
                           >
                             +
@@ -335,7 +336,7 @@ const Carrito = () => {
                       </td>
                       <td>
                         <button 
-                          className="btn-eliminar"
+                          className={style.btnEliminar}
                           onClick={() => eliminarDelCarrito(index)}
                         >
                          Eliminar
@@ -350,22 +351,22 @@ const Carrito = () => {
 
           {/* Total y Botones */}
           {carrito.length > 0 && (
-            <div className="carrito-footer">
-              <div className="total-container">
-                <span className="total-text">Total: $</span>
-                <span className="total-precio">
+            <div className={style.carritoFooter}>
+              <div className={style.totalContainer}>
+                <span className={style.totalText}>Total: $</span>
+                <span className={style.totalPrecio}>
                   {calcularTotal().toLocaleString('es-CL')}
                 </span>
               </div>
-              <div className="botones-carrito">
+              <div className={style.botonesCarrito}>
                 <button 
-                  className="btn-limpiar"
+                  className={style.btnLimpiar}
                   onClick={limpiarCarrito}
                 >
                   Limpiar Carrito
                 </button>
                 <button 
-                  className="btn-comprar-ahora"
+                  className={style.btnComprarAhora}
                   onClick={irAlCheckout}
                 >
                   Comprar Ahora

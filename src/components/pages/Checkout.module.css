@@ -1,0 +1,313 @@
+/* Checkout.module.css - VERSIÓN CON CAMELCASE */
+
+.container {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f0f0f 0%, #050505 100%);
+    color: #fff;
+}
+
+/* Estados de carga */
+.carritoVacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 60vh;
+}
+
+.carritoVacio .icono {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+}
+
+.carritoVacio h3 {
+    color: #fff;
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.btnIrCatalogo {
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    color: #000;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.btnIrCatalogo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(57,255,20,0.4);
+}
+
+/* Contenedor principal del checkout */
+.checkoutContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 70vh;
+}
+
+/* Encabezado del Checkout */
+.checkoutHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.checkoutTitulos {
+    flex: 1;
+}
+
+.checkoutTitulo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem 0;
+}
+
+.checkoutSubtitulo {
+    color: #9adf8b;
+    font-size: 1.1rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.btnTotalPagar {
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    color: #000;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: 0 4px 15px rgba(57,255,20,0.3);
+}
+
+/* Tabla de productos en checkout */
+.tablaCheckoutContainer {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.tablaCheckout {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(15,15,15,0.6);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tablaCheckout th {
+    background: rgba(57,255,20,0.1);
+    color: #39FF14;
+    font-weight: 600;
+    padding: 1.5rem 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(57,255,20,0.2);
+}
+
+.tablaCheckout td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.tablaCheckout tr:last-child td {
+    border-bottom: none;
+}
+
+.tablaCheckout tr:hover {
+    background: rgba(57,255,20,0.05);
+}
+
+.imagenTabla {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Secciones de formulario */
+.infoCliente,
+.direccionEntrega {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(57,255,20,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem 0;
+}
+
+.sectionSubtitle {
+    color: #9adf8b;
+    font-size: 1rem;
+    margin: 0 0 2rem 0;
+    opacity: 0.9;
+}
+
+/* Formularios */
+.formCliente,
+.formDireccion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formGroup label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    background: rgba(15,15,15,0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: rgba(57,255,20,0.5);
+    box-shadow: 0 0 0 2px rgba(57,255,20,0.1);
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+.formGroup select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+/* Footer del checkout */
+.checkoutFooter {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btnPagarAhora {
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    color: #000;
+    border: none;
+    padding: 1.25rem 3rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 300px;
+    box-shadow: 0 4px 15px rgba(57,255,20,0.3);
+}
+
+.btnPagarAhora:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(57,255,20,0.5);
+}
+
+.btnPagarAhora:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* RESPONSIVE DESIGN - mantén las media queries igual pero con camelCase */
+@media (max-width: 1024px) {
+    .checkoutContainer {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .checkoutHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+    
+    .btnTotalPagar {
+        align-self: stretch;
+        text-align: center;
+    }
+    
+    .formRow {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+/* ... resto de media queries igual pero con los nombres camelCase ... */

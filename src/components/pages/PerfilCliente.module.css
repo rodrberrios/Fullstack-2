@@ -1,0 +1,129 @@
+/* PerfilCliente.module.css */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    z-index: 1000;
+    overflow-y: auto;
+    background: rgba(17, 17, 17, 0.95);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid #39FF14;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+/* Contenido principal */
+.mainContent {
+    margin-left: 250px;
+    padding: 2rem;
+    min-height: 100vh;
+    width: calc(100% - 250px);
+    background: linear-gradient(180deg, #0f0f0f 0%, #050505 100%);
+    color: #fff;
+    transition: margin 0.3s ease;
+}
+
+/* Bienvenida */
+.welcomeContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.welcomeTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #39FF14;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcomeSubtitle {
+    color: #9adf8b;
+    font-size: 1.1rem;
+    margin: 0 0 3rem 0;
+}
+
+/* Acciones rápidas */
+.quickActions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.quickLink {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(25,25,25,0.7);
+    border: 1px solid rgba(57,255,20,0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(6px);
+}
+
+.quickLink:hover {
+    transform: translateY(-2px);
+    border-color: rgba(57,255,20,0.3);
+    background: rgba(25,25,25,0.9);
+}
+
+.quickLink span {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.quickLink h3 {
+    margin: 0 0 0.5rem 0;
+    color: #39FF14;
+    font-size: 1.1rem;
+}
+
+.quickLink p {
+    margin: 0;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #39FF14;
+    }
+    
+    .mainContent {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+    
+    .welcomeTitle {
+        font-size: 2rem;
+    }
+    
+    .quickActions {
+        grid-template-columns: 1fr;
+    }
+}

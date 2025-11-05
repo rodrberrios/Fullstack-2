@@ -1,0 +1,536 @@
+/* ErrorPago.module.css - ESTILOS PARA PÁGINA DE ERROR */
+
+.container {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f0f0f 0%, #050505 100%);
+    color: #fff;
+}
+
+/* Estados de carga */
+.cargando {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 60vh;
+}
+
+.spinner {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.cargando p {
+    color: #9adf8b;
+    font-size: 1.1rem;
+}
+
+/* Contenedor principal */
+.errorContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 70vh;
+}
+
+/* Encabezado de error */
+.errorHeader {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(255,71,87,0.1);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+    position: relative;
+}
+
+.errorTitulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.iconoError {
+    font-size: 3rem;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.errorTitulo h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.errorTitulo h1 span {
+    color: #ff4757;
+    -webkit-text-fill-color: #ff4757;
+}
+
+.errorSubtitulo {
+    color: #ff6b81;
+    font-size: 1.3rem;
+    margin: 0 0 2rem 0;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+/* Botón reintentar pago */
+.btnReintentarPago {
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    color: #fff;
+    border: none;
+    padding: 1.25rem 3rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 300px;
+    box-shadow: 0 4px 15px rgba(255,71,87,0.3);
+    margin-top: 1rem;
+}
+
+.btnReintentarPago:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255,71,87,0.5);
+}
+
+/* Secciones de información */
+.infoCliente,
+.direccionEntrega {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(255,71,87,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1.5rem 0;
+}
+
+/* Formularios en modo lectura */
+.formCliente,
+.formDireccion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formCliente.readonly .formGroup input,
+.formDireccion.readonly .formGroup input,
+.formDireccion.readonly .formGroup textarea {
+    background: rgba(40,30,30,0.6);
+    border-color: rgba(255,71,87,0.2);
+    color: #ff6b81;
+    cursor: not-allowed;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formGroup label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.formGroup input,
+.formGroup textarea {
+    background: rgba(15,15,15,0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+/* Tabla de productos */
+.tablaCheckoutContainer {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(255,71,87,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.tablaCheckout {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(15,15,15,0.6);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tablaCheckout th {
+    background: rgba(255,71,87,0.1);
+    color: #ff4757;
+    font-weight: 600;
+    padding: 1.5rem 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255,71,87,0.2);
+}
+
+.tablaCheckout td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.tablaCheckout tr:last-child td {
+    border-bottom: none;
+}
+
+.tablaCheckout tr:hover {
+    background: rgba(255,71,87,0.05);
+}
+
+.imagenTabla {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Total */
+.totalPagadoContainer {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(255,71,87,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.totalPagado {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,71,87,0.1);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 2px solid rgba(255,71,87,0.3);
+}
+
+.totalText {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.totalPrecio {
+    color: #ff4757;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Mensaje de ayuda */
+.ayudaContainer {
+    background: rgba(255,71,87,0.1);
+    border: 1px solid rgba(255,71,87,0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.ayudaTitulo {
+    color: #ff4757;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.ayudaTexto {
+    color: #ff6b81;
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .errorContainer {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .errorHeader {
+        padding: 2rem 1.5rem;
+    }
+    
+    .errorTitulo h1 {
+        font-size: 2rem;
+    }
+    
+    .formRow {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .btnReintentarPago {
+        min-width: 250px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .errorContainer {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .errorHeader,
+    .infoCliente,
+    .direccionEntrega,
+    .tablaCheckoutContainer,
+    .totalPagadoContainer {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .errorTitulo {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .errorTitulo h1 {
+        font-size: 1.75rem;
+        text-align: center;
+    }
+    
+    .iconoError {
+        font-size: 2.5rem;
+    }
+    
+    .errorSubtitulo {
+        font-size: 1.1rem;
+    }
+    
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+    
+    /* Tabla responsive */
+    .tablaCheckoutContainer {
+        overflow-x: auto;
+    }
+    
+    .tablaCheckout {
+        min-width: 600px;
+    }
+    
+    .tablaCheckout th,
+    .tablaCheckout td {
+        padding: 1rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .imagenTabla {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .totalPagado {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem;
+    }
+    
+    .totalText {
+        font-size: 1.1rem;
+    }
+    
+    .totalPrecio {
+        font-size: 1.5rem;
+    }
+    
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .errorContainer {
+        padding: 0.5rem;
+    }
+    
+    .errorHeader,
+    .infoCliente,
+    .direccionEntrega,
+    .tablaCheckoutContainer,
+    .totalPagadoContainer {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+    
+    .errorTitulo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .errorSubtitulo {
+        font-size: 1rem;
+    }
+    
+    .sectionTitle {
+        font-size: 1.3rem;
+    }
+    
+    .tablaCheckout th,
+    .tablaCheckout td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .imagenTabla {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .formGroup input,
+    .formGroup textarea {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.9rem;
+    }
+    
+    .btnReintentarPago {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        min-width: 200px;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .cargando {
+        padding: 2rem 1rem;
+    }
+    
+    .spinner {
+        font-size: 2.5rem;
+    }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.errorContainer > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.errorContainer > *:nth-child(1) { animation-delay: 0.1s; }
+.errorContainer > *:nth-child(2) { animation-delay: 0.2s; }
+.errorContainer > *:nth-child(3) { animation-delay: 0.3s; }
+.errorContainer > *:nth-child(4) { animation-delay: 0.4s; }
+.errorContainer > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* Efectos visuales de error */
+.errorHeader::before {
+    content: '⚠️';
+    position: absolute;
+    top: -15px;
+    left: 10%;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.errorHeader::after {
+    content: '🚫';
+    position: absolute;
+    bottom: -10px;
+    right: 10%;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    animation: pulse 2s ease-in-out infinite reverse;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Mensaje de advertencia adicional */
+.errorHeader {
+    position: relative;
+}
+
+.errorHeader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ff4757 0%, #ff3838 100%);
+    border-radius: 16px 16px 0 0;
+}
