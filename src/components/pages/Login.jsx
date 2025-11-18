@@ -1,70 +1,24 @@
 
-import { useNavigate, Link, useHistory } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useContext, useEffect } from "react";
-import { verificarCredenciales } from '../../services/authService';
 import { validarCorreo } from '../../utils/register';
-import { useAuth } from '../../context/AuthContext';
+import { UserContext } from '../../context/AuthContext';
 import Nav from "../molecules/Nav";
 import Footer from '../organisms/Footer';
 import style from './Login.module.css';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    correo: '',
-    clave: ''
-  });
-  const [mensaje, setMensaje] = useState('');
-  const [cargando, setCargando] = useState(false);
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const { setUser } = useContext(UserContext);
+  const history = userHistory();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    if (mensaje) setMensaje('');
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMensaje('');
-    setCargando(true);
-
-    const { correo, clave } = formData;
-
-    if (!correo.trim() || !clave.trim()) {
-      setMensaje('Todos los campos son obligatorios');
-      setCargando(false);
-      return;
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    if(usuario) {
+      setUser(usuario); // se actualiza el contexto
+      // Se redirige dependiendo el rol
+      history.push(usuario.rol === "admin" ? "/perfilAdmin" : "perfilCliente");
     }
-
-    if (!validarCorreo(correo)) {
-      setMensaje('El correo debe ser @duoc.cl, @profesor.duoc.cl o @gmail.com');
-      setCargando(false);
-      return;
-    }
-
-    try {
-      const usuario = await verificarCredenciales(correo.trim(), clave.trim());
-      login(usuario);
-      
-      setMensaje(`¡Bienvenido de vuelta ${usuario.nombre}!`);
-
-      setTimeout(() => {
-        const destino = usuario.correo.toLowerCase() === "admin@duoc.cl" 
-          ? `/admin?nombre=${encodeURIComponent(usuario.nombre)}`
-          : `/cliente?nombre=${encodeURIComponent(usuario.nombre)}`;
-        
-        navigate(destino);
-      }, 1500);
-
-    } catch (error) {
-      setMensaje(error.message);
-    } finally {
-      setCargando(false);
-    }
-  };
+  }, [setUser, history]); // Solo se ejecuta una vez al montar el componente
 
   return (
     <div className={style.container}>

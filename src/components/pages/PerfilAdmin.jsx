@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from "../../../context/AuthContext"
 import style from './PerfilAdmin.module.css';
 import Aside from "../../organisms/Aside";
