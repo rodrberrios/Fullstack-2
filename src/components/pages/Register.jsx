@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../../services/firestoreService';
-import {  validarFormularioCompleto,  validarCorreo } from '../../utils/register';
+import { validarFormularioCompleto, validarCorreo } from '../../utils/register';
 import Header from '../organisms/Header';
-import Footer from '../organisms/Footer'
+import Footer from '../organisms/Footer';
+import style from './Register.module.css'; // Importar los estilos
 
-
-
-
-//----------------------------------VALIDACIONES----------------------------------------------
 const Register = () => {
   const [formData, setFormData] = useState({
     run: '',
@@ -79,95 +76,111 @@ const Register = () => {
     }
   };
 
-  //----------------------------------VALIDACIONES----------------------------------------------
-
   return (
-    <div className="container">
-      
+    <div className={style.container}>
       <Header />
 
       {/* FORMULARIO */}
-      <main className="main__register">
-        <section className="form__container section__register">
-          <form onSubmit={handleSubmit} className="form__register">
-            <div className="div__register">
+      <main className={style.main__register}>
+        <section className={`${style.form__container} ${style.section__register}`}>
+          <form onSubmit={handleSubmit} className={style.form__register}>
+            <div className={style.div__register}>
+              <h2>Registro</h2>
+              
               {/* RUN */}
-              <label htmlFor="run">RUN</label>
-              <input 
-                type="text" 
-                id="run" 
-                name="run" 
-                value={formData.run}
-                onChange={handleChange}
-                placeholder="123456789" 
-                required 
-              />
-              {errores.run && <span style={{color: 'red', fontSize: '12px'}}>{errores.run}</span>}
+              <div className={style.form__group}>
+                <label htmlFor="run" className={style.form__label}>RUN</label>
+                <input 
+                  type="text" 
+                  id="run" 
+                  name="run" 
+                  value={formData.run}
+                  onChange={handleChange}
+                  placeholder="123456789" 
+                  required 
+                  className={style.form__input}
+                />
+                {errores.run && <span className={style.error__message}>{errores.run}</span>}
+              </div>
 
               {/* NOMBRE COMPLETO */}
-              <label htmlFor="nombre">Nombre</label>
-              <input 
-                type="text" 
-                id="nombre" 
-                name="nombre" 
-                value={formData.nombre}
-                onChange={handleChange}
-                placeholder="Francisco" 
-                required 
-              />
-              {errores.nombre && <span style={{color: 'red', fontSize: '12px'}}>{errores.nombre}</span>}
+              <div className={style.form__group}>
+                <label htmlFor="nombre" className={style.form__label}>Nombre</label>
+                <input 
+                  type="text" 
+                  id="nombre" 
+                  name="nombre" 
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  placeholder="Francisco" 
+                  required 
+                  className={style.form__input}
+                />
+                {errores.nombre && <span className={style.error__message}>{errores.nombre}</span>}
+              </div>
 
               {/* CORREO */}
-              <label htmlFor="correo">Correo</label>
-              <input 
-                type="email" 
-                id="correo" 
-                name="correo" 
-                value={formData.correo}
-                onChange={handleChange}
-                placeholder="Francisco@duocuc.cl" 
-                required 
-              />
-              {errores.correo && <span style={{color: 'red', fontSize: '12px'}}>{errores.correo}</span>}
+              <div className={style.form__group}>
+                <label htmlFor="correo" className={style.form__label}>Correo</label>
+                <input 
+                  type="email" 
+                  id="correo" 
+                  name="correo" 
+                  value={formData.correo}
+                  onChange={handleChange}
+                  placeholder="Francisco@duocuc.cl" 
+                  required 
+                  className={style.form__input}
+                />
+                {errores.correo && <span className={style.error__message}>{errores.correo}</span>}
+              </div>
 
               {/* CONTRASEÑA */}
-              <label htmlFor="clave">Contraseña</label>
-              <input 
-                type="password"
-                id="clave" 
-                name="clave" 
-                value={formData.clave}
-                onChange={handleChange}
-                placeholder="Entre 6 y 10 caracteres" 
-                minLength="6"
-                maxLength="10"
-                required 
-              />
-              {errores.clave && <span style={{color: 'red', fontSize: '12px'}}>{errores.clave}</span>}
+              <div className={style.form__group}>
+                <label htmlFor="clave" className={style.form__label}>Contraseña</label>
+                <input 
+                  type="password"
+                  id="clave" 
+                  name="clave" 
+                  value={formData.clave}
+                  onChange={handleChange}
+                  placeholder="Entre 6 y 10 caracteres" 
+                  minLength="6"
+                  maxLength="10"
+                  required 
+                  className={style.form__input}
+                />
+                {errores.clave && <span className={style.error__message}>{errores.clave}</span>}
+              </div>
 
               {/* FECHA NACIMIENTO */}
-              <label htmlFor="fecha">Fecha de nacimiento</label>
-              <input 
-                className="fecha" 
-                type="date" 
-                id="fecha" 
-                name="fecha" 
-                value={formData.fecha}
-                onChange={handleChange}
-                required 
-              />
-              {errores.fecha && <span style={{color: 'red', fontSize: '12px'}}>{errores.fecha}</span>}
+              <div className={style.form__group}>
+                <label htmlFor="fecha" className={style.form__label}>Fecha de nacimiento</label>
+                <input 
+                  className={style.fecha} 
+                  type="date" 
+                  id="fecha" 
+                  name="fecha" 
+                  value={formData.fecha}
+                  onChange={handleChange}
+                  required 
+                />
+                {errores.fecha && <span className={style.error__message}>{errores.fecha}</span>}
+              </div>
 
               {/* BOTON DE REGISTRO */}
-              <button type="submit">REGISTRARSE</button>
-              <a href="/login">Iniciar sesión</a>
+              <button type="submit" className={style.submit__button}>REGISTRARSE</button>
+              
+              <div className={style.login__link}>
+                <span>¿Ya tienes cuenta? </span>
+                <a href="/login">Iniciar sesión</a>
+              </div>
 
               {/* MENSAJES GENERALES */}
               {mensaje && (
-                <div id="mensaje" style={{
-                  marginTop: '10px', 
-                  color: mensaje.includes('Bienvenido') ? 'green' : 'red'
-                }}>
+                <div className={`${style.message__alert} ${
+                  mensaje.includes('Bienvenido') ? style.message__success : style.message__error
+                }`}>
                   {mensaje}
                 </div>
               )}

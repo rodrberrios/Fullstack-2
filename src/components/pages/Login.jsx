@@ -1,24 +1,98 @@
 
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useContext, useEffect } from "react";
 import { validarCorreo } from '../../utils/register';
 import { UserContext } from '../../context/AuthContext';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 import Nav from "../molecules/Nav";
 import Footer from '../organisms/Footer';
 import style from './Login.module.css';
 
 const Login = () => {
-  const { setUser } = useContext(UserContext);
-  const history = userHistory();
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  
+  const [formData, setFormData] = useState({
+    correo: '',
+    clave: ''
+  });
+  const [cargando, setCargando] = useState(false);
+  const [mensaje, setMensaje] = useState('');
 
   useEffect(() => {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    if(usuario) {
-      setUser(usuario); // se actualiza el contexto
-      // Se redirige dependiendo el rol
-      history.push(usuario.rol === "admin" ? "/perfilAdmin" : "perfilCliente");
+    // Solo redirigir si el usuario ya está autenticado en el contexto
+    if (user) {
+      navigate(user.rol === "admin" ? "/perfilAdmin" : "/perfilCliente");
     }
-  }, [setUser, history]); // Solo se ejecuta una vez al montar el componente
+  }, [user, navigate]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+    // Limpiar mensaje cuando el usuario empiece a escribir
+    if (mensaje) {
+      setMensaje('');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setCargando(true);
+    setMensaje('');
+
+    // Validación de correo
+    if (!validarCorreo(formData.correo.trim())) {
+      setMensaje("El correo debe ser @duoc.cl, @profesor.duoc.cl o @gmail.com.");
+      setCargando(false);
+      return;
+    }
+
+    try {
+      // Buscar usuario en Firestore
+      const usuariosRef = collection(db, "usuarios");
+      const q = query(
+        usuariosRef, 
+        where("correo", "==", formData.correo.trim().toLowerCase()),
+        where("clave", "==", formData.clave)
+      );
+      
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        // Usuario encontrado
+        const usuarioDoc = querySnapshot.docs[0];
+        const datosUsuario = usuarioDoc.data();
+        const usuarioData = {
+          id: usuarioDoc.id,
+          ...datosUsuario,
+          rol: datosUsuario.correo === "admin@duoc.cl" ? "admin" : "cliente"
+        };
+        
+        // Guardar en localStorage
+        localStorage.setItem("usuario", JSON.stringify(usuarioData));
+        
+        // Actualizar contexto
+        setUser(usuarioData);
+        
+        setMensaje(`Bienvenido ${usuarioData.nombre}!`);
+        
+        // Redirección después de 1 segundo
+        setTimeout(() => {
+          navigate(usuarioData.rol === "admin" ? "/perfilAdmin" : "/perfilCliente");
+        }, 1000);
+      } else {
+        setMensaje("Correo o contraseña incorrectos.");
+      }
+    } catch (error) {
+      console.error('Error al iniciar sesión: ', error);
+      setMensaje('Error al iniciar sesión. Por favor, intenta nuevamente.');
+    } finally {
+      setCargando(false);
+    }
+  };
 
   return (
     <div className={style.container}>

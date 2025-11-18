@@ -1,11 +1,11 @@
 import React from 'react';
-import { useAuth } from "../../context/AuthContext"
+import { UserContext } from "../../context/AuthContext"
 import { Link, useLocation } from 'react-router-dom';
 import style from './Aside.module.css';
 
 const Aside = () => {
   const location = useLocation();
-  const { usuario } = useAuth()
+  const { usuario } = UserContext()
 
   // Función para verificar si el link está activo
   const isActiveLink = (path) => {

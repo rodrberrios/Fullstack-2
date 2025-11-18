@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/AuthContext';
 import styles from './Nav.module.css';
 
 const Nav = () => {
     
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { user, setUser } = useContext(UserContext);
 
     const calcularTotalCarrito = () => {
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -16,6 +18,11 @@ const Nav = () => {
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    };
+
+    const logout = () => {
+        setUser(null);
+        localStorage.removeItem('usuario');
     };
 
     const handleLogout = () => {
@@ -43,9 +50,9 @@ const Nav = () => {
                 </ul>
 
                 <div className={styles.right}>
-                    {estaAutenticado ? (
+                    {user ? (
                         <>
-                            <span className={styles.user}> <Link to='/perfil'>👤{usuario.nombre}</Link> </span>
+                            <span className={styles.user}> <Link to='/perfilCliente'>👤{user.nombre}</Link> </span>
                             <button className={styles.btnLogout} onClick={handleLogout}>
                                 Cerrar Sesión
                             </button>

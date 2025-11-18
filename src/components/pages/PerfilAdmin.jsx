@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
-import { UserContext } from "../../../context/AuthContext"
+import { UserContext } from "../../context/AuthContext"
 import style from './PerfilAdmin.module.css';
-import Aside from "../../organisms/Aside";
+import Aside from "../organisms/Aside";
 
 const PerfilAdmin = () => {
     const { usuario } = useContext(UserContext); // Aqui se accede al usuario desde el contexto

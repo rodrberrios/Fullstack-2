@@ -14,7 +14,6 @@ import CompraExitosa from "../components/pages/CompraExitosa";
 import ErrorPago from "../components/pages/ErrorPago";
 import HistorialConsultas from "../components/pages/HistorialConsultas";
 import HistorialCompras from "../components/pages/HistorialCompras";
-import Perfil from "../components/pages/Perfil";
 
 const RouterConfig = () => (
     <Router>
@@ -22,8 +21,8 @@ const RouterConfig = () => (
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<PerfilAdmin />} />
-            <Route path="/cliente" element={<PerfilCliente />} />
+            <Route path="/perfilAdmin" element={<PerfilAdmin />} />
+            <Route path="/perfilCliente" element={<PerfilCliente />} />
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/contacto" element={<Contacto />} />
             <Route path="/carrito" element={<Carrito />} />
@@ -34,7 +33,6 @@ const RouterConfig = () => (
             <Route path="/error" element={<ErrorPago />} />
             <Route path="/historialConsultas" element={<HistorialConsultas />} />
             <Route path="/historialCompras" element={<HistorialCompras />} />
-            <Route path="/perfil" element={<Perfil />} />
         </Routes>
     </Router>
 );

@@ -1,11 +1,11 @@
 import RouterConfig from './routes/RouterConfig';
-import { AuthProvider } from './context/AuthContext';
+import { UserProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <AuthProvider>
+    <UserProvider>
       <RouterConfig />
-    </AuthProvider>
+    </UserProvider>
   );
 }
 
