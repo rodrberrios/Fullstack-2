@@ -1,11 +1,11 @@
 // PerfilCliente.jsx
-import React from "react";
-import { useAuth } from "../../context/AuthContext";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/AuthContext";
 import perfilStyles from "./PerfilCliente.module.css";
 import AsideCliente from "../organisms/AsideCliente";
 
 export default function PerfilCliente() {
-    const { usuario } = useAuth();
+    const { usuario } = useContext(UserContext);
 
     return (
         <div className={perfilStyles.container}>

@@ -1,5 +1,4 @@
 // Validaciones para el formulario de registro
-
 export const validarCorreo = (correo) => {
     const regex = /^[\w.+-]+@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
     return regex.test(correo);

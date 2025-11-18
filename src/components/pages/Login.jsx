@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+
+import { useNavigate, Link, useHistory } from 'react-router-dom';
+import { useContext, useEffect } from "react";
 import { verificarCredenciales } from '../../services/authService';
 import { validarCorreo } from '../../utils/register';
 import { useAuth } from '../../context/AuthContext';

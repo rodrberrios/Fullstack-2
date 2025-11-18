@@ -1,11 +1,10 @@
-// Perfil.jsx
-import React, { useState } from 'react';
-import { useAuth } from "../../context/AuthContext";
+import React, { useContext } from 'react';
+import { UserContext } from "../../context/AuthContext";
 import AsideCliente from '../organisms/AsideCliente';
 import style from './Perfil.module.css';
 
 const Perfil = () => {
-    const { usuario } = useAuth();
+    const { usuario } = useContext(UserContext);
 
     return (
         <div className={style.container}>

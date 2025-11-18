@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from "../../../context/AuthContext"
+import { UserContext } from "../../../context/AuthContext"
 import style from './PerfilAdmin.module.css';
 import Aside from "../../organisms/Aside";
 
 const PerfilAdmin = () => {
-    const location = useLocation();
-    const { usuario } = useAuth();
-
-    const isActiveLink = (path) => {
-    return location.pathname === path;
-    };
+    const { usuario } = useContext(UserContext); // Aqui se accede al usuario desde el contexto
 
     return(
         <div className={style.container}>

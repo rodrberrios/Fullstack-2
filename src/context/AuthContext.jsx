@@ -1,54 +1,16 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState } from "react";
 
-// Crear el contexto
-const AuthContext = createContext();
-
-// Hook personalizado para usar el contexto
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
-  }
-  return context;
-};
+// Contexto para manejar el estado del usuario (si esta logeado)
+export const UserContext = createContext();
 
 // Proveedor del contexto
-export const AuthProvider = ({ children }) => {
-  const [usuario, setUsuario] = useState(null);
-  const [cargando, setCargando] = useState(true);
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
 
-  // Al cargar la app, verificar si hay usuario en localStorage
-  useEffect(() => {
-    const usuarioGuardado = localStorage.getItem('usuario');
-    if (usuarioGuardado) {
-      setUsuario(JSON.parse(usuarioGuardado));
-    }
-    setCargando(false);
-  }, []);
-
-  // Función para iniciar sesión
-  const login = (datosUsuario) => {
-    setUsuario(datosUsuario);
-    localStorage.setItem('usuario', JSON.stringify(datosUsuario));
-  };
-
-  // Función para cerrar sesión
-  const logout = () => {
-    setUsuario(null);
-    localStorage.removeItem('usuario');
-  };
-
-  const value = {
-    usuario,
-    login,
-    logout,
-    cargando,
-    estaAutenticado: !!usuario
-  };
-
+  // Usamos UserContext.Provider para proveer el estado y la funcion para actualizarlo a los componentes hijos
   return (
-    <AuthContext.Provider value={value}>
+    <UserContext.Provider value = {{ user, setUser }}>
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 };
