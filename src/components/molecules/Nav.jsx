@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Nav.module.css';
 
 const Nav = () => {
-    const { usuario, logout, estaAutenticado } = useAuth();
+    
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { obtenerProductos } from '../../services/productService';
-import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Header from '../organisms/Header';
 import Footer from '../organisms/Footer';
@@ -14,7 +13,6 @@ const Catalogo = () => {
   const [terminoBusqueda, setTerminoBusqueda] = useState('');
   const [categoriaActiva, setCategoriaActiva] = useState('todos');
   const [carrito, setCarrito] = useState([]);
-  const { usuario, estaAutenticado } = useAuth();
   const navigate = useNavigate();
 
   // Cargar productos al montar el componente
