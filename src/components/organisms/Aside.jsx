@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from "../../context/AuthContext"
 import { Link, useLocation } from 'react-router-dom';
 import style from './Aside.module.css';
 
 const Aside = () => {
   const location = useLocation();
-  const { usuario } = UserContext()
+  const { user } = useContext(UserContext);
 
   // Función para verificar si el link está activo
   const isActiveLink = (path) => {
@@ -20,48 +20,48 @@ const Aside = () => {
           <div className={style.nav__title}>Company</div>
           <ul className={style.nav__list}>
             <li className={style.nav__item}>
-              <Link 
-                to="/admin" 
+              <Link
+                to="/admin"
                 className={`${style.nav__link} ${isActiveLink('/admin') ? style.active : ''}`}
               >
                 Dashboard
               </Link>
             </li>
             <li className={style.nav__item}>
-              <Link 
-                to="/orders" 
+              <Link
+                to="/orders"
                 className={`${style.nav__link} ${isActiveLink('/admin/orders') ? style.active : ''}`}
               >
                 Orders
               </Link>
             </li>
             <li className={style.nav__item}>
-              <Link 
-                to="/inventory" 
+              <Link
+                to="/inventory"
                 className={`${style.nav__link} ${isActiveLink('/admin/inventory') ? style.active : ''}`}
               >
                 Inventory
               </Link>
             </li>
             <li className={style.nav__item}>
-              <Link 
-                to="/reports" 
+              <Link
+                to="/reports"
                 className={`${style.nav__link} ${isActiveLink('/admin/reports') ? style.active : ''}`}
               >
                 Reports
               </Link>
             </li>
             <li className={style.nav__item}>
-              <Link 
-                to="/employees" 
+              <Link
+                to="/employees"
                 className={`${style.nav__link} ${isActiveLink('/admin/employees') ? style.active : ''}`}
               >
                 Employees
               </Link>
             </li>
             <li className={style.nav__item}>
-              <Link 
-                to="/customers" 
+              <Link
+                to="/customers"
                 className={`${style.nav__link} ${isActiveLink('/admin/customers') ? style.active : ''}`}
               >
                 Customers
@@ -69,22 +69,22 @@ const Aside = () => {
             </li>
           </ul>
         </div>
-        
+
         {/* Sección Ecosystems */}
         <div className={style.nav__section}>
           <div className={style.nav__title}>Ecosystems</div>
           <ul className={style.nav__list}>
             <li className={style.nav__item}>
-              <Link 
-                to="/settings" 
+              <Link
+                to="/settings"
                 className={`${style.nav__link} ${isActiveLink('/admin/settings') ? style.active : ''}`}
               >
                 Settings
               </Link>
             </li>
             <li className={style.nav__item}>
-              <Link 
-                to="/profile" 
+              <Link
+                to="/profile"
                 className={`${style.nav__link} ${isActiveLink('/admin/profile') ? style.active : ''}`}
               >
                 Profile
@@ -113,7 +113,7 @@ const Aside = () => {
             A
           </div>
           <div className={style.user__details}>
-            <p className={style.user__name}>Administrador {usuario?.nombre}</p>
+            <p className={style.user__name}>Administrador {user?.nombre}</p>
             <p className={style.user__role}>Admin Level Up</p>
           </div>
         </div>

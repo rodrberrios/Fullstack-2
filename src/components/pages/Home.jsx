@@ -5,7 +5,6 @@ import style from "./Home.module.css";
 import { obtenerProductos } from '../../services/productService';
 import ProductCard from "../molecules/ProductCard";
 
-
 const Home = () => {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -25,28 +24,38 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={style.container}>  {/* Cambia "container" por style.container */}
+    <div className={style.pageContainer}>
       <Header />
-      <main className={style['main-container']}>
-        <section className={style['title-container']}>
-          <div>
-            <h2>Level Up Gamer</h2>
-            <p>Somos Una tienda que vende perifericos de las mas alta calidad no apto para FLACOUS!.</p>
+
+      <main className={style.mainContent}>
+        <section className={style.heroSection}>
+          <div className={style.heroContent}>
+            <h1 className={style.heroTitle}>Level Up Gamer</h1>
+            <p className={style.heroSubtitle}>
+              Level-Up Gamer es una tienda online chilena especializada en productos para gamers.
+            </p>
+            <a href="/catalogo" className={style.heroButton}>Explorar Tienda</a>
           </div>
-          <div>
-            <img src="/assets/img/icon.png" alt="Level UP Store Logo" /> 
+          <div className={style.heroImageContainer}>
+            <img src="/assets/img/icon.png" alt="Level UP Store Logo" className={style.heroImage} />
           </div>
         </section>
 
-        <section className={style['main-products']}>
-          <div className={style['products-header']}>
-            <h3>Productos destacados</h3>
-            <a className={style['ver-todos-link']} href="/catalogo">Ver catálogo</a>
+        <section className={style.featuredSection}>
+          <div className={style.sectionHeader}>
+            <h2 className={style.sectionTitle}>Productos Destacados</h2>
+            <a className={style.viewAllLink} href="/catalogo">
+              Ver todo el catálogo <span className={style.arrow}>→</span>
+            </a>
           </div>
+
           {cargando ? (
-            <div className={style['loading']}>Cargando...</div>
+            <div className={style.loadingContainer}>
+              <div className={style.spinner}></div>
+              <p>Cargando productos...</p>
+            </div>
           ) : (
-            <div className={style['products-grid']}>
+            <div className={style.productsGrid}>
               {(productos || []).slice(0, 8).map((p) => (
                 <ProductCard key={p.id} producto={p} />
               ))}
@@ -54,6 +63,7 @@ const Home = () => {
           )}
         </section>
       </main>
+
       <Footer />
     </div>
   );

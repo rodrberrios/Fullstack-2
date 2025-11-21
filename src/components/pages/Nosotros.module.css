@@ -1,28 +1,142 @@
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-.container {
-  display: flex;
-  gap: 24px;
-  padding: 24px 0;
+.pageContainer {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #0b0b0b;
+  color: #e5e7eb;
 }
 
-.mainContainer {
+.mainContent {
   flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.sectionContainer {
-  background: #0b0b0b;
-  border: 1px solid #111318;
-  border-radius: 10px;
-  min-height: 160px;
+.heroSection {
   text-align: center;
+  margin-bottom: 48px;
 }
 
+.pageTitle {
+  color: #e5e7eb;
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+}
+
+.pageSubtitle {
+  color: #94a3b8;
+  font-size: 18px;
+  margin: 0;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.infoCard {
+  background: #111318;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s ease;
+}
+
+.infoCard:hover {
+  border-color: #22c55e;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.icon {
+  font-size: 32px;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.cardTitle {
+  color: #e5e7eb;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cardBody {
+  color: #cbd5e1;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.text {
+  margin-bottom: 16px;
+}
+
+.text:last-child {
+  margin-bottom: 0;
+}
+
+.logoSection {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.logoPlaceholder {
+  background: #111318;
+  border: 2px dashed #1f2937;
+  border-radius: 16px;
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  color: #22c55e;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 28px;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .infoCard {
+    padding: 24px;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

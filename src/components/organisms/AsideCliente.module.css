@@ -1,6 +1,5 @@
 .sidebarInner {
-    background: rgba(17, 17, 17, 0.95);
-    backdrop-filter: blur(10px);
+    background-color: #111318;
     padding: 2rem 0;
     display: flex;
     flex-direction: column;
@@ -25,7 +24,7 @@
 .nav__title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #666;
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 0 1.5rem;
@@ -50,7 +49,7 @@
     display: flex;
     align-items: center;
     padding: 0.875rem 1.5rem;
-    color: #ffffff;
+    color: #e5e7eb;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -59,38 +58,39 @@
 }
 
 .nav__link:hover {
-    background: rgba(57, 255, 20, 0.1);
-    color: #39FF14;
-    border-left-color: #39FF14;
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-left-color: #22c55e;
 }
 
 .nav__link::before {
     content: "▸";
     margin-right: 0.75rem;
-    color: #666;
+    color: #64748b;
     transition: all 0.3s ease;
 }
 
 .nav__link:hover::before {
-    color: #39FF14;
+    color: #22c55e;
     transform: translateX(3px);
 }
 
 .nav__link.active {
-    background: rgba(57, 255, 20, 0.15);
-    color: #39FF14;
-    border-left-color: #39FF14;
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border-left-color: #22c55e;
 }
 
 .nav__link.active::before {
-    color: #39FF14;
+    color: #22c55e;
     transform: translateX(3px);
 }
 
 .sidebar__footer {
     padding: 1.5rem;
-    border-top: 1px solid #333;
+    border-top: 1px solid #1f2937;
     margin-top: auto;
+    background-color: #0f172a;
 }
 
 .user__info {
@@ -103,11 +103,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: #fff;
     font-weight: bold;
     font-size: 1.1rem;
 }
@@ -117,14 +117,14 @@
 }
 
 .user__name {
-    color: #ffffff;
+    color: #e5e7eb;
     font-weight: 600;
     font-size: 0.9rem;
     margin: 0;
 }
 
 .user__role {
-    color: #39FF14;
+    color: #22c55e;
     font-size: 0.8rem;
     margin: 0;
 }
@@ -139,20 +139,20 @@
 }
 
 .profile__link:hover {
-    background: rgba(57, 255, 20, 0.1);
-    color: #39FF14;
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
     transform: translateY(-2px);
 }
 
 .welcomeTitle {
     font-size: 1rem;
     font-weight: 600;
-    color: #39FF14;
+    color: #22c55e;
     padding: 1.5rem 1.5rem 0.75rem 1.5rem;
     margin: 0;
     margin-bottom: 1rem;
     text-align: left;
-    border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+    border-bottom: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -160,11 +160,11 @@
         min-height: auto;
         padding: 1rem 0;
     }
-    
+
     .nav__link {
         padding: 0.75rem 1rem;
     }
-    
+
     .sidebar__footer {
         padding: 1rem;
     }

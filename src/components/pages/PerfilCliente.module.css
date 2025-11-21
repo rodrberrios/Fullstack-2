@@ -1,6 +1,7 @@
 .container {
     display: flex;
     min-height: 100vh;
+    background-color: #0b0b0b;
 }
 
 .sidebar {
@@ -11,10 +12,8 @@
     height: 100vh;
     z-index: 1000;
     overflow-y: auto;
-    background: rgba(17, 17, 17, 0.95);
-    backdrop-filter: blur(10px);
-    border-right: 1px solid #39FF14;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    background-color: #111318;
+    border-right: 1px solid #1f2937;
 }
 
 .mainContent {
@@ -22,51 +21,47 @@
     padding: 2rem;
     min-height: 100vh;
     width: calc(100% - 250px);
-    background: linear-gradient(180deg, #0f0f0f 0%, #050505 100%);
-    color: #fff;
+    background-color: #0b0b0b;
+    color: #e5e7eb;
     transition: margin 0.3s ease;
 }
 
 .header {
     margin-bottom: 3rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(57,255,20,0.1);
+    border-bottom: 1px solid #1f2937;
 }
 
 .backLink {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #39FF14;
+    color: #22c55e;
     text-decoration: none;
     font-weight: 500;
     margin-bottom: 1.5rem;
     padding: 0.75rem 1.5rem;
-    border: 1px solid rgba(57,255,20,0.3);
+    border: 1px solid rgba(34, 197, 94, 0.3);
     border-radius: 8px;
     transition: all 0.3s ease;
-    background: rgba(57,255,20,0.08);
-    backdrop-filter: blur(10px);
+    background: rgba(34, 197, 94, 0.05);
 }
 
 .backLink:hover {
-    background: rgba(57,255,20,0.15);
+    background: rgba(34, 197, 94, 0.1);
     transform: translateX(-5px);
-    box-shadow: 0 4px 15px rgba(57,255,20,0.2);
+    border-color: #22c55e;
 }
 
 .header h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #e5e7eb;
     margin: 0 0 0.5rem 0;
 }
 
 .header p {
-    color: #9adf8b;
+    color: #94a3b8;
     margin: 0;
     font-size: 1.1rem;
     font-weight: 400;
@@ -82,23 +77,21 @@
 }
 
 .profileCard {
-    background: rgba(25,25,25,0.8);
-    border: 1px solid rgba(57,255,20,0.15);
+    background-color: #111318;
+    border: 1px solid #1f2937;
     padding: 2rem;
     border-radius: 16px;
-    backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
 }
 
 .profileCard:hover {
-    border-color: rgba(57,255,20,0.3);
+    border-color: #22c55e;
     transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(57,255,20,0.1);
 }
 
 .avatar {
@@ -109,13 +102,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
-    color: #000;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #fff;
     font-weight: 700;
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    border: 3px solid rgba(57,255,20,0.3);
-    box-shadow: 0 4px 20px rgba(57,255,20,0.3);
+    border: 3px solid rgba(34, 197, 94, 0.3);
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
 }
 
 .profileInfo {
@@ -128,40 +121,38 @@
 .profileName {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #e5e7eb;
     margin: 0;
     line-height: 1.3;
 }
 
 .profileMeta {
-    color: #9adf8b;
+    color: #94a3b8;
     font-size: 1rem;
     margin: 0;
     line-height: 1.4;
 }
 
 .contentCard {
-    background: rgba(20,20,20,0.7);
-    border: 1px solid rgba(57,255,20,0.1);
+    background-color: #111318;
+    border: 1px solid #1f2937;
     padding: 2.5rem;
     border-radius: 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
 }
 
 .contentCard:hover {
-    border-color: rgba(57,255,20,0.2);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    border-color: rgba(34, 197, 94, 0.5);
 }
 
 .contentCard h3 {
     margin-top: 0;
     margin-bottom: 2.5rem;
-    color: #39FF14;
+    color: #22c55e;
     font-size: 1.5rem;
     font-weight: 600;
-    border-bottom: 2px solid rgba(57,255,20,0.3);
+    border-bottom: 2px solid rgba(34, 197, 94, 0.3);
     padding-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -181,7 +172,7 @@
 .formGroup label {
     display: block;
     margin-bottom: 0.75rem;
-    color: #e0e0e0;
+    color: #e5e7eb;
     font-size: 1rem;
     font-weight: 500;
     display: flex;
@@ -194,49 +185,49 @@
     opacity: 0.7;
 }
 
-.formGroup:nth-child(1) label::before { content: "👤"; }
-.formGroup:nth-child(2) label::before { content: "📧"; }
-.formGroup:nth-child(3) label::before { content: "📞"; }
-.formGroup:nth-child(4) label::before { content: "🏠"; }
+.formGroup:nth-child(1) label::before {
+    content: "👤";
+}
+
+.formGroup:nth-child(2) label::before {
+    content: "📧";
+}
+
+.formGroup:nth-child(3) label::before {
+    content: "📞";
+}
+
+.formGroup:nth-child(4) label::before {
+    content: "🏠";
+}
 
 .formGroup input {
     width: 100%;
     padding: 1.25rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
+    background-color: #0f172a;
+    border: 1px solid #1f2937;
     border-radius: 12px;
-    color: #fff;
+    color: #e5e7eb;
     font-size: 1rem;
     transition: all 0.3s ease;
     font-family: inherit;
-    backdrop-filter: blur(10px);
 }
 
 .formGroup input:read-only {
-    background: rgba(255,255,255,0.03);
-    color: #bbb;
-    cursor: not-allowed;
-    border-color: rgba(255,255,255,0.08);
+    background-color: #1a1d24;
+    color: #94a3b8;
+    cursor: default;
+    border-color: #1f2937;
 }
 
 .formGroup input:focus {
     outline: none;
-    border-color: #39FF14;
-    background: rgba(57,255,20,0.05);
-    box-shadow: 0 0 0 3px rgba(57,255,20,0.15);
-    transform: translateY(-2px);
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
 }
 
 .formGroup input::placeholder {
-    color: #666;
-    font-style: italic;
-}
-
-.formGroup input:not(:read-only) {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
-    border-color: rgba(57,255,20,0.4);
-    box-shadow: 0 4px 15px rgba(57,255,20,0.1);
+    color: #64748b;
 }
 
 .btnEdit {
@@ -246,8 +237,8 @@
     gap: 0.5rem;
     padding: 1rem 1.5rem;
     background: transparent;
-    color: #39FF14;
-    border: 2px solid rgba(57,255,20,0.4);
+    color: #22c55e;
+    border: 2px solid rgba(34, 197, 94, 0.4);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -255,7 +246,6 @@
     font-size: 0.95rem;
     width: 100%;
     margin-top: 0.5rem;
-    backdrop-filter: blur(10px);
 }
 
 .btnEdit::before {
@@ -263,97 +253,9 @@
 }
 
 .btnEdit:hover {
-    background: rgba(57,255,20,0.15);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(57,255,20,0.25);
-    border-color: rgba(57,255,20,0.6);
-}
-
-.actionButtons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.15);
-}
-
-.btnPrimary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1.25rem 2rem;
-    background: linear-gradient(135deg, #39FF14 0%, #2bd411 100%);
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    flex: 1;
-}
-
-.btnPrimary::before {
-    content: "💾";
-}
-
-.btnPrimary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(57,255,20,0.5);
-    background: linear-gradient(135deg, #4AFF2D 0%, #3BE422 100%);
-}
-
-.btnPrimary:disabled {
-    background: #666;
-    color: #999;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-.btnSecondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1.25rem 2rem;
-    background: transparent;
-    color: #39FF14;
-    border: 2px solid rgba(57,255,20,0.4);
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    flex: 1;
-    backdrop-filter: blur(10px);
-}
-
-.btnSecondary::before {
-    content: "↶";
-}
-
-.btnSecondary:hover {
-    background: rgba(57,255,20,0.15);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(57,255,20,0.2);
-    border-color: rgba(57,255,20,0.6);
-}
-
-.formGroup.valid input {
-    border-color: #39FF14;
-    background: rgba(57,255,20,0.05);
-}
-
-.formGroup.error input {
-    border-color: #ff4757;
-    background: rgba(255,71,87,0.05);
-}
-
-.formGroup input:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    background: rgba(34, 197, 94, 0.1);
+    transform: translateY(-2px);
+    border-color: #22c55e;
 }
 
 @media (max-width: 768px) {
@@ -362,41 +264,24 @@
         padding: 1.5rem;
         width: 100%;
     }
-    
+
     .profileContainer {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     .avatar {
         width: 100px;
         height: 100px;
         font-size: 2rem;
     }
-    
+
     .profileCard {
         padding: 1.5rem;
     }
-    
+
     .contentCard {
         padding: 1.5rem;
-    }
-    
-    .actionButtons {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .btnPrimary, .btnSecondary {
-        padding: 1rem 1.5rem;
-    }
-    
-    .header h1 {
-        font-size: 2rem;
-    }
-    
-    .formGroup input {
-        padding: 1rem;
     }
 }
 
@@ -404,23 +289,20 @@
     .mainContent {
         padding: 1rem;
     }
-    
+
     .avatar {
         width: 80px;
         height: 80px;
         font-size: 1.5rem;
     }
-    
-    .profileCard, .contentCard {
+
+    .profileCard,
+    .contentCard {
         padding: 1rem;
         border-radius: 12px;
     }
-    
+
     .formGroup input {
         padding: 0.875rem;
-    }
-    
-    .header h1 {
-        font-size: 1.75rem;
     }
 }

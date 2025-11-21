@@ -4,7 +4,7 @@ import { UserContext } from '../../context/AuthContext';
 import styles from './Nav.module.css';
 
 const Nav = () => {
-    
+
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user, setUser } = useContext(UserContext);
@@ -12,9 +12,9 @@ const Nav = () => {
     const calcularTotalCarrito = () => {
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         return carrito.reduce((total, producto) => {
-          return total + (producto.precio || 0) * (producto.cantidad || 1);
+            return total + (producto.precio || 0) * (producto.cantidad || 1);
         }, 0);
-      };
+    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -47,6 +47,7 @@ const Nav = () => {
                     <li><Link to="/catalogo">Catálogo</Link></li>
                     <li><Link to="/blog">Blog</Link></li>
                     <li><Link to="/nosotros">Nosotros</Link></li>
+                    <li><Link to="/contacto">Contacto</Link></li>
                 </ul>
 
                 <div className={styles.right}>
