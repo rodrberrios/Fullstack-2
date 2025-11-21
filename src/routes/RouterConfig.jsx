@@ -14,6 +14,7 @@ import CompraExitosa from "../components/pages/CompraExitosa";
 import ErrorPago from "../components/pages/ErrorPago";
 import HistorialConsultas from "../components/pages/HistorialConsultas";
 import HistorialCompras from "../components/pages/HistorialCompras";
+import Customers from "../components/pages/Customers";
 
 const RouterConfig = () => (
     <Router>
@@ -33,6 +34,7 @@ const RouterConfig = () => (
             <Route path="/error" element={<ErrorPago />} />
             <Route path="/historialConsultas" element={<HistorialConsultas />} />
             <Route path="/historialCompras" element={<HistorialCompras />} />
+            <Route path="/customers" element={<Customers />} />
         </Routes>
     </Router>
 );

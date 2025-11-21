@@ -34,7 +34,7 @@ const Home = () => {
             <p className={style.heroSubtitle}>
               Level-Up Gamer es una tienda online chilena especializada en productos para gamers.
             </p>
-            <a href="/catalogo" className={style.heroButton}>Explorar Tienda</a>
+            <a href="/nosotros" className={style.heroButton}>Acerca de nosotros</a>
           </div>
           <div className={style.heroImageContainer}>
             <img src="/assets/img/icon.png" alt="Level UP Store Logo" className={style.heroImage} />

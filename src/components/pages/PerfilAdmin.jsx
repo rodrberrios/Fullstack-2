@@ -111,7 +111,7 @@ const PerfilAdmin = () => {
                         <p className={style.navDescription}>Organizar productos en categorías para facilitar su navegación.</p>
                     </Link>
 
-                    <Link to="/admin/customers" className={style.navCard}>
+                    <Link to="/customers" className={style.navCard}>
                         <div className={style.navIcon}>👥</div>
                         <h3 className={style.navTitle}>Usuarios</h3>
                         <p className={style.navDescription}>Gestionar cuentas de usuarios y permisos del sistema.</p>
