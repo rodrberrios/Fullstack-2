@@ -1,11 +1,13 @@
 {
     "spec_dir": "src",
     "spec_files": [
-        "**/*/test.js",
-        "**/*/test.jsx"
+        "**/*.test.js",
+        "**/*.test.jsx",
+        "**/*.test.ts",
+        "**/*.test.tsx"
     ],
     "helpers": [
-        "../spec/helpers/**/*.js"
+        "../../src/test/helpers/**/*.js"
     ],
     "env": {
         "stopSpecOnExpectationFailure": false,
