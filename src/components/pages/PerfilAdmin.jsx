@@ -51,8 +51,8 @@ const PerfilAdmin = () => {
 
             <main className={style.main}>
                 <div className={style.header}>
-                    <h1 className={style.title}>Resumen General</h1>
-                    <p className={style.subtitle}>Bienvenido, {user?.nombre}</p>
+                    <h1 className={style.title}>Bienvenido, Administrador</h1>
+                    <p className={style.subtitle}>{user?.nombre}</p>
                 </div>
 
                 {/* Summary Cards Section */}
@@ -61,7 +61,7 @@ const PerfilAdmin = () => {
                         <div className={style.summaryContent}>
                             <span className={style.summaryLabel}>COMPRAS</span>
                             <h2 className={style.summaryValue}>{loading ? "..." : stats.orders}</h2>
-                            <p className={style.summaryTrend}>Total de órdenes registradas</p>
+                            <p className={style.summaryTrend}>Total de órdenes: 48%</p>
                         </div>
                         <div className={style.summaryIcon}>🛒</div>
                     </div>
@@ -70,7 +70,7 @@ const PerfilAdmin = () => {
                         <div className={style.summaryContent}>
                             <span className={style.summaryLabel}>PRODUCTOS</span>
                             <h2 className={style.summaryValue}>{loading ? "..." : stats.products}</h2>
-                            <p className={style.summaryTrend}>Inventario total</p>
+                            <p className={style.summaryTrend}>Inventario Actual: 8%</p>
                         </div>
                         <div className={style.summaryIcon}>📦</div>
                     </div>
@@ -79,7 +79,7 @@ const PerfilAdmin = () => {
                         <div className={style.summaryContent}>
                             <span className={style.summaryLabel}>USUARIOS</span>
                             <h2 className={style.summaryValue}>{loading ? "..." : stats.users}</h2>
-                            <p className={style.summaryTrend}>Usuarios registrados</p>
+                            <p className={style.summaryTrend}>Usuarios registrados: Lote 1</p>
                         </div>
                         <div className={style.summaryIcon}>👥</div>
                     </div>
@@ -93,19 +93,19 @@ const PerfilAdmin = () => {
                         <p className={style.navDescription}>Visión general de todas las métricas y estadísticas clave del sistema.</p>
                     </Link>
 
-                    <Link to="/admin/orders" className={style.navCard}>
+                    <Link to="/orders" className={style.navCard}>
                         <div className={style.navIcon}>🛒</div>
                         <h3 className={style.navTitle}>Ordenes</h3>
                         <p className={style.navDescription}>Gestión y seguimiento de todas las ordenes de compras realizadas.</p>
                     </Link>
 
-                    <Link to="/admin/inventory" className={style.navCard}>
+                    <Link to="/inventory" className={style.navCard}>
                         <div className={style.navIcon}>📦</div>
                         <h3 className={style.navTitle}>Productos</h3>
                         <p className={style.navDescription}>Administrar inventario y detalles de los productos disponibles.</p>
                     </Link>
 
-                    <Link to="/admin/categories" className={style.navCard}>
+                    <Link to="/categories" className={style.navCard}>
                         <div className={style.navIcon}>🏷️</div>
                         <h3 className={style.navTitle}>Categorías</h3>
                         <p className={style.navDescription}>Organizar productos en categorías para facilitar su navegación.</p>
@@ -117,16 +117,16 @@ const PerfilAdmin = () => {
                         <p className={style.navDescription}>Gestionar cuentas de usuarios y permisos del sistema.</p>
                     </Link>
 
-                    <Link to="/admin/reports" className={style.navCard}>
+                    <Link to="/reports" className={style.navCard}>
                         <div className={style.navIcon}>📊</div>
                         <h3 className={style.navTitle}>Reportes</h3>
                         <p className={style.navDescription}>Visualizar reportes detallados de ventas y rendimiento.</p>
                     </Link>
 
-                    <Link to="/admin/profile" className={style.navCard}>
+                    <Link to="/profile" className={style.navCard}>
                         <div className={style.navIcon}>👤</div>
                         <h3 className={style.navTitle}>Perfil</h3>
-                        <p className={style.navDescription}>Configurar tu cuenta y preferencias personales.</p>
+                        <p className={style.navDescription}>Administrar tu información personal y configuración de cuenta.</p>
                     </Link>
 
                     <Link to="/" className={style.navCard}>

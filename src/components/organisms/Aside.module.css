@@ -150,6 +150,42 @@
   font-weight: 500;
 }
 
+/* Logout Button */
+.logout__button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #ef4444;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.logout__button:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.logout__icon {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.logout__button:hover .logout__icon {
+  transform: rotate(-15deg);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar {

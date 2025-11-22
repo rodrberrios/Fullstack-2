@@ -1,28 +1,36 @@
 import React, { useContext } from 'react';
 import { UserContext } from "../../context/AuthContext"
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import style from './Aside.module.css';
 
 const Aside = () => {
   const location = useLocation();
-  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
 
   // Función para verificar si el link está activo
   const isActiveLink = (path) => {
     return location.pathname === path;
   };
 
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('usuario');
+    navigate('/');
+  };
+
   return (
     <aside className={style.sidebar}>
       <nav className={style.sidebar__nav}>
-        {/* Sección Company */}
+        {/* Sección Administración */}
         <div className={style.nav__section}>
-          <div className={style.nav__title}>Company</div>
+          <div className={style.nav__title}>Administración</div>
           <ul className={style.nav__list}>
             <li className={style.nav__item}>
               <Link
-                to="/admin"
-                className={`${style.nav__link} ${isActiveLink('/admin') ? style.active : ''}`}
+                to="/PerfilAdmin"
+                className={`${style.nav__link} ${isActiveLink('/PerfilAdmin') ? style.active : ''}`}
               >
                 Dashboard
               </Link>
@@ -30,77 +38,65 @@ const Aside = () => {
             <li className={style.nav__item}>
               <Link
                 to="/orders"
-                className={`${style.nav__link} ${isActiveLink('/admin/orders') ? style.active : ''}`}
+                className={`${style.nav__link} ${isActiveLink('/orders') ? style.active : ''}`}
               >
-                Orders
+                Ordenes
               </Link>
             </li>
             <li className={style.nav__item}>
               <Link
                 to="/inventory"
-                className={`${style.nav__link} ${isActiveLink('/admin/inventory') ? style.active : ''}`}
+                className={`${style.nav__link} ${isActiveLink('/inventory') ? style.active : ''}`}
               >
-                Inventory
+                Productos
               </Link>
             </li>
             <li className={style.nav__item}>
               <Link
-                to="/reports"
-                className={`${style.nav__link} ${isActiveLink('/admin/reports') ? style.active : ''}`}
+                to="/categories"
+                className={`${style.nav__link} ${isActiveLink('/categories') ? style.active : ''}`}
               >
-                Reports
-              </Link>
-            </li>
-            <li className={style.nav__item}>
-              <Link
-                to="/employees"
-                className={`${style.nav__link} ${isActiveLink('/admin/employees') ? style.active : ''}`}
-              >
-                Employees
+                Categorías
               </Link>
             </li>
             <li className={style.nav__item}>
               <Link
                 to="/customers"
-                className={`${style.nav__link} ${isActiveLink('/admin/customers') ? style.active : ''}`}
+                className={`${style.nav__link} ${isActiveLink('/customers') ? style.active : ''}`}
               >
-                Customers
+                Usuarios
+              </Link>
+            </li>
+            <li className={style.nav__item}>
+              <Link
+                to="/reports"
+                className={`${style.nav__link} ${isActiveLink('/reports') ? style.active : ''}`}
+              >
+                Reportes
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Sección Ecosystems */}
+        {/* Sección Cuenta */}
         <div className={style.nav__section}>
-          <div className={style.nav__title}>Ecosystems</div>
+          <div className={style.nav__title}>Cuenta</div>
           <ul className={style.nav__list}>
             <li className={style.nav__item}>
               <Link
-                to="/settings"
-                className={`${style.nav__link} ${isActiveLink('/admin/settings') ? style.active : ''}`}
+                to="/InfoPerfilAdmin"
+                className={`${style.nav__link} ${isActiveLink('/InfoPerfilAdmin') ? style.active : ''}`}
               >
-                Settings
+                Perfil
               </Link>
             </li>
             <li className={style.nav__item}>
               <Link
-                to="/profile"
-                className={`${style.nav__link} ${isActiveLink('/admin/profile') ? style.active : ''}`}
+                to="/"
+                className={style.nav__link}
               >
-                Profile
+                Tienda
               </Link>
-            </li>
-            <li className={style.nav__item}>
-              <a href="#" className={style.nav__link}>Works</a>
-            </li>
-            <li className={style.nav__item}>
-              <a href="#" className={style.nav__link}>Search</a>
-            </li>
-            <li className={style.nav__item}>
-              <a href="#" className={style.nav__link}>Help</a>
-            </li>
-            <li className={style.nav__item}>
-              <a href="#" className={style.nav__link}>Details</a>
             </li>
           </ul>
         </div>
@@ -113,10 +109,14 @@ const Aside = () => {
             A
           </div>
           <div className={style.user__details}>
-            <p className={style.user__name}>Administrador {user?.nombre}</p>
-            <p className={style.user__role}>Admin Level Up</p>
+            <p className={style.user__name}>Administrador</p>
+            <p className={style.user__role}>{user?.nombre}</p>
           </div>
         </div>
+        <button className={style.logout__button} onClick={handleLogout}>
+          <span className={style.logout__icon}>🚪</span>
+          Cerrar Sesión
+        </button>
       </div>
     </aside>
   );

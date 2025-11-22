@@ -53,7 +53,11 @@ const Nav = () => {
                 <div className={styles.right}>
                     {user ? (
                         <>
-                            <span className={styles.user}> <Link to='/perfilCliente'>👤{user.nombre}</Link> </span>
+                            <span className={styles.user}>
+                                <Link to={user.rol === 'admin' ? '/perfilAdmin' : '/perfilCliente'}>
+                                    👤{user.nombre}
+                                </Link>
+                            </span>
                             <button className={styles.btnLogout} onClick={handleLogout}>
                                 Cerrar Sesión
                             </button>
