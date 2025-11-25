@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: API Panel de Administración - Tienda Online
+  description: Documentación de servicios Firebase Firestore - Los ejemplos son estáticos
+  version: 1.0.0
+  contact:
+    name: Soporte Técnico
+    email: soporte@tiendaonline.com
+
+servers:
+  - url: https://firestore.googleapis.com/v1
+    description: Firebase Firestore API
