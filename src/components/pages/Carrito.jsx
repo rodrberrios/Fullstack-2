@@ -291,7 +291,7 @@ const Carrito = () => {
                       <p>Agrega algunos productos para continuar</p>
                       <button 
                         className={style.btnIrCatalogo}
-                        onClick={() => navigate('/productos')}
+                        onClick={() => navigate('/catalogo')}
                       >
                         Ir al Catálogo
                       </button>
