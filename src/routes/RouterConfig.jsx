@@ -17,6 +17,7 @@ import HistorialCompras from "../components/pages/HistorialCompras";
 import Customers from "../components/pages/Customers";
 import Orders from "../components/pages/Orders";
 import Inventory from "../components/pages/Inventory";
+import Categories from "../components/pages/Categories";
 
 const RouterConfig = () => (
     <Router>
@@ -37,8 +38,9 @@ const RouterConfig = () => (
             <Route path="/historialConsultas" element={<HistorialConsultas />} />
             <Route path="/historialCompras" element={<HistorialCompras />} />
             <Route path="/customers" element={<Customers />} />
-            <Route path="/admin/orders" element={<Orders />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/inventory" element={<Inventory />} />
+            <Route path="/categories" element={<Categories />} />
         </Routes>
     </Router>
 );

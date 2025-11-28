@@ -75,6 +75,16 @@ const Aside = () => {
                 Reportes
               </Link>
             </li>
+            <li className={style.nav__item}>
+              <a
+                href="http://localhost:5000/api-docs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={style.nav__link}
+              >
+                API Docs
+              </a>
+            </li>
           </ul>
         </div>
 

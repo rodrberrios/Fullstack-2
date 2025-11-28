@@ -63,36 +63,23 @@
     gap: 1rem;
 }
 
-.filterGroup {
+.btnPrimary {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-.filterLabel {
-    color: #94a3b8;
-    font-size: 0.9rem;
-}
-
-.filterSelect {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #374151;
-    background-color: #1f2937;
-    color: #e5e7eb;
-    font-size: 0.9rem;
-    cursor: pointer;
-    outline: none;
     transition: all 0.2s ease;
 }
 
-.filterSelect:hover {
-    border-color: #3b82f6;
-}
-
-.filterSelect:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+.btnPrimary:hover {
+    background-color: #3b82f6;
+    color: white;
 }
 
 .btnSecondary {
@@ -119,6 +106,21 @@
     padding: 3rem;
     color: #94a3b8;
     font-size: 1rem;
+}
+
+/* Warning Box */
+.warningBox {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 8px;
+}
+
+.warningBox p {
+    margin: 0;
+    color: #f59e0b;
+    font-size: 0.9rem;
 }
 
 /* Table Styles */
@@ -153,18 +155,20 @@
     background-color: rgba(255, 255, 255, 0.02);
 }
 
-.idCell {
-    font-family: monospace;
-    color: #3b82f6;
-    font-weight: 500;
-}
-
-.priceCell {
+.categoryName {
     font-weight: 600;
-    color: #22c55e;
+    color: #3b82f6;
 }
 
-/* Status Badges */
+.description {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .statusBadge {
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
@@ -173,34 +177,26 @@
     display: inline-block;
 }
 
-.status_pendiente {
-    background-color: rgba(245, 158, 11, 0.1);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.2);
-}
-
-.status_entregado {
+.statusActive {
     background-color: rgba(34, 197, 94, 0.1);
     color: #22c55e;
     border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
-.status_cancelado {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.2);
+.statusInactive {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+    border: 1px solid rgba(107, 114, 128, 0.2);
 }
 
-.status_en_camino {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.status_en_preparacion {
+.productCount {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
     background-color: rgba(168, 85, 247, 0.1);
     color: #a855f7;
     border: 1px solid rgba(168, 85, 247, 0.2);
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
 /* Action Buttons */
@@ -234,6 +230,28 @@
 
 .btnEdit:hover {
     background-color: #3b82f6;
+    color: white;
+}
+
+.btnView {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.btnView:hover {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.btnDelete {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.btnDelete:hover {
+    background-color: #ef4444;
     color: white;
 }
 
@@ -303,39 +321,6 @@
     padding: 1.5rem;
 }
 
-.orderDetails {
-    background-color: #0b0b0b;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.detailRow {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #1f2937;
-}
-
-.detailRow:last-child {
-    border-bottom: none;
-}
-
-.detailRow strong {
-    color: #94a3b8;
-    font-weight: 500;
-}
-
-.detailRow span {
-    color: #e5e7eb;
-}
-
-.totalAmount {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #22c55e !important;
-}
-
 .formGroup {
     margin-bottom: 1.5rem;
 }
@@ -358,6 +343,7 @@
     font-size: 1rem;
     outline: none;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .input:focus {
@@ -365,8 +351,68 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.productsSection {
-    margin-top: 1.5rem;
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    color: #e5e7eb;
+    font-size: 0.95rem;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #3b82f6;
+}
+
+/* Products List */
+.productsList {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.productItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #0b0b0b;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}
+
+.productInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.productName {
+    color: #e5e7eb;
+    font-weight: 500;
+}
+
+.productPrice {
+    color: #22c55e;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.productStock {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.assignSection {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1f2937;
 }
 
 .sectionTitle {
@@ -376,37 +422,22 @@
     margin: 0 0 1rem 0;
 }
 
-.productsList {
-    background-color: #0b0b0b;
-    border-radius: 8px;
-    padding: 1rem;
-}
-
-.productItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem;
-    border-bottom: 1px solid #1f2937;
-}
-
-.productItem:last-child {
-    border-bottom: none;
-}
-
-.productName {
-    flex: 1;
-    color: #e5e7eb;
-}
-
-.productQuantity {
-    color: #94a3b8;
-    padding: 0 1rem;
-}
-
-.productPrice {
+.btnAssign {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: rgba(34, 197, 94, 0.1);
     color: #22c55e;
-    font-weight: 600;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.btnAssign:hover {
+    background-color: #22c55e;
+    color: #0b0b0b;
 }
 
 .modalFooter {
@@ -462,17 +493,23 @@
         align-items: stretch;
     }
 
-    .filterGroup {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .filterSelect,
+    .btnPrimary,
     .btnSecondary {
         width: 100%;
+        justify-content: center;
     }
 
     .modalContent {
         max-width: 100%;
+    }
+
+    .productItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .btnAssign {
+        width: 100%;
     }
 }

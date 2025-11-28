@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { db } from "../../config/firebase";
-import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from "firebase/firestore";
 import { UserContext } from "../../context/AuthContext";
 import Aside from "../organisms/Aside";
 import style from './Inventory.module.css';
@@ -66,25 +66,56 @@ const Inventory = () => {
     const handleSaveProduct = async () => {
         if (!editingProduct) return;
 
+        // Validación básica
+        if (!editingProduct.nombre || !editingProduct.precio) {
+            alert("Por favor completa al menos el nombre y precio del producto");
+            return;
+        }
+
         try {
-            const productRef = doc(db, "producto", editingProduct.id);
-            const { id, ...updateData } = editingProduct; // Exclude ID from update data
+            if (editingProduct.id) {
+                // Actualizar producto existente
+                const productRef = doc(db, "producto", editingProduct.id);
+                const { id, ...updateData } = editingProduct;
+                await updateDoc(productRef, updateData);
+                setProducts(products.map(p => p.id === editingProduct.id ? editingProduct : p));
+                alert("Producto actualizado correctamente");
+            } else {
+                // Crear nuevo producto
+                const newProduct = {
+                    nombre: editingProduct.nombre,
+                    precio: Number(editingProduct.precio) || 0,
+                    stock: Number(editingProduct.stock) || 0,
+                    categoria: editingProduct.categoria || 'General',
+                    img: editingProduct.img || '',
+                    descripcion: editingProduct.descripcion || '',
+                    activo: true
+                };
 
-            await updateDoc(productRef, updateData);
+                const docRef = await addDoc(collection(db, "producto"), newProduct);
 
-            // Update local state
-            setProducts(products.map(p => p.id === editingProduct.id ? editingProduct : p));
+                // Actualizar la lista local con el nuevo producto
+                setProducts([...products, { id: docRef.id, ...newProduct }]);
+                alert("Producto creado correctamente");
+            }
 
-            alert("Producto actualizado correctamente");
             handleCloseModal();
         } catch (error) {
-            console.error("Error updating product:", error);
-            alert("Error al actualizar el producto");
+            console.error("Error saving product:", error);
+            alert("Error al guardar el producto");
         }
     };
 
     const handleAdd = () => {
-        alert("Agregar nuevo producto (Funcionalidad pendiente)");
+        setEditingProduct({
+            nombre: '',
+            precio: 0,
+            stock: 0,
+            categoria: '',
+            img: '',
+            descripcion: ''
+        });
+        setIsModalOpen(true);
     };
 
     return (
@@ -159,33 +190,40 @@ const Inventory = () => {
                     )}
                 </div>
 
-                {/* Edit Modal */}
+                {/* Add/Edit Modal */}
                 {isModalOpen && editingProduct && (
                     <div className={style.modalOverlay}>
                         <div className={style.modalContent}>
                             <div className={style.modalHeader}>
-                                <h3 className={style.modalTitle}>Editar Producto</h3>
+                                <h3 className={style.modalTitle}>
+                                    {editingProduct.id ? 'Editar Producto' : 'Nuevo Producto'}
+                                </h3>
                                 <button className={style.closeButton} onClick={handleCloseModal}>×</button>
                             </div>
                             <div className={style.modalBody}>
                                 <div className={style.formGroup}>
-                                    <label className={style.label}>Nombre</label>
+                                    <label className={style.label}>Nombre *</label>
                                     <input
                                         type="text"
                                         name="nombre"
                                         className={style.input}
                                         value={editingProduct.nombre || ''}
                                         onChange={handleInputChange}
+                                        placeholder="Ej: Mouse Gaming RGB"
+                                        required
                                     />
                                 </div>
                                 <div className={style.formGroup}>
-                                    <label className={style.label}>Precio</label>
+                                    <label className={style.label}>Precio *</label>
                                     <input
                                         type="number"
                                         name="precio"
                                         className={style.input}
                                         value={editingProduct.precio || 0}
                                         onChange={handleInputChange}
+                                        min="0"
+                                        step="0.01"
+                                        required
                                     />
                                 </div>
                                 <div className={style.formGroup}>
@@ -196,6 +234,7 @@ const Inventory = () => {
                                         className={style.input}
                                         value={editingProduct.stock || 0}
                                         onChange={handleInputChange}
+                                        min="0"
                                     />
                                 </div>
                                 <div className={style.formGroup}>
@@ -206,6 +245,18 @@ const Inventory = () => {
                                         className={style.input}
                                         value={editingProduct.categoria || ''}
                                         onChange={handleInputChange}
+                                        placeholder="Ej: Periféricos, Componentes, etc."
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Descripción</label>
+                                    <textarea
+                                        name="descripcion"
+                                        className={style.input}
+                                        value={editingProduct.descripcion || ''}
+                                        onChange={handleInputChange}
+                                        placeholder="Descripción del producto..."
+                                        rows="3"
                                     />
                                 </div>
                                 <div className={style.formGroup}>

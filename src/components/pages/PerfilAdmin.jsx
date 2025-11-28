@@ -134,6 +134,17 @@ const PerfilAdmin = () => {
                         <h3 className={style.navTitle}>Tienda</h3>
                         <p className={style.navDescription}>Ir a la vista principal de la tienda online.</p>
                     </Link>
+
+                    <a
+                        href="http://localhost:5000/api-docs"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={style.navCard}
+                    >
+                        <div className={style.navIcon}>📚</div>
+                        <h3 className={style.navTitle}>API Docs</h3>
+                        <p className={style.navDescription}>Documentación interactiva de la API REST con Swagger.</p>
+                    </a>
                 </div>
             </main>
         </div>
