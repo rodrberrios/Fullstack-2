@@ -1,55 +1,74 @@
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         // Framework base
         frameworks: ['jasmine'],
-        
-        // Archivos a incluir en las pruebas - SOLO nuestros tests
+
+        // Archivos a incluir en las pruebas - Tests JS y JSX
         files: [
-            'src/test/unit/**/*.test.js'
+            'src/test/unit/**/*.test.js',
+            'src/test/unit/**/*.test.jsx'
         ],
-        
+
         // Excluir archivos problemáticos
         exclude: [
-            'src/**/*.test.jsx',
             'src/**/*.test.ts',
             'src/**/*.test.tsx',
             'src/App.test.js',
             'src/components/**/*.test.js'
         ],
-        
-        // Preprocesadores
+
+        // Preprocesadores para JS y JSX
         preprocessors: {
-            'src/test/unit/**/*.test.js': ['webpack']
+            'src/test/unit/**/*.test.js': ['webpack'],
+            'src/test/unit/**/*.test.jsx': ['webpack']
         },
-        
-        // Webpack configurado correctamente
+
+        // Webpack configurado correctamente con soporte JSX
         webpack: {
             mode: 'development',
             module: {
                 rules: [
                     {
-                        test: /\.js$/,
+                        test: /\.(js|jsx)$/,
                         exclude: /node_modules/,
                         use: {
                             loader: 'babel-loader',
                             options: {
-                                presets: ['@babel/preset-env']
+                                presets: [
+                                    '@babel/preset-env',
+                                    ['@babel/preset-react', { runtime: 'automatic' }]
+                                ]
                             }
                         }
+                    },
+                    {
+                        test: /\.css$/,
+                        use: [
+                            'style-loader',
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    modules: {
+                                        auto: true,
+                                        localIdentName: '[name]__[local]--[hash:base64:5]'
+                                    }
+                                }
+                            }
+                        ]
                     }
                 ]
             },
             resolve: {
-                extensions: ['.js']
+                extensions: ['.js', '.jsx']
             }
         },
-        
+
         // Navegadores
         browsers: ['Chrome'],
-        
+
         // REPORTERS MEJORADOS
         reporters: ['mocha', 'progress', 'kjhtml'],
-        
+
         // Configuración específica para cada reporter
         mochaReporter: {
             output: 'autowatch',
@@ -61,19 +80,19 @@ module.exports = function(config) {
                 error: 'red'
             }
         },
-        
+
         // Configuración del reporter de spec
         specReporter: {
-            maxLogLines: 5,             // Límite de líneas de log
-            suppressErrorSummary: false, // Mostrar resumen de errores
-            suppressFailed: false,      // Mostrar pruebas fallidas
-            suppressPassed: false,      // Mostrar pruebas exitosas
-            suppressSkipped: false,     // Mostrar pruebas saltadas
-            showSpecTiming: true,       // Mostrar tiempo de cada spec
-            failFast: false             // Detener en el primer error
+            maxLogLines: 5,
+            suppressErrorSummary: false,
+            suppressFailed: false,
+            suppressPassed: false,
+            suppressSkipped: false,
+            showSpecTiming: true,
+            failFast: false
         },
-        
-        // Plugins (agrega los nuevos)
+
+        // Plugins
         plugins: [
             'karma-jasmine',
             'karma-chrome-launcher',
@@ -82,17 +101,17 @@ module.exports = function(config) {
             'karma-spec-reporter',
             'karma-jasmine-html-reporter'
         ],
-        
+
         // Configuración adicional
         autoWatch: true,
         singleRun: process.env.CI === 'true',
-        
+
         // Log level más detallado
         logLevel: config.LOG_INFO,
-        
+
         // Colores en la salida
         colors: true,
-        
+
         // Tiempo de espera
         browserNoActivityTimeout: 30000
     });
