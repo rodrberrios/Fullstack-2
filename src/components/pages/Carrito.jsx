@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { db } from '../../config/firebase'
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/AuthContext';
 import Header from '../organisms/Header';
 import style from './Carrito.module.css';
 
@@ -10,6 +11,7 @@ import style from './Carrito.module.css';
  * Muestra productos en oferta y el resumen del carrito
  */
 const Carrito = () => {
+  const { user } = useContext(UserContext);
   const [carrito, setCarrito] = useState([]);
   const [productosOferta, setProductosOferta] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -32,7 +34,7 @@ const Carrito = () => {
         id: doc.id,
         ...doc.data()
       }));
-      
+
       // Filtrar productos con precio anterior (en oferta)
       const productosConOferta = productos.filter(producto => producto.precioAnterior);
       setProductosOferta(productosConOferta);
@@ -50,7 +52,7 @@ const Carrito = () => {
     try {
       const productoRef = doc(db, 'producto', productId);
       const producto = productosOferta.find(p => p.id === productId);
-      
+
       if (producto && producto.stock !== undefined) {
         const nuevoStock = producto.stock - cantidad;
         await updateDoc(productoRef, {
@@ -69,14 +71,22 @@ const Carrito = () => {
   const restaurarStockFirebase = async (productId, cantidad) => {
     try {
       const productoRef = doc(db, 'producto', productId);
-      const producto = productosOferta.find(p => p.id === productId);
-      
-      if (producto && producto.stock !== undefined) {
-        const nuevoStock = producto.stock + cantidad;
+
+      // Obtener el stock actual directamente de Firebase
+      const productoSnapshot = await getDoc(productoRef);
+
+      if (productoSnapshot.exists()) {
+        const productoData = productoSnapshot.data();
+        const stockActual = productoData.stock || 0;
+        const nuevoStock = stockActual + cantidad;
+
         await updateDoc(productoRef, {
           stock: nuevoStock
         });
-        console.log(`Stock restaurado: ${producto.nombre} - Nuevo stock: ${nuevoStock}`);
+
+        console.log(`Stock restaurado: ${productoData.nombre} - Stock anterior: ${stockActual} - Nuevo stock: ${nuevoStock}`);
+      } else {
+        console.error(`Producto ${productId} no encontrado en Firebase`);
       }
     } catch (error) {
       console.error('Error restaurando stock:', error);
@@ -102,10 +112,10 @@ const Carrito = () => {
 
     setCarrito(nuevoCarrito);
     guardarCarrito(nuevoCarrito);
-    
+
     // Actualizar stock en Firebase
     await actualizarStockFirebase(producto.id, 1);
-    
+
     mostrarNotificacion(`"${producto.nombre}" agregado al carrito`);
   };
 
@@ -140,13 +150,13 @@ const Carrito = () => {
     const producto = carrito[index];
     const cantidadEliminada = producto.cantidad || 1;
     const nuevoCarrito = carrito.filter((_, i) => i !== index);
-    
+
     setCarrito(nuevoCarrito);
     guardarCarrito(nuevoCarrito);
-    
+
     // Restaurar stock en Firebase
     await restaurarStockFirebase(producto.id, cantidadEliminada);
-    
+
     mostrarNotificacion(`"${producto.nombre}" eliminado del carrito`);
   };
 
@@ -171,7 +181,7 @@ const Carrito = () => {
       for (const producto of carrito) {
         await restaurarStockFirebase(producto.id, producto.cantidad || 1);
       }
-      
+
       setCarrito([]);
       localStorage.removeItem('carrito');
       mostrarNotificacion('Carrito limpiado correctamente');
@@ -186,6 +196,15 @@ const Carrito = () => {
       alert('Agrega productos al carrito antes de continuar');
       return;
     }
+
+    // Validar que el usuario esté autenticado
+    if (!user) {
+      alert('Debes iniciar sesión para poder realizar una compra');
+      localStorage.setItem('redirectAfterLogin', '/carrito');
+      navigate('/login');
+      return;
+    }
+
     navigate('/checkout');
   };
 
@@ -220,7 +239,7 @@ const Carrito = () => {
   return (
     <div className={style.container}>
       <Header />
-      
+
       <div className={style.carritoContainer}>
         {/* Productos en Oferta */}
         <section className={style.ofertasSection}>
@@ -231,8 +250,8 @@ const Carrito = () => {
             ) : (
               productosOferta.map(producto => (
                 <div key={producto.id} className={style.productoCard}>
-                  <img 
-                    src={producto.imagen} 
+                  <img
+                    src={producto.imagen}
                     alt={producto.nombre}
                     className={style.productoImagen}
                     onError={(e) => {
@@ -252,7 +271,7 @@ const Carrito = () => {
                     <p className={style.stockDisponible}>
                       Stock: {producto.stock || 10}
                     </p>
-                    <button 
+                    <button
                       className={style.btnAgregarOferta}
                       onClick={() => agregarAlCarrito(producto)}
                     >
@@ -268,7 +287,7 @@ const Carrito = () => {
         {/* Resumen del Carrito */}
         <section className={style.resumenCarrito}>
           <h2 className={style.sectionTitle}>Resumen del Carrito</h2>
-          
+
           {/* Tabla de productos en carrito */}
           <div className={style.tablaCarritoContainer}>
             <table className={style.tablaCarrito}>
@@ -289,7 +308,7 @@ const Carrito = () => {
                       <div className={style.icono}>🛒</div>
                       <h3>Tu carrito está vacío</h3>
                       <p>Agrega algunos productos para continuar</p>
-                      <button 
+                      <button
                         className={style.btnIrCatalogo}
                         onClick={() => navigate('/catalogo')}
                       >
@@ -301,8 +320,8 @@ const Carrito = () => {
                   carrito.map((producto, index) => (
                     <tr key={`${producto.id}-${index}`}>
                       <td>
-                        <img 
-                          src={producto.imagen} 
+                        <img
+                          src={producto.imagen}
                           alt={producto.nombre}
                           className={style.imagenTabla}
                           onError={(e) => {
@@ -314,7 +333,7 @@ const Carrito = () => {
                       <td>${producto.precio?.toLocaleString('es-CL')}</td>
                       <td>
                         <div className={style.controlesCantidad}>
-                          <button 
+                          <button
                             className={style.btnCantidad}
                             onClick={() => actualizarCantidad(index, (producto.cantidad || 1) - 1)}
                           >
@@ -323,7 +342,7 @@ const Carrito = () => {
                           <span className={style.cantidadActual}>
                             {producto.cantidad || 1}
                           </span>
-                          <button 
+                          <button
                             className={style.btnCantidad}
                             onClick={() => actualizarCantidad(index, (producto.cantidad || 1) + 1)}
                           >
@@ -335,11 +354,11 @@ const Carrito = () => {
                         ${((producto.precio || 0) * (producto.cantidad || 1)).toLocaleString('es-CL')}
                       </td>
                       <td>
-                        <button 
+                        <button
                           className={style.btnEliminar}
                           onClick={() => eliminarDelCarrito(index)}
                         >
-                         Eliminar
+                          Eliminar
                         </button>
                       </td>
                     </tr>
@@ -359,13 +378,13 @@ const Carrito = () => {
                 </span>
               </div>
               <div className={style.botonesCarrito}>
-                <button 
+                <button
                   className={style.btnLimpiar}
                   onClick={limpiarCarrito}
                 >
                   Limpiar Carrito
                 </button>
-                <button 
+                <button
                   className={style.btnComprarAhora}
                   onClick={irAlCheckout}
                 >

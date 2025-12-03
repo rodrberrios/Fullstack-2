@@ -12,7 +12,7 @@ import style from './Login.module.css';
 const Login = () => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     correo: '',
     clave: ''
@@ -54,34 +54,50 @@ const Login = () => {
       // Buscar usuario en Firestore
       const usuariosRef = collection(db, "usuarios");
       const q = query(
-        usuariosRef, 
+        usuariosRef,
         where("correo", "==", formData.correo.trim().toLowerCase()),
         where("clave", "==", formData.clave)
       );
-      
+
       const querySnapshot = await getDocs(q);
-      
+
       if (!querySnapshot.empty) {
         // Usuario encontrado
         const usuarioDoc = querySnapshot.docs[0];
         const datosUsuario = usuarioDoc.data();
+
+        // Verificar si la cuenta está activa
+        if (datosUsuario.activo === false) {
+          setMensaje("Tu cuenta ha sido desactivada. Contacta al administrador.");
+          setCargando(false);
+          return;
+        }
+
         const usuarioData = {
           id: usuarioDoc.id,
           ...datosUsuario,
-          rol: datosUsuario.correo === "admin@duoc.cl" ? "admin" : "cliente"
+          rol: datosUsuario.rol || "cliente"
         };
-        
+
         // Guardar en localStorage
         localStorage.setItem("usuario", JSON.stringify(usuarioData));
-        
+
         // Actualizar contexto
         setUser(usuarioData);
-        
+
         setMensaje(`Bienvenido ${usuarioData.nombre}!`);
-        
+
+        // Verificar si hay una ruta de retorno guardada
+        const redirectPath = localStorage.getItem('redirectAfterLogin');
+
         // Redirección después de 1 segundo
         setTimeout(() => {
-          navigate(usuarioData.rol === "admin" ? "/perfilAdmin" : "/perfilCliente");
+          if (redirectPath) {
+            localStorage.removeItem('redirectAfterLogin');
+            navigate(redirectPath);
+          } else {
+            navigate(usuarioData.rol === "admin" ? "/perfilAdmin" : "/perfilCliente");
+          }
         }, 1000);
       } else {
         setMensaje("Correo o contraseña incorrectos.");
@@ -97,7 +113,7 @@ const Login = () => {
   return (
     <div className={style.container}>
       {/* NAVBAR */}
-      
+
       <Nav></Nav>
 
       {/* FORMULARIO DE LOGIN */}
@@ -106,18 +122,18 @@ const Login = () => {
           <form onSubmit={handleSubmit} className={style.form__register}>
             <div className={style.div__register}>
               <h2>Iniciar Sesión</h2>
-              
+
               {/* CORREO */}
               <div className={style.form__group}>
                 <label htmlFor="correo" className={style.form__label}>Correo Electrónico</label>
-                <input 
-                  type="email" 
-                  id="correo" 
-                  name="correo" 
+                <input
+                  type="email"
+                  id="correo"
+                  name="correo"
                   value={formData.correo}
                   onChange={handleChange}
-                  placeholder="tu-correo@duoc.cl" 
-                  required 
+                  placeholder="tu-correo@duoc.cl"
+                  required
                   className={style.form__input}
                 />
               </div>
@@ -125,21 +141,21 @@ const Login = () => {
               {/* CONTRASEÑA */}
               <div className={style.form__group}>
                 <label htmlFor="clave" className={style.form__label}>Contraseña</label>
-                <input 
+                <input
                   type="password"
-                  id="clave" 
-                  name="clave" 
+                  id="clave"
+                  name="clave"
                   value={formData.clave}
                   onChange={handleChange}
-                  placeholder="Ingresa tu contraseña" 
-                  required 
+                  placeholder="Ingresa tu contraseña"
+                  required
                   className={style.form__input}
                 />
               </div>
 
               {/* BOTÓN DE LOGIN */}
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={cargando}
                 className={style.submit__button}
               >
@@ -154,9 +170,8 @@ const Login = () => {
 
               {/* MENSAJES */}
               {mensaje && (
-                <div className={`${style.message__alert} ${
-                  mensaje.includes('Bienvenido') ? style.message__success : style.message__error
-                }`}>
+                <div className={`${style.message__alert} ${mensaje.includes('Bienvenido') ? style.message__success : style.message__error
+                  }`}>
                   {mensaje}
                 </div>
               )}
@@ -164,7 +179,7 @@ const Login = () => {
           </form>
         </section>
       </main>
-      
+
       <Footer></Footer>
     </div>
   );

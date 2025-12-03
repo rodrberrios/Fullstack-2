@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { obtenerProductos } from '../../services/productService';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../../config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 import Header from '../organisms/Header';
 import Footer from '../organisms/Footer';
 import style from './Catalogo.module.css';
@@ -68,7 +70,7 @@ const Catalogo = () => {
     }
 
     const termino = terminoBusqueda.toLowerCase();
-    const resultados = productos.filter(p => 
+    const resultados = productos.filter(p =>
       p.nombre?.toLowerCase().includes(termino) ||
       p.categoria?.toLowerCase().includes(termino) ||
       p.descripcion?.toLowerCase().includes(termino)
@@ -76,13 +78,25 @@ const Catalogo = () => {
     setProductosFiltrados(resultados);
   };
 
-  // Agregar al carrito
-  const agregarAlCarrito = (producto) => {
+  // Agregar al carrito con gestión de stock
+  const agregarAlCarrito = async (producto) => {
+    // Verificar si hay stock disponible
+    if (producto.stock === undefined || producto.stock <= 0) {
+      alert('No hay stock disponible para este producto');
+      return;
+    }
+
     const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
     const productoExistente = carritoActual.find(item => item.id === producto.id);
     let nuevoCarrito;
 
+    // Verificar si hay suficiente stock para agregar otra unidad
     if (productoExistente) {
+      const cantidadEnCarrito = productoExistente.cantidad || 1;
+      if (producto.stock <= cantidadEnCarrito) {
+        alert('No hay más stock disponible de este producto');
+        return;
+      }
       nuevoCarrito = carritoActual.map(item =>
         item.id === producto.id
           ? { ...item, cantidad: (item.cantidad || 1) + 1 }
@@ -92,11 +106,33 @@ const Catalogo = () => {
       nuevoCarrito = [...carritoActual, { ...producto, cantidad: 1 }];
     }
 
-    setCarrito(nuevoCarrito);
-    localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
-    
-    // Mostrar notificación
-    mostrarNotificacion(`"${producto.nombre}" agregado al carrito`);
+    try {
+      // Reducir stock en Firebase
+      const productoRef = doc(db, 'producto', producto.id);
+      await updateDoc(productoRef, {
+        stock: producto.stock - 1
+      });
+
+      // Actualizar estado local
+      const productosActualizados = productos.map(p =>
+        p.id === producto.id ? { ...p, stock: p.stock - 1 } : p
+      );
+      setProductos(productosActualizados);
+      setProductosFiltrados(productosActualizados.filter(p => {
+        if (categoriaActiva === 'todos') return true;
+        return p.categoria === categoriaActiva;
+      }));
+
+      // Guardar en carrito
+      setCarrito(nuevoCarrito);
+      localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+
+      // Mostrar notificación
+      mostrarNotificacion(`"${producto.nombre}" agregado al carrito`);
+    } catch (error) {
+      console.error('Error al actualizar stock:', error);
+      alert('Error al agregar el producto al carrito');
+    }
   };
 
   // Mostrar notificación
@@ -136,8 +172,8 @@ const Catalogo = () => {
       <header className={style.header}>
         <div className={style.headerTop}>
           <div className={style.searchContainer}>
-            <input 
-              type="text" 
+            <input
+              type="text"
               className={style.searchInput}
               placeholder="Buscar productos..."
               value={terminoBusqueda}
@@ -148,36 +184,36 @@ const Catalogo = () => {
               Buscar
             </button>
           </div>
-          
+
         </div>
 
         <nav className={style.navMain}>
           <div className={style.navRow}>
-          <div className={style.navCenter}>
-            {categorias.map(categoria => (
-              <a 
-                key={categoria}
-                className={`${style.navLink} ${categoriaActiva === categoria ? style.active : ''}`}
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  filtrarPorCategoria(categoria);
-                }}
+            <div className={style.navCenter}>
+              {categorias.map(categoria => (
+                <a
+                  key={categoria}
+                  className={`${style.navLink} ${categoriaActiva === categoria ? style.active : ''}`}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    filtrarPorCategoria(categoria);
+                  }}
+                >
+                  {categoria === 'todos' ? 'Todos' : categoria}
+                </a>
+              ))}
+            </div>
+
+            <div className={style.navRight}>
+              <button
+                className={style.btnCarrito}
+                onClick={() => navigate('/carrito')}
               >
-                {categoria === 'todos' ? 'Todos' : categoria}
-              </a>
-            ))}
-          </div>
-          
-          <div className={style.navRight}>
-            <button 
-              className={style.btnCarrito}
-              onClick={() => navigate('/carrito')}
-            >
-              <span className={style.carritoIcon}>🛒</span>
-              Carrito: ${calcularTotalCarritoHeader().toLocaleString('es-CL')}
-            </button>
-          </div>
+                <span className={style.carritoIcon}>🛒</span>
+                Carrito: ${calcularTotalCarritoHeader().toLocaleString('es-CL')}
+              </button>
+            </div>
           </div>
         </nav>
       </header>
@@ -189,7 +225,7 @@ const Catalogo = () => {
           <h2 className={style.sectionTitle}>Categorías</h2>
           <div className={style.categoriasGrid} id="cardsCategorias">
             {categorias.filter(cat => cat !== 'todos').map(categoria => (
-              <div 
+              <div
                 key={categoria}
                 className={style.categoriaCard}
                 onClick={() => filtrarPorCategoria(categoria)}
@@ -207,12 +243,12 @@ const Catalogo = () => {
         <section className={style.productosSection}>
           <div className={style.productosHeader}>
             <h2 className={style.sectionTitle} style={{ margin: 0 }}>
-              {categoriaActiva === 'todos' 
+              {categoriaActiva === 'todos'
                 ? `Todos los productos (${productosFiltrados.length})`
                 : `${categoriaActiva} (${productosFiltrados.length} productos)`
               }
             </h2>
-            <button 
+            <button
               className={style.btnVerTodos}
               onClick={() => filtrarPorCategoria('todos')}
             >
@@ -225,7 +261,7 @@ const Catalogo = () => {
               <p className={style.emptyText}>
                 No se encontraron productos
               </p>
-              <button 
+              <button
                 className={style.btnSignup}
                 onClick={() => filtrarPorCategoria('todos')}
               >

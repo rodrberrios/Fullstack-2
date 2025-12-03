@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { db } from '../../config/firebase';
 import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/AuthContext';
 import Header from '../organisms/Header';
 import style from './Checkout.module.css';
 
@@ -9,6 +10,7 @@ import style from './Checkout.module.css';
  * Componente de Checkout - Procesamiento de compra
  */
 const Checkout = () => {
+  const { user } = useContext(UserContext);
   const [carrito, setCarrito] = useState([]);
   const [formData, setFormData] = useState({
     cliente: {
@@ -43,10 +45,34 @@ const Checkout = () => {
     setCarrito(carritoGuardado);
     setRegiones(Object.keys(regionesComunas));
 
+    // Validar que el usuario esté autenticado
+    if (!user) {
+      alert('Debes iniciar sesión para acceder al checkout');
+      localStorage.setItem('redirectAfterLogin', '/carrito');
+      navigate('/login');
+      return;
+    }
+
+    // Auto-rellenar datos del usuario si está autenticado
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        cliente: {
+          nombre: user.nombre || '',
+          apellidos: user.apellidos || '',
+          correo: user.correo || ''
+        },
+        direccion: {
+          ...prev.direccion,
+          calle: user.direccion || ''
+        }
+      }));
+    }
+
     if (carritoGuardado.length === 0) {
       navigate('/carrito');
     }
-  }, [navigate]);
+  }, [navigate, user]);
 
   /**
    * Maneja cambios en los campos del formulario
