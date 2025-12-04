@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db } from "../../config/firebase";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
-import { UserContext } from "../../context/AuthContext";
-import Aside from "../organisms/Aside";
-import style from './Orders.module.css';
+import { collection, getDocs } from "firebase/firestore";
+import AsideVendedor from "../organisms/AsideVendedor";
+import style from './VendedorOrdenes.module.css';
 
-const Orders = () => {
-    const { user } = useContext(UserContext);
+const VendedorOrdenes = () => {
     const [orders, setOrders] = useState([]);
-    const [filteredOrders, setFilteredOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const [statusFilter, setStatusFilter] = useState('Todos');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchOrders = async () => {
         setLoading(true);
@@ -23,7 +19,6 @@ const Orders = () => {
                 ...doc.data()
             }));
             setOrders(ordersData);
-            setFilteredOrders(ordersData);
         } catch (error) {
             console.error("Error fetching orders:", error);
         } finally {
@@ -35,17 +30,8 @@ const Orders = () => {
         fetchOrders();
     }, []);
 
-    // Filtrar órdenes cuando cambia el filtro
-    useEffect(() => {
-        if (statusFilter === 'Todos') {
-            setFilteredOrders(orders);
-        } else {
-            setFilteredOrders(orders.filter(order => order.estado === statusFilter));
-        }
-    }, [statusFilter, orders]);
-
-    const handleOpenModal = (order) => {
-        setSelectedOrder({ ...order });
+    const handleViewDetails = (order) => {
+        setSelectedOrder(order);
         setIsModalOpen(true);
     };
 
@@ -54,69 +40,25 @@ const Orders = () => {
         setSelectedOrder(null);
     };
 
-    const handleStatusChange = (e) => {
-        setSelectedOrder(prev => ({
-            ...prev,
-            estado: e.target.value
-        }));
-    };
-
-    const handleSaveStatus = async () => {
-        if (!selectedOrder) return;
-
-        try {
-            const orderRef = doc(db, "compras", selectedOrder.id);
-            await updateDoc(orderRef, {
-                estado: selectedOrder.estado
-            });
-
-            // Actualizar estado local
-            setOrders(orders.map(order =>
-                order.id === selectedOrder.id ? { ...order, estado: selectedOrder.estado } : order
-            ));
-
-            alert("Estado actualizado correctamente");
-            handleCloseModal();
-        } catch (error) {
-            console.error("Error updating status:", error);
-            alert("Error al actualizar el estado");
-        }
-    };
-
     const getStatusClass = (status) => {
         const normalizedStatus = status?.toLowerCase().replace(/\s+/g, '_') || 'pendiente';
         return style[`status_${normalizedStatus}`] || style.status_pendiente;
     };
 
-    // Obtener lista única de estados para el filtro
-    const uniqueStatuses = ['Todos', ...new Set(orders.map(o => o.estado).filter(Boolean))];
-
     return (
         <div className={style.container}>
-            <Aside />
+            <AsideVendedor />
 
             <main className={style.main}>
                 <div className={style.header}>
-                    <h1 className={style.title}>Gestión de Órdenes</h1>
-                    <p className={style.subtitle}>Administra y realiza seguimiento de todas las órdenes de compra</p>
+                    <h1 className={style.title}>Órdenes de Compra</h1>
+                    <p className={style.subtitle}>Visualiza todas las órdenes realizadas en el sistema</p>
                 </div>
 
                 <div className={style.tableContainer}>
                     <div className={style.tableHeader}>
                         <h2 className={style.tableTitle}>Lista de Órdenes</h2>
                         <div className={style.headerActions}>
-                            <div className={style.filterGroup}>
-                                <label className={style.filterLabel}>Filtrar por estado:</label>
-                                <select
-                                    className={style.filterSelect}
-                                    value={statusFilter}
-                                    onChange={(e) => setStatusFilter(e.target.value)}
-                                >
-                                    {uniqueStatuses.map(status => (
-                                        <option key={status} value={status}>{status}</option>
-                                    ))}
-                                </select>
-                            </div>
                             <button className={style.btnSecondary} onClick={fetchOrders}>
                                 Actualizar
                             </button>
@@ -125,8 +67,8 @@ const Orders = () => {
 
                     {loading ? (
                         <p>Cargando órdenes...</p>
-                    ) : filteredOrders.length === 0 ? (
-                        <p className={style.noData}>No hay órdenes con el estado seleccionado</p>
+                    ) : orders.length === 0 ? (
+                        <p className={style.noData}>No hay órdenes registradas</p>
                     ) : (
                         <table className={style.table}>
                             <thead>
@@ -141,7 +83,7 @@ const Orders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredOrders.map((order) => (
+                                {orders.map((order) => (
                                     <tr key={order.id}>
                                         <td className={style.idCell}>{order.id.substring(0, 8)}...</td>
                                         <td>{order.usuario || 'N/A'}</td>
@@ -157,11 +99,11 @@ const Orders = () => {
                                         </td>
                                         <td className={style.actionButtons}>
                                             <button
-                                                className={`${style.btnAction} ${style.btnEdit}`}
-                                                onClick={() => handleOpenModal(order)}
-                                                title="Ver y Editar"
+                                                className={`${style.btnAction} ${style.btnView}`}
+                                                onClick={() => handleViewDetails(order)}
+                                                title="Ver Detalles"
                                             >
-                                                ✏️
+                                                👁️
                                             </button>
                                         </td>
                                     </tr>
@@ -171,7 +113,7 @@ const Orders = () => {
                     )}
                 </div>
 
-                {/* Modal de detalles y edición de estado */}
+                {/* Details Modal */}
                 {isModalOpen && selectedOrder && (
                     <div className={style.modalOverlay}>
                         <div className={style.modalContent}>
@@ -202,24 +144,15 @@ const Orders = () => {
                                         </span>
                                     </div>
                                     <div className={style.detailRow}>
+                                        <strong>Estado:</strong>
+                                        <span className={`${style.statusBadge} ${getStatusClass(selectedOrder.estado)}`}>
+                                            {selectedOrder.estado || 'Pendiente'}
+                                        </span>
+                                    </div>
+                                    <div className={style.detailRow}>
                                         <strong>Total:</strong>
                                         <span className={style.totalAmount}>${selectedOrder.total?.toLocaleString('es-CL')}</span>
                                     </div>
-                                </div>
-
-                                <div className={style.formGroup}>
-                                    <label className={style.label}>Estado de la Orden</label>
-                                    <select
-                                        className={style.input}
-                                        value={selectedOrder.estado || 'Pendiente'}
-                                        onChange={handleStatusChange}
-                                    >
-                                        <option value="Pendiente">Pendiente</option>
-                                        <option value="En Preparacion">En Preparación</option>
-                                        <option value="En Camino">En Camino</option>
-                                        <option value="Entregado">Entregado</option>
-                                        <option value="Cancelado">Cancelado</option>
-                                    </select>
                                 </div>
 
                                 {selectedOrder.items && selectedOrder.items.length > 0 && (
@@ -238,8 +171,7 @@ const Orders = () => {
                                 )}
                             </div>
                             <div className={style.modalFooter}>
-                                <button className={style.btnCancel} onClick={handleCloseModal}>Cerrar</button>
-                                <button className={style.btnSave} onClick={handleSaveStatus}>Guardar Estado</button>
+                                <button className={style.btnClose} onClick={handleCloseModal}>Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -249,4 +181,4 @@ const Orders = () => {
     );
 };
 
-export default Orders;
+export default VendedorOrdenes;

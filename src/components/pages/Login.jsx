@@ -23,7 +23,13 @@ const Login = () => {
   useEffect(() => {
     // Solo redirigir si el usuario ya está autenticado en el contexto
     if (user) {
-      navigate(user.rol === "admin" ? "/perfilAdmin" : "/perfilCliente");
+      if (user.rol === "admin") {
+        navigate("/perfilAdmin");
+      } else if (user.rol === "vendedor") {
+        navigate("/vendedor/perfil");
+      } else {
+        navigate("/perfilCliente");
+      }
     }
   }, [user, navigate]);
 
@@ -96,7 +102,13 @@ const Login = () => {
             localStorage.removeItem('redirectAfterLogin');
             navigate(redirectPath);
           } else {
-            navigate(usuarioData.rol === "admin" ? "/perfilAdmin" : "/perfilCliente");
+            if (usuarioData.rol === "admin") {
+              navigate("/perfilAdmin");
+            } else if (usuarioData.rol === "vendedor") {
+              navigate("/vendedor/perfil");
+            } else {
+              navigate("/perfilCliente");
+            }
           }
         }, 1000);
       } else {

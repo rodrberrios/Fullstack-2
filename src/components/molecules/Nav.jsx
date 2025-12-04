@@ -61,7 +61,7 @@ const Nav = () => {
                             <button className={styles.btnLogout} onClick={handleLogout}>
                                 Cerrar Sesión
                             </button>
-                            <Link className={styles.cartLink} to="/carrito">🛒 {calcularTotalCarrito().toLocaleString('es-CL')}</Link>
+                            <Link className={styles.cartLink} to="/carrito"> {calcularTotalCarrito().toLocaleString('es-CL')}</Link>
                         </>
                     ) : (
                         <>

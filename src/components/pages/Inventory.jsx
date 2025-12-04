@@ -59,7 +59,7 @@ const Inventory = () => {
         const { name, value } = e.target;
         setEditingProduct(prev => ({
             ...prev,
-            [name]: name === 'precio' || name === 'stock' ? Number(value) : value
+            [name]: ['precio', 'stock', 'precioAnterior'].includes(name) ? Number(value) : value
         }));
     };
 
@@ -85,6 +85,7 @@ const Inventory = () => {
                 const newProduct = {
                     nombre: editingProduct.nombre,
                     precio: Number(editingProduct.precio) || 0,
+                    precioAnterior: Number(editingProduct.precioAnterior) || 0,
                     stock: Number(editingProduct.stock) || 0,
                     categoria: editingProduct.categoria || 'General',
                     img: editingProduct.img || '',
@@ -110,6 +111,7 @@ const Inventory = () => {
         setEditingProduct({
             nombre: '',
             precio: 0,
+            precioAnterior: 0,
             stock: 0,
             categoria: '',
             img: '',
@@ -133,10 +135,10 @@ const Inventory = () => {
                         <h2 className={style.tableTitle}>Lista de Productos</h2>
                         <div className={style.headerActions}>
                             <button className={style.btnPrimary} onClick={handleAdd}>
-                                ➕ Nuevo Producto
+                                Nuevo Producto
                             </button>
                             <button className={style.btnSecondary} onClick={fetchProducts}>
-                                🔄 Actualizar
+                                Actualizar
                             </button>
                         </div>
                     </div>
@@ -225,6 +227,24 @@ const Inventory = () => {
                                         step="0.01"
                                         required
                                     />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Precio Anterior (Opcional)</label>
+                                    <input
+                                        type="number"
+                                        name="precioAnterior"
+                                        className={style.input}
+                                        value={editingProduct.precioAnterior || 0}
+                                        onChange={handleInputChange}
+                                        min="0"
+                                        step="0.01"
+                                        placeholder="0"
+                                    />
+                                    {editingProduct.precioAnterior > editingProduct.precio && (
+                                        <span style={{ color: '#22c55e', fontSize: '12px', marginTop: '4px', display: 'block' }}>
+                                            Descuento: {Math.round(((editingProduct.precioAnterior - editingProduct.precio) / editingProduct.precioAnterior) * 100)}%
+                                        </span>
+                                    )}
                                 </div>
                                 <div className={style.formGroup}>
                                     <label className={style.label}>Stock</label>

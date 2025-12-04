@@ -1,0 +1,217 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #0b0b0b;
+    color: #e5e7eb;
+}
+
+.main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.header {
+    background-color: #111318;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #1f2937;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Report Controls Section */
+.reportControls {
+    background-color: #111318;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #1f2937;
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+}
+
+.dateFilters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.dateInput {
+    flex: 1;
+    min-width: 200px;
+}
+
+.dateField {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #374151;
+    background-color: #1f2937;
+    color: #ffffff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.dateField:focus {
+    border-color: #3b82f6;
+}
+
+.btnGenerate {
+    background-color: #22c55e;
+    color: #0b0b0b;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btnGenerate:hover {
+    background-color: #16a34a;
+    transform: translateY(-2px);
+}
+
+.btnGenerate:disabled {
+    background-color: #374151;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Report Cards */
+.reportCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.reportCard {
+    background-color: #111318;
+    border-radius: 12px;
+    border: 1px solid #1f2937;
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.reportCard:hover {
+    transform: translateY(-4px);
+}
+
+.cardTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #1f2937;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.statRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.statRow:not(:last-child) {
+    border-bottom: 1px solid #1f2937;
+}
+
+.statLabel {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.statValue {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Empty State */
+.emptyState {
+    background-color: #111318;
+    border-radius: 12px;
+    border: 1px solid #1f2937;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.emptyText {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main {
+        padding: 20px;
+    }
+
+    .reportCards {
+        grid-template-columns: 1fr;
+    }
+
+    .dateFilters {
+        flex-direction: column;
+    }
+
+    .dateInput {
+        width: 100%;
+    }
+
+    .btnGenerate {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .reportControls {
+        padding: 1rem;
+    }
+
+    .reportCard {
+        padding: 1rem;
+    }
+}

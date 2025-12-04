@@ -246,10 +246,10 @@ const Categories = () => {
                         <h2 className={style.tableTitle}>Lista de Categorías</h2>
                         <div className={style.headerActions}>
                             <button className={style.btnPrimary} onClick={() => handleOpenModal()}>
-                                ➕ Nueva Categoría
+                                Nueva Categoría
                             </button>
                             <button className={style.btnSecondary} onClick={fetchCategoriesAndProducts}>
-                                🔄 Actualizar
+                                Actualizar
                             </button>
                         </div>
                     </div>

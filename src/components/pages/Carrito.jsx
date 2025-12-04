@@ -35,8 +35,10 @@ const Carrito = () => {
         ...doc.data()
       }));
 
-      // Filtrar productos con precio anterior (en oferta)
-      const productosConOferta = productos.filter(producto => producto.precioAnterior);
+      // Filtrar productos con descuento real (precioAnterior > precio)
+      const productosConOferta = productos.filter(producto =>
+        producto.precioAnterior && producto.precioAnterior > producto.precio
+      );
       setProductosOferta(productosConOferta);
     } catch (error) {
       console.error('Error cargando productos en oferta:', error);
@@ -46,19 +48,33 @@ const Carrito = () => {
   };
 
   /**
+   * Calcula el porcentaje de descuento
+   */
+  const calcularDescuento = (precioAnterior, precioActual) => {
+    if (!precioAnterior || !precioActual || precioAnterior <= precioActual) {
+      return 0;
+    }
+    return Math.round(((precioAnterior - precioActual) / precioAnterior) * 100);
+  };
+
+  /**
    * Actualiza el stock en Firebase cuando se agrega al carrito
    */
   const actualizarStockFirebase = async (productId, cantidad) => {
     try {
       const productoRef = doc(db, 'producto', productId);
-      const producto = productosOferta.find(p => p.id === productId);
 
-      if (producto && producto.stock !== undefined) {
-        const nuevoStock = producto.stock - cantidad;
+      // Obtener el stock actual directamente de Firebase para asegurar consistencia
+      const productoSnapshot = await getDoc(productoRef);
+
+      if (productoSnapshot.exists()) {
+        const productoData = productoSnapshot.data();
+        const nuevoStock = (productoData.stock || 0) - cantidad;
+
         await updateDoc(productoRef, {
           stock: nuevoStock
         });
-        console.log(`Stock actualizado: ${producto.nombre} - Nuevo stock: ${nuevoStock}`);
+        console.log(`Stock actualizado: ${productoData.nombre} - Nuevo stock: ${nuevoStock}`);
       }
     } catch (error) {
       console.error('Error actualizando stock:', error);
@@ -248,38 +264,53 @@ const Carrito = () => {
             {productosOferta.length === 0 ? (
               <p className={style.sinOfertas}>No hay productos en oferta en este momento.</p>
             ) : (
-              productosOferta.map(producto => (
-                <div key={producto.id} className={style.productoCard}>
-                  <img
-                    src={producto.imagen}
-                    alt={producto.nombre}
-                    className={style.productoImagen}
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/400x300/cccccc/969696?text=Imagen+No+Disponible';
-                    }}
-                  />
-                  <div className={style.productoInfo}>
-                    <h3 className={style.productoNombre}>{producto.nombre}</h3>
-                    <div className={style.preciosOferta}>
-                      <span className={style.precioAnterior}>
-                        ${producto.precioAnterior?.toLocaleString('es-CL')}
-                      </span>
-                      <span className={style.precioActual}>
-                        ${producto.precio?.toLocaleString('es-CL')}
-                      </span>
+              productosOferta.map(producto => {
+                const descuento = calcularDescuento(producto.precioAnterior, producto.precio);
+                const ahorro = producto.precioAnterior - producto.precio;
+
+                return (
+                  <div key={producto.id} className={style.productoCard}>
+                    {descuento > 0 && (
+                      <div className={style.descuentoBadge}>
+                        -{descuento}%
+                      </div>
+                    )}
+                    <img
+                      src={producto.imagen}
+                      alt={producto.nombre}
+                      className={style.productoImagen}
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/400x300/cccccc/969696?text=Imagen+No+Disponible';
+                      }}
+                    />
+                    <div className={style.productoInfo}>
+                      <h3 className={style.productoNombre}>{producto.nombre}</h3>
+                      <div className={style.preciosOferta}>
+                        <span className={style.precioAnterior}>
+                          ${producto.precioAnterior?.toLocaleString('es-CL')}
+                        </span>
+                        <span className={style.precioActual}>
+                          ${producto.precio?.toLocaleString('es-CL')}
+                        </span>
+                      </div>
+                      {ahorro > 0 && (
+                        <p className={style.ahorroTexto}>
+                          ¡Ahorras ${ahorro.toLocaleString('es-CL')}!
+                        </p>
+                      )}
+                      <p className={style.stockDisponible}>
+                        Stock: {producto.stock || 10}
+                      </p>
+                      <button
+                        className={style.btnAgregarOferta}
+                        onClick={() => agregarAlCarrito(producto)}
+                      >
+                        Añadir
+                      </button>
                     </div>
-                    <p className={style.stockDisponible}>
-                      Stock: {producto.stock || 10}
-                    </p>
-                    <button
-                      className={style.btnAgregarOferta}
-                      onClick={() => agregarAlCarrito(producto)}
-                    >
-                      Añadir
-                    </button>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </section>

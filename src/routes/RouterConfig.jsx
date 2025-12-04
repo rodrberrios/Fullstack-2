@@ -7,7 +7,7 @@ import PerfilCliente from "../components/pages/PerfilCliente";
 import Nosotros from "../components/pages/Nosotros";
 import Contacto from "../components/pages/Contacto";
 import Carrito from "../components/pages/Carrito";
-import Blog from "../components/pages/Blog"
+import Blog from "../components/pages/Blog";
 import Catalogo from "../components/pages/Catalogo";
 import Checkout from "../components/pages/Checkout";
 import CompraExitosa from "../components/pages/CompraExitosa";
@@ -18,40 +18,29 @@ import Customers from "../components/pages/Customers";
 import Orders from "../components/pages/Orders";
 import Inventory from "../components/pages/Inventory";
 import Categories from "../components/pages/Categories";
+import Reports from "../components/pages/Reports";
+import PerfilVendedor from "../components/pages/PerfilVendedor";
+import VendedorProductos from "../components/pages/VendedorProductos";
+import VendedorOrdenes from "../components/pages/VendedorOrdenes";
+import DashboardVendedor from "../components/pages/DashboardVendedor";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const RouterConfig = () => (
     <Router>
         <Routes>
+            {/* Rutas públicas */}
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/blog" element={<Blog />} />
+
+            {/* Rutas de Admin */}
             <Route path="/perfilAdmin" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                     <PerfilAdmin />
-                </ProtectedRoute>
-            } />
-            <Route path="/perfilCliente" element={
-                <ProtectedRoute allowedRoles={['cliente', 'vendedor']}>
-                    <PerfilCliente />
-                </ProtectedRoute>
-            } />
-            <Route path="/nosotros" element={<Nosotros />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/carrito" element={<Carrito />} />
-            <Route path="/catalogo" element={<Catalogo />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/exito" element={<CompraExitosa />} />
-            <Route path="/error" element={<ErrorPago />} />
-            <Route path="/historialConsultas" element={
-                <ProtectedRoute allowedRoles={['cliente', 'vendedor']}>
-                    <HistorialConsultas />
-                </ProtectedRoute>
-            } />
-            <Route path="/historialCompras" element={
-                <ProtectedRoute allowedRoles={['cliente', 'vendedor']}>
-                    <HistorialCompras />
                 </ProtectedRoute>
             } />
             <Route path="/customers" element={
@@ -72,6 +61,54 @@ const RouterConfig = () => (
             <Route path="/categories" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                     <Categories />
+                </ProtectedRoute>
+            } />
+            <Route path="/reports" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                    <Reports />
+                </ProtectedRoute>
+            } />
+
+            {/* Rutas de Cliente (solo para clientes, NO vendedores) */}
+            <Route path="/perfilCliente" element={
+                <ProtectedRoute allowedRoles={['cliente']}>
+                    <PerfilCliente />
+                </ProtectedRoute>
+            } />
+            <Route path="/carrito" element={<Carrito />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/exito" element={<CompraExitosa />} />
+            <Route path="/error" element={<ErrorPago />} />
+            <Route path="/historialConsultas" element={
+                <ProtectedRoute allowedRoles={['cliente']}>
+                    <HistorialConsultas />
+                </ProtectedRoute>
+            } />
+            <Route path="/historialCompras" element={
+                <ProtectedRoute allowedRoles={['cliente']}>
+                    <HistorialCompras />
+                </ProtectedRoute>
+            } />
+
+            {/* Rutas de Vendedor */}
+            <Route path="/vendedor/dashboard" element={
+                <ProtectedRoute allowedRoles={['vendedor']}>
+                    <DashboardVendedor />
+                </ProtectedRoute>
+            } />
+            <Route path="/vendedor/perfil" element={
+                <ProtectedRoute allowedRoles={['vendedor']}>
+                    <PerfilVendedor />
+                </ProtectedRoute>
+            } />
+            <Route path="/vendedor/productos" element={
+                <ProtectedRoute allowedRoles={['vendedor']}>
+                    <VendedorProductos />
+                </ProtectedRoute>
+            } />
+            <Route path="/vendedor/ordenes" element={
+                <ProtectedRoute allowedRoles={['vendedor']}>
+                    <VendedorOrdenes />
                 </ProtectedRoute>
             } />
         </Routes>

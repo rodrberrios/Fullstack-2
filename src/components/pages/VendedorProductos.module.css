@@ -60,25 +60,6 @@
     gap: 1rem;
 }
 
-.btnPrimary {
-    background-color: #22c55e;
-    color: #0b0b0b;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s ease;
-}
-
-.btnPrimary:hover {
-    background-color: #16a34a;
-    transform: translateY(-2px);
-}
-
 .btnSecondary {
     background-color: #3b82f6;
     color: white;
@@ -127,9 +108,15 @@
     border-bottom: none;
 }
 
-.userName {
+.productName {
     font-weight: 500;
     color: #ffffff;
+}
+
+.productPrice {
+    font-family: monospace;
+    color: #3b82f6;
+    font-weight: 600;
 }
 
 /* Status Badges */
@@ -151,30 +138,6 @@
     color: white;
 }
 
-/* Role Badges */
-.roleBadge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: inline-block;
-}
-
-.role_admin {
-    background-color: #8b5cf6;
-    color: white;
-}
-
-.role_vendedor {
-    background-color: #06b6d4;
-    color: white;
-}
-
-.role_cliente {
-    background-color: #3b82f6;
-    color: white;
-}
-
 /* Action Buttons */
 .actionButtons {
     display: flex;
@@ -192,43 +155,18 @@
     cursor: pointer;
     transition: all 0.2s ease;
     color: white;
-    font-size: 1rem;
 }
 
 .btnAction:hover {
     transform: translateY(-2px);
 }
 
-.btnEdit {
-    background-color: #f59e0b;
-}
-
-.btnEdit:hover {
-    background-color: #d97706;
-}
-
-.btnToggle {
+.btnView {
     background-color: #3b82f6;
 }
 
-.btnToggle:hover {
+.btnView:hover {
     background-color: #2563eb;
-}
-
-.btnRole {
-    background-color: #06b6d4;
-}
-
-.btnRole:hover {
-    background-color: #0891b2;
-}
-
-.btnDelete {
-    background-color: #ef4444;
-}
-
-.btnDelete:hover {
-    background-color: #dc2626;
 }
 
 /* Modal Styles */
@@ -251,7 +189,9 @@
     border-radius: 12px;
     border: 1px solid #1f2937;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
     padding: 2rem;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     animation: modalSlideIn 0.3s ease-out;
@@ -304,64 +244,73 @@
     gap: 1rem;
 }
 
-.formGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #e5e7eb;
-}
-
-.input {
-    padding: 0.75rem;
-    border-radius: 6px;
-    border: 1px solid #374151;
-    background-color: #1f2937;
-    color: #ffffff;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.input:focus {
-    border-color: #3b82f6;
-}
-
-.userInfo {
-    background-color: #1f2937;
-    padding: 1rem;
-    border-radius: 6px;
+.productImage {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
     margin-bottom: 1rem;
 }
 
-.userInfo p {
-    margin: 0.5rem 0;
-    color: #e5e7eb;
+.productImage img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
-.userInfo strong {
-    color: #ffffff;
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #1f2937;
+    border-radius: 6px;
 }
 
-.helperText {
-    font-size: 0.8rem;
+.detailRow strong {
     color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.detailRow span {
+    color: #e5e7eb;
+    font-weight: 500;
+}
+
+.detailRowFull {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #1f2937;
+    border-radius: 6px;
+}
+
+.detailRowFull strong {
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.detailRowFull p {
+    color: #e5e7eb;
     margin: 0;
-    font-style: italic;
+    line-height: 1.6;
+}
+
+.priceValue {
+    color: #3b82f6 !important;
+    font-weight: 600 !important;
+    font-family: monospace;
 }
 
 .modalFooter {
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1f2937;
 }
 
-.btnCancel {
+.btnClose {
     background-color: #374151;
     color: #ffffff;
     border: none;
@@ -372,23 +321,8 @@
     transition: background-color 0.2s;
 }
 
-.btnCancel:hover {
+.btnClose:hover {
     background-color: #4b5563;
-}
-
-.btnSave {
-    background-color: #22c55e;
-    color: #0b0b0b;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btnSave:hover {
-    background-color: #16a34a;
 }
 
 /* Responsive */
@@ -401,8 +335,8 @@
         overflow-x: auto;
     }
 
-    .headerActions {
-        flex-direction: column;
-        gap: 0.5rem;
+    .modalContent {
+        max-width: 95%;
+        padding: 1.5rem;
     }
 }

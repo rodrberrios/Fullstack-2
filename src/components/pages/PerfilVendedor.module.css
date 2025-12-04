@@ -5,11 +5,7 @@
     color: #e5e7eb;
 }
 
-.sidebar {
-    flex-shrink: 0;
-}
-
-.mainContent {
+.main {
     flex: 1;
     padding: 40px;
     overflow-y: auto;
@@ -95,26 +91,13 @@
 }
 
 .input:focus {
-    border-color: #22c55e;
+    border-color: #3b82f6;
 }
 
 .inputDisabled {
     opacity: 0.6;
     cursor: not-allowed;
     background-color: #0f172a;
-}
-
-.passwordSection {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #1f2937;
-}
-
-.sectionTitle {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0 0 1rem 0;
 }
 
 .helperText {
@@ -133,8 +116,8 @@
 }
 
 .btnSave {
-    background-color: #22c55e;
-    color: #0b0b0b;
+    background-color: #3b82f6;
+    color: #ffffff;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 6px;
@@ -147,7 +130,7 @@
 }
 
 .btnSave:hover {
-    background-color: #16a34a;
+    background-color: #2563eb;
     transform: translateY(-2px);
 }
 
@@ -168,7 +151,7 @@
 .infoTitle {
     font-size: 1rem;
     font-weight: 600;
-    color: #22c55e;
+    color: #3b82f6;
     margin: 0 0 1rem 0;
 }
 
@@ -190,7 +173,7 @@
 
 .infoList li::before {
     content: "•";
-    color: #22c55e;
+    color: #3b82f6;
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -204,7 +187,7 @@
 }
 
 @media (max-width: 768px) {
-    .mainContent {
+    .main {
         padding: 20px;
     }
 

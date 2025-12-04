@@ -1,0 +1,223 @@
+.sidebar {
+    background: #111318;
+    border-right: 1px solid #1f2937;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    color: #e5e7eb;
+    width: 260px;
+    flex-shrink: 0;
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.nav__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav__section:first-child {
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
+.nav__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nav__item {
+    padding: 0;
+    margin: 0;
+}
+
+.nav__link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    position: relative;
+}
+
+.nav__link:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-left-color: #3b82f6;
+}
+
+/* Active state para la página actual */
+.nav__link.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border-left-color: #3b82f6;
+    font-weight: 600;
+}
+
+/* Footer del sidebar */
+.sidebar__footer {
+    padding: 1.5rem;
+    border-top: 1px solid #1f2937;
+    margin-top: auto;
+    background: #0f172a;
+}
+
+.user__info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.user__details {
+    flex: 1;
+    overflow: hidden;
+}
+
+.user__name {
+    color: #e5e7eb;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0 0 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user__role {
+    color: #3b82f6;
+    font-size: 0.75rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Logout Button */
+.logout__button {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    color: #ef4444;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.logout__button:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.logout__icon {
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.logout__button:hover .logout__icon {
+    transform: rotate(-15deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #1f2937;
+        padding: 1rem 0;
+    }
+
+    .sidebar__nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .nav__section {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .nav__section:first-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .nav__link {
+        padding: 0.5rem 1rem;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        border-radius: 6px;
+    }
+
+    .nav__link:hover,
+    .nav__link.active {
+        border-left-color: transparent;
+        border-bottom-color: #3b82f6;
+    }
+
+    .sidebar__footer {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav__section {
+        min-width: 100%;
+    }
+}

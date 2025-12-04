@@ -1,49 +1,151 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-import { UserContext } from "../../context/AuthContext"
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from "../../context/AuthContext";
 import { db } from "../../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, updateDoc, getDocs, query, where } from "firebase/firestore";
+import Aside from '../organisms/Aside';
 import style from './PerfilAdmin.module.css';
-import Aside from "../organisms/Aside";
 
 const PerfilAdmin = () => {
-    const { user } = useContext(UserContext);
-    const [stats, setStats] = useState({
-        orders: 0,
-        products: 0,
-        users: 0
+    const { user, setUser } = useContext(UserContext);
+    const [userData, setUserData] = useState({
+        id: '',
+        nombre: '',
+        correo: '',
+        telefono: '',
+        rut: ''
+    });
+    const [passwordData, setPasswordData] = useState({
+        claveActual: '',
+        claveNueva: '',
+        claveConfirmar: ''
     });
     const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                // Fetch Orders
-                const ordersSnapshot = await getDocs(collection(db, "compras"));
-                const ordersCount = ordersSnapshot.size;
+        fetchUserData();
+    }, [user]);
 
-                // Fetch Products
-                const productsSnapshot = await getDocs(collection(db, "producto"));
-                const productsCount = productsSnapshot.size;
+    const fetchUserData = async () => {
+        if (!user || !user.correo) return;
 
-                // Fetch Users
-                const usersSnapshot = await getDocs(collection(db, "usuarios"));
-                const usersCount = usersSnapshot.size;
+        setLoading(true);
+        try {
+            const q = query(collection(db, "usuarios"), where("correo", "==", user.correo));
+            const querySnapshot = await getDocs(q);
 
-                setStats({
-                    orders: ordersCount,
-                    products: productsCount,
-                    users: usersCount
+            if (!querySnapshot.empty) {
+                const docSnap = querySnapshot.docs[0];
+                const data = docSnap.data();
+                setUserData({
+                    id: docSnap.id,
+                    nombre: data.nombre || '',
+                    correo: data.correo || '',
+                    telefono: data.telefono || '',
+                    rut: data.rut || data.run || ''
                 });
-            } catch (error) {
-                console.error("Error fetching dashboard stats:", error);
-            } finally {
-                setLoading(false);
             }
-        };
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        fetchStats();
-    }, []);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setUserData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handlePasswordChange = (e) => {
+        const { name, value } = e.target;
+        setPasswordData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSaveChanges = async () => {
+        if (!userData.nombre) {
+            alert("El nombre es obligatorio");
+            return;
+        }
+
+        // Validar contraseña si se está intentando cambiar
+        if (passwordData.claveActual || passwordData.claveNueva || passwordData.claveConfirmar) {
+            if (!passwordData.claveActual || !passwordData.claveNueva || !passwordData.claveConfirmar) {
+                alert("Debes completar todos los campos de contraseña");
+                return;
+            }
+
+            if (passwordData.claveNueva !== passwordData.claveConfirmar) {
+                alert("Las contraseñas nuevas no coinciden");
+                return;
+            }
+
+            if (passwordData.claveNueva.length < 6 || passwordData.claveNueva.length > 10) {
+                alert("La contraseña debe tener entre 6 y 10 caracteres");
+                return;
+            }
+
+            try {
+                const q = query(collection(db, "usuarios"), where("correo", "==", user.correo));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    const currentData = querySnapshot.docs[0].data();
+                    if (currentData.clave !== passwordData.claveActual) {
+                        alert("La contraseña actual es incorrecta");
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error("Error verifying password:", error);
+                alert("Error al verificar la contraseña");
+                return;
+            }
+        }
+
+        setSaving(true);
+        try {
+            const userRef = doc(db, "usuarios", userData.id);
+            const updateData = {
+                nombre: userData.nombre,
+                telefono: userData.telefono
+            };
+
+            if (passwordData.claveNueva) {
+                updateData.clave = passwordData.claveNueva;
+            }
+
+            await updateDoc(userRef, updateData);
+
+            setUser(prev => ({
+                ...prev,
+                nombre: userData.nombre
+            }));
+
+            const storedUser = JSON.parse(localStorage.getItem('usuario') || '{}');
+            storedUser.nombre = userData.nombre;
+            localStorage.setItem('usuario', JSON.stringify(storedUser));
+
+            setPasswordData({
+                claveActual: '',
+                claveNueva: '',
+                claveConfirmar: ''
+            });
+
+            alert("Perfil actualizado correctamente");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Error al actualizar el perfil");
+        } finally {
+            setSaving(false);
+        }
+    };
 
     return (
         <div className={style.container}>
@@ -51,100 +153,121 @@ const PerfilAdmin = () => {
 
             <main className={style.main}>
                 <div className={style.header}>
-                    <h1 className={style.title}>Bienvenido, Administrador</h1>
-                    <p className={style.subtitle}>{user?.nombre}</p>
+                    <h1 className={style.title}>Mi Perfil</h1>
+                    <p className={style.subtitle}>Administra tu información personal</p>
                 </div>
 
-                {/* Summary Cards Section */}
-                <div className={style.summaryGrid}>
-                    <div className={`${style.summaryCard} ${style.cardBlue}`}>
-                        <div className={style.summaryContent}>
-                            <span className={style.summaryLabel}>COMPRAS</span>
-                            <h2 className={style.summaryValue}>{loading ? "..." : stats.orders}</h2>
-                            <p className={style.summaryTrend}>Total de órdenes: 48%</p>
-                        </div>
-                        <div className={style.summaryIcon}>🛒</div>
-                    </div>
+                <div className={style.profileContainer}>
+                    {loading ? (
+                        <p>Cargando datos...</p>
+                    ) : (
+                        <>
+                            <div className={style.profileCard}>
+                                <h2 className={style.cardTitle}>Información Personal</h2>
+                                <div className={style.formGrid}>
+                                    <div className={style.formGroup}>
+                                        <label className={style.label}>Nombre *</label>
+                                        <input
+                                            type="text"
+                                            name="nombre"
+                                            className={style.input}
+                                            value={userData.nombre}
+                                            onChange={handleInputChange}
+                                            placeholder="Tu nombre completo"
+                                        />
+                                    </div>
 
-                    <div className={`${style.summaryCard} ${style.cardGreen}`}>
-                        <div className={style.summaryContent}>
-                            <span className={style.summaryLabel}>PRODUCTOS</span>
-                            <h2 className={style.summaryValue}>{loading ? "..." : stats.products}</h2>
-                            <p className={style.summaryTrend}>Inventario Actual: 8%</p>
-                        </div>
-                        <div className={style.summaryIcon}>📦</div>
-                    </div>
+                                    <div className={style.formGroup}>
+                                        <label className={style.label}>Email</label>
+                                        <input
+                                            type="email"
+                                            className={`${style.input} ${style.inputDisabled}`}
+                                            value={userData.correo}
+                                            disabled
+                                        />
+                                    </div>
 
-                    <div className={`${style.summaryCard} ${style.cardOrange}`}>
-                        <div className={style.summaryContent}>
-                            <span className={style.summaryLabel}>USUARIOS</span>
-                            <h2 className={style.summaryValue}>{loading ? "..." : stats.users}</h2>
-                            <p className={style.summaryTrend}>Usuarios registrados: Lote 1</p>
-                        </div>
-                        <div className={style.summaryIcon}>👥</div>
-                    </div>
-                </div>
+                                    <div className={style.formGroup}>
+                                        <label className={style.label}>Teléfono</label>
+                                        <input
+                                            type="text"
+                                            name="telefono"
+                                            className={style.input}
+                                            value={userData.telefono}
+                                            onChange={handleInputChange}
+                                            placeholder="+56 9 1234 5678"
+                                        />
+                                    </div>
 
-                {/* Navigation Grid Section */}
-                <div className={style.navGrid}>
-                    <Link to="/admin" className={style.navCard}>
-                        <div className={style.navIcon}>⚡</div>
-                        <h3 className={style.navTitle}>Dashboard</h3>
-                        <p className={style.navDescription}>Visión general de todas las métricas y estadísticas clave del sistema.</p>
-                    </Link>
+                                    <div className={style.formGroup}>
+                                        <label className={style.label}>RUN/RUT</label>
+                                        <input
+                                            type="text"
+                                            className={`${style.input} ${style.inputDisabled}`}
+                                            value={userData.rut}
+                                            disabled
+                                        />
+                                    </div>
+                                </div>
 
-                    <Link to="/orders" className={style.navCard}>
-                        <div className={style.navIcon}>🛒</div>
-                        <h3 className={style.navTitle}>Ordenes</h3>
-                        <p className={style.navDescription}>Gestión y seguimiento de todas las ordenes de compras realizadas.</p>
-                    </Link>
+                                <div className={style.passwordSection}>
+                                    <h3 className={style.sectionTitle}>Cambiar Contraseña</h3>
+                                    <div className={style.formGrid}>
+                                        <div className={style.formGroup}>
+                                            <label className={style.label}>Contraseña Actual</label>
+                                            <input
+                                                type="password"
+                                                name="claveActual"
+                                                className={style.input}
+                                                value={passwordData.claveActual}
+                                                onChange={handlePasswordChange}
+                                                placeholder="Ingresa tu contraseña actual"
+                                            />
+                                        </div>
 
-                    <Link to="/inventory" className={style.navCard}>
-                        <div className={style.navIcon}>📦</div>
-                        <h3 className={style.navTitle}>Productos</h3>
-                        <p className={style.navDescription}>Administrar inventario y detalles de los productos disponibles.</p>
-                    </Link>
+                                        <div className={style.formGroup}>
+                                            <label className={style.label}>Nueva Contraseña</label>
+                                            <input
+                                                type="password"
+                                                name="claveNueva"
+                                                className={style.input}
+                                                value={passwordData.claveNueva}
+                                                onChange={handlePasswordChange}
+                                                placeholder="6-10 caracteres"
+                                                minLength="6"
+                                                maxLength="10"
+                                            />
+                                        </div>
 
-                    <Link to="/categories" className={style.navCard}>
-                        <div className={style.navIcon}>🏷️</div>
-                        <h3 className={style.navTitle}>Categorías</h3>
-                        <p className={style.navDescription}>Organizar productos en categorías para facilitar su navegación.</p>
-                    </Link>
+                                        <div className={style.formGroup}>
+                                            <label className={style.label}>Confirmar Nueva Contraseña</label>
+                                            <input
+                                                type="password"
+                                                name="claveConfirmar"
+                                                className={style.input}
+                                                value={passwordData.claveConfirmar}
+                                                onChange={handlePasswordChange}
+                                                placeholder="Repite la nueva contraseña"
+                                                minLength="6"
+                                                maxLength="10"
+                                            />
+                                        </div>
+                                    </div>
+                                    <p className={style.helperText}>Deja estos campos vacíos si no deseas cambiar tu contraseña</p>
+                                </div>
 
-                    <Link to="/customers" className={style.navCard}>
-                        <div className={style.navIcon}>👥</div>
-                        <h3 className={style.navTitle}>Usuarios</h3>
-                        <p className={style.navDescription}>Gestionar cuentas de usuarios y permisos del sistema.</p>
-                    </Link>
-
-                    <Link to="/reports" className={style.navCard}>
-                        <div className={style.navIcon}>📊</div>
-                        <h3 className={style.navTitle}>Reportes</h3>
-                        <p className={style.navDescription}>Visualizar reportes detallados de ventas y rendimiento.</p>
-                    </Link>
-
-                    <Link to="/profile" className={style.navCard}>
-                        <div className={style.navIcon}>👤</div>
-                        <h3 className={style.navTitle}>Perfil</h3>
-                        <p className={style.navDescription}>Administrar tu información personal y configuración de cuenta.</p>
-                    </Link>
-
-                    <Link to="/" className={style.navCard}>
-                        <div className={style.navIcon}>🏪</div>
-                        <h3 className={style.navTitle}>Tienda</h3>
-                        <p className={style.navDescription}>Ir a la vista principal de la tienda online.</p>
-                    </Link>
-
-                    <a
-                        href="http://localhost:5000/api-docs"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={style.navCard}
-                    >
-                        <div className={style.navIcon}>📚</div>
-                        <h3 className={style.navTitle}>API Docs</h3>
-                        <p className={style.navDescription}>Documentación interactiva de la API REST con Swagger.</p>
-                    </a>
+                                <div className={style.actions}>
+                                    <button
+                                        className={style.btnSave}
+                                        onClick={handleSaveChanges}
+                                        disabled={saving}
+                                    >
+                                        {saving ? '💾 Guardando...' : 'Guardar Cambios'}
+                                    </button>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </main>
         </div>

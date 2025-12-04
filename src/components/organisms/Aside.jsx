@@ -124,7 +124,7 @@ const Aside = () => {
           </div>
         </div>
         <button className={style.logout__button} onClick={handleLogout}>
-          <span className={style.logout__icon}>🚪</span>
+          <span className={style.logout__icon}></span>
           Cerrar Sesión
         </button>
       </div>

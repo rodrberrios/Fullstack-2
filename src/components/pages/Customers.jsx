@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { db } from "../../config/firebase";
-import { collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, updateDoc, addDoc } from "firebase/firestore";
 import { UserContext } from "../../context/AuthContext";
 import Aside from "../organisms/Aside";
 import style from './Customers.module.css';
@@ -11,7 +11,18 @@ const Customers = () => {
     const [loading, setLoading] = useState(true);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
+    const [newUser, setNewUser] = useState({
+        nombre: '',
+        correo: '',
+        clave: '',
+        telefono: '',
+        direccion: '',
+        rut: '',
+        rol: 'cliente',
+        activo: true
+    });
 
     const fetchUsers = async () => {
         setLoading(true);
@@ -72,7 +83,18 @@ const Customers = () => {
     const handleCloseModals = () => {
         setIsEditModalOpen(false);
         setIsRoleModalOpen(false);
+        setIsCreateModalOpen(false);
         setEditingUser(null);
+        setNewUser({
+            nombre: '',
+            correo: '',
+            clave: '',
+            telefono: '',
+            direccion: '',
+            rut: '',
+            rol: 'cliente',
+            activo: true
+        });
     };
 
     const handleInputChange = (e) => {
@@ -119,6 +141,63 @@ const Customers = () => {
         }
     };
 
+    const handleCreateUser = () => {
+        setIsCreateModalOpen(true);
+    };
+
+    const handleNewUserChange = (e) => {
+        const { name, value } = e.target;
+        setNewUser(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSaveNewUser = async () => {
+        // Validación básica
+        if (!newUser.nombre || !newUser.correo || !newUser.clave) {
+            alert("Por favor completa nombre, correo y contraseña");
+            return;
+        }
+
+        // Validar formato de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(newUser.correo)) {
+            alert("Por favor ingresa un correo electrónico válido");
+            return;
+        }
+
+        // Validar que la contraseña tenga al menos 6 caracteres
+        if (newUser.clave.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres");
+            return;
+        }
+
+        try {
+            const userToCreate = {
+                nombre: newUser.nombre,
+                correo: newUser.correo,
+                clave: newUser.clave,
+                telefono: newUser.telefono || '',
+                direccion: newUser.direccion || '',
+                rut: newUser.rut || '',
+                rol: newUser.rol,
+                activo: true,
+                fechaRegistro: new Date()
+            };
+
+            const docRef = await addDoc(collection(db, "usuarios"), userToCreate);
+
+            // Actualizar la lista local
+            setUsers([...users, { id: docRef.id, ...userToCreate }]);
+            alert("Usuario creado correctamente");
+            handleCloseModals();
+        } catch (error) {
+            console.error("Error creating user:", error);
+            alert("Error al crear el usuario. Verifica que el correo no esté en uso.");
+        }
+    };
+
     return (
         <div className={style.container}>
             <Aside />
@@ -133,6 +212,9 @@ const Customers = () => {
                     <div className={style.tableHeader}>
                         <h2 className={style.tableTitle}>Lista de Usuarios</h2>
                         <div className={style.headerActions}>
+                            <button className={style.btnPrimary} onClick={handleCreateUser}>
+                                ➕ Crear Usuario
+                            </button>
                             <button className={style.btnSecondary} onClick={fetchUsers}>
                                 🔄 Actualizar
                             </button>
@@ -314,6 +396,106 @@ const Customers = () => {
                             <div className={style.modalFooter}>
                                 <button className={style.btnCancel} onClick={handleCloseModals}>Cancelar</button>
                                 <button className={style.btnSave} onClick={handleSaveRole}>Cambiar Rol</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Create User Modal */}
+                {isCreateModalOpen && (
+                    <div className={style.modalOverlay}>
+                        <div className={style.modalContent}>
+                            <div className={style.modalHeader}>
+                                <h3 className={style.modalTitle}>Crear Nuevo Usuario</h3>
+                                <button className={style.closeButton} onClick={handleCloseModals}>×</button>
+                            </div>
+                            <div className={style.modalBody}>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Nombre *</label>
+                                    <input
+                                        type="text"
+                                        name="nombre"
+                                        className={style.input}
+                                        value={newUser.nombre}
+                                        onChange={handleNewUserChange}
+                                        placeholder="Ej: Juan Pérez"
+                                        required
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Email *</label>
+                                    <input
+                                        type="email"
+                                        name="correo"
+                                        className={style.input}
+                                        value={newUser.correo}
+                                        onChange={handleNewUserChange}
+                                        placeholder="correo@ejemplo.com"
+                                        required
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Contraseña *</label>
+                                    <input
+                                        type="password"
+                                        name="clave"
+                                        className={style.input}
+                                        value={newUser.clave}
+                                        onChange={handleNewUserChange}
+                                        placeholder="Mínimo 6 caracteres"
+                                        required
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Teléfono</label>
+                                    <input
+                                        type="text"
+                                        name="telefono"
+                                        className={style.input}
+                                        value={newUser.telefono}
+                                        onChange={handleNewUserChange}
+                                        placeholder="+56 9 1234 5678"
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Dirección</label>
+                                    <input
+                                        type="text"
+                                        name="direccion"
+                                        className={style.input}
+                                        value={newUser.direccion}
+                                        onChange={handleNewUserChange}
+                                        placeholder="Ej: Calle Principal 123"
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>RUN/RUT</label>
+                                    <input
+                                        type="text"
+                                        name="rut"
+                                        className={style.input}
+                                        value={newUser.rut}
+                                        onChange={handleNewUserChange}
+                                        placeholder="12.345.678-9"
+                                    />
+                                </div>
+                                <div className={style.formGroup}>
+                                    <label className={style.label}>Rol *</label>
+                                    <select
+                                        name="rol"
+                                        className={style.input}
+                                        value={newUser.rol}
+                                        onChange={handleNewUserChange}
+                                    >
+                                        <option value="cliente">Cliente</option>
+                                        <option value="vendedor">Vendedor</option>
+                                    </select>
+                                    <p className={style.helperText}>Solo puedes crear clientes y vendedores</p>
+                                </div>
+                            </div>
+                            <div className={style.modalFooter}>
+                                <button className={style.btnCancel} onClick={handleCloseModals}>Cancelar</button>
+                                <button className={style.btnSave} onClick={handleSaveNewUser}>Crear Usuario</button>
                             </div>
                         </div>
                     </div>

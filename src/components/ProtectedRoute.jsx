@@ -17,7 +17,12 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     // Si hay roles permitidos y el usuario no tiene uno de ellos, redirigir
     if (allowedRoles && !allowedRoles.includes(user.rol)) {
         // Redirigir según el rol del usuario
-        const redirectPath = user.rol === 'admin' ? '/perfilAdmin' : '/perfilCliente';
+        let redirectPath = '/perfilCliente';
+        if (user.rol === 'admin') {
+            redirectPath = '/perfilAdmin';
+        } else if (user.rol === 'vendedor') {
+            redirectPath = '/vendedor/perfil';
+        }
         return <Navigate to={redirectPath} replace />;
     }
 

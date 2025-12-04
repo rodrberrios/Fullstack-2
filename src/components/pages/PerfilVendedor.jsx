@@ -1,23 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { UserContext } from "../../context/AuthContext";
+import React, { useState, useEffect, useContext } from 'react';
 import { db } from "../../config/firebase";
 import { collection, doc, updateDoc, getDocs, query, where } from "firebase/firestore";
-import AsideCliente from '../organisms/AsideCliente';
-import style from './PerfilCliente.module.css';
+import { UserContext } from "../../context/AuthContext";
+import AsideVendedor from "../organisms/AsideVendedor";
+import style from './PerfilVendedor.module.css';
 
-const PerfilCliente = () => {
+const PerfilVendedor = () => {
     const { user, setUser } = useContext(UserContext);
     const [userData, setUserData] = useState({
-        id: '',
         nombre: '',
         correo: '',
         telefono: '',
-        rut: ''
-    });
-    const [passwordData, setPasswordData] = useState({
-        claveActual: '',
-        claveNueva: '',
-        claveConfirmar: ''
+        direccion: '',
+        rut: '',
+        rol: ''
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -35,14 +31,16 @@ const PerfilCliente = () => {
             const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
-                const docSnap = querySnapshot.docs[0];
-                const data = docSnap.data();
+                const doc = querySnapshot.docs[0];
+                const data = doc.data();
                 setUserData({
-                    id: docSnap.id,
+                    id: doc.id,
                     nombre: data.nombre || '',
                     correo: data.correo || '',
                     telefono: data.telefono || '',
-                    rut: data.rut || data.run || ''
+                    direccion: data.direccion || '',
+                    rut: data.rut || data.run || '',
+                    rol: data.rol || ''
                 });
             }
         } catch (error) {
@@ -60,83 +58,31 @@ const PerfilCliente = () => {
         }));
     };
 
-    const handlePasswordChange = (e) => {
-        const { name, value } = e.target;
-        setPasswordData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
     const handleSaveChanges = async () => {
         if (!userData.nombre) {
             alert("El nombre es obligatorio");
             return;
         }
 
-        // Validar contraseña si se está intentando cambiar
-        if (passwordData.claveActual || passwordData.claveNueva || passwordData.claveConfirmar) {
-            if (!passwordData.claveActual || !passwordData.claveNueva || !passwordData.claveConfirmar) {
-                alert("Debes completar todos los campos de contraseña");
-                return;
-            }
-
-            if (passwordData.claveNueva !== passwordData.claveConfirmar) {
-                alert("Las contraseñas nuevas no coinciden");
-                return;
-            }
-
-            if (passwordData.claveNueva.length < 6 || passwordData.claveNueva.length > 10) {
-                alert("La contraseña debe tener entre 6 y 10 caracteres");
-                return;
-            }
-
-            try {
-                const q = query(collection(db, "usuarios"), where("correo", "==", user.correo));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    const currentData = querySnapshot.docs[0].data();
-                    if (currentData.clave !== passwordData.claveActual) {
-                        alert("La contraseña actual es incorrecta");
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.error("Error verifying password:", error);
-                alert("Error al verificar la contraseña");
-                return;
-            }
-        }
-
         setSaving(true);
         try {
             const userRef = doc(db, "usuarios", userData.id);
-            const updateData = {
+            await updateDoc(userRef, {
                 nombre: userData.nombre,
-                telefono: userData.telefono
-            };
+                telefono: userData.telefono,
+                direccion: userData.direccion
+            });
 
-            if (passwordData.claveNueva) {
-                updateData.clave = passwordData.claveNueva;
-            }
-
-            await updateDoc(userRef, updateData);
-
+            // Actualizar el contexto del usuario
             setUser(prev => ({
                 ...prev,
                 nombre: userData.nombre
             }));
 
+            // Actualizar localStorage
             const storedUser = JSON.parse(localStorage.getItem('usuario') || '{}');
             storedUser.nombre = userData.nombre;
             localStorage.setItem('usuario', JSON.stringify(storedUser));
-
-            setPasswordData({
-                claveActual: '',
-                claveNueva: '',
-                claveConfirmar: ''
-            });
 
             alert("Perfil actualizado correctamente");
         } catch (error) {
@@ -149,11 +95,9 @@ const PerfilCliente = () => {
 
     return (
         <div className={style.container}>
-            <aside className={style.sidebar}>
-                <AsideCliente />
-            </aside>
+            <AsideVendedor />
 
-            <main className={style.mainContent}>
+            <main className={style.main}>
                 <div className={style.header}>
                     <h1 className={style.title}>Mi Perfil</h1>
                     <p className={style.subtitle}>Administra tu información personal</p>
@@ -177,6 +121,7 @@ const PerfilCliente = () => {
                                             onChange={handleInputChange}
                                             placeholder="Tu nombre completo"
                                         />
+                                        <p className={style.helperText}>Puedes modificar tu nombre</p>
                                     </div>
 
                                     <div className={style.formGroup}>
@@ -187,6 +132,7 @@ const PerfilCliente = () => {
                                             value={userData.correo}
                                             disabled
                                         />
+                                        <p className={style.helperText}>El email no puede ser modificado</p>
                                     </div>
 
                                     <div className={style.formGroup}>
@@ -209,53 +155,31 @@ const PerfilCliente = () => {
                                             value={userData.rut}
                                             disabled
                                         />
+                                        <p className={style.helperText}>El RUT no puede ser modificado</p>
                                     </div>
-                                </div>
 
-                                <div className={style.passwordSection}>
-                                    <h3 className={style.sectionTitle}>Cambiar Contraseña</h3>
-                                    <div className={style.formGrid}>
-                                        <div className={style.formGroup}>
-                                            <label className={style.label}>Contraseña Actual</label>
-                                            <input
-                                                type="password"
-                                                name="claveActual"
-                                                className={style.input}
-                                                value={passwordData.claveActual}
-                                                onChange={handlePasswordChange}
-                                                placeholder="Ingresa tu contraseña actual"
-                                            />
-                                        </div>
-
-                                        <div className={style.formGroup}>
-                                            <label className={style.label}>Nueva Contraseña</label>
-                                            <input
-                                                type="password"
-                                                name="claveNueva"
-                                                className={style.input}
-                                                value={passwordData.claveNueva}
-                                                onChange={handlePasswordChange}
-                                                placeholder="6-10 caracteres"
-                                                minLength="6"
-                                                maxLength="10"
-                                            />
-                                        </div>
-
-                                        <div className={style.formGroup}>
-                                            <label className={style.label}>Confirmar Nueva Contraseña</label>
-                                            <input
-                                                type="password"
-                                                name="claveConfirmar"
-                                                className={style.input}
-                                                value={passwordData.claveConfirmar}
-                                                onChange={handlePasswordChange}
-                                                placeholder="Repite la nueva contraseña"
-                                                minLength="6"
-                                                maxLength="10"
-                                            />
-                                        </div>
+                                    <div className={style.formGroupFull}>
+                                        <label className={style.label}>Dirección</label>
+                                        <input
+                                            type="text"
+                                            name="direccion"
+                                            className={style.input}
+                                            value={userData.direccion}
+                                            onChange={handleInputChange}
+                                            placeholder="Calle Principal 123, Comuna, Ciudad"
+                                        />
                                     </div>
-                                    <p className={style.helperText}>Deja estos campos vacíos si no deseas cambiar tu contraseña</p>
+
+                                    <div className={style.formGroup}>
+                                        <label className={style.label}>Rol</label>
+                                        <input
+                                            type="text"
+                                            className={`${style.input} ${style.inputDisabled}`}
+                                            value={userData.rol === 'vendedor' ? 'Vendedor' : userData.rol}
+                                            disabled
+                                        />
+                                        <p className={style.helperText}>El rol es asignado por el administrador</p>
+                                    </div>
                                 </div>
 
                                 <div className={style.actions}>
@@ -276,4 +200,4 @@ const PerfilCliente = () => {
     );
 };
 
-export default PerfilCliente;
+export default PerfilVendedor;
