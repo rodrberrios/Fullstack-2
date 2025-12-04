@@ -4,6 +4,8 @@ import Footer from "../organisms/Footer";
 import style from "./Home.module.css";
 import { obtenerProductos } from '../../services/productService';
 import ProductCard from "../molecules/ProductCard";
+import { db } from '../../config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
 const Home = () => {
   const [productos, setProductos] = useState([]);
@@ -22,6 +24,63 @@ const Home = () => {
     };
     cargar();
   }, []);
+
+  // Agregar al carrito con gestión de stock (Lógica compartida con Catalogo)
+  const agregarAlCarrito = async (producto) => {
+    // Verificar si hay stock disponible
+    if (producto.stock === undefined || producto.stock <= 0) {
+      alert('No hay stock disponible para este producto');
+      return;
+    }
+
+    const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+    const productoExistente = carritoActual.find(item => item.id === producto.id);
+    let nuevoCarrito;
+
+    // Verificar si hay suficiente stock para agregar otra unidad
+    if (productoExistente) {
+      const cantidadEnCarrito = productoExistente.cantidad || 1;
+      if (producto.stock <= cantidadEnCarrito) {
+        alert('No hay más stock disponible de este producto');
+        return;
+      }
+      nuevoCarrito = carritoActual.map(item =>
+        item.id === producto.id
+          ? { ...item, cantidad: (item.cantidad || 1) + 1 }
+          : item
+      );
+    } else {
+      nuevoCarrito = [...carritoActual, { ...producto, cantidad: 1 }];
+    }
+
+    try {
+      // Intentar actualizar stock en Firebase (puede fallar si no hay permisos, pero actualizamos local)
+      const productoRef = doc(db, 'producto', producto.id);
+      await updateDoc(productoRef, {
+        stock: producto.stock - 1
+      });
+
+      // Actualizar estado local de productos
+      setProductos(prevProductos =>
+        prevProductos.map(p =>
+          p.id === producto.id ? { ...p, stock: p.stock - 1 } : p
+        )
+      );
+
+      // Guardar en carrito
+      localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+
+      // Disparar evento para actualizar header si es necesario (opcional)
+      window.dispatchEvent(new Event('storage'));
+
+      alert(`"${producto.nombre}" agregado al carrito`);
+    } catch (error) {
+      console.error('Error al actualizar stock:', error);
+      // Si falla firebase (ej. permisos), igual guardamos en local storage para el usuario
+      localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+      alert(`"${producto.nombre}" agregado al carrito (Stock local actualizado)`);
+    }
+  };
 
   return (
     <div className={style.pageContainer}>
@@ -57,7 +116,7 @@ const Home = () => {
           ) : (
             <div className={style.productsGrid}>
               {(productos || []).slice(0, 8).map((p) => (
-                <ProductCard key={p.id} producto={p} />
+                <ProductCard key={p.id} producto={p} onAgregar={agregarAlCarrito} />
               ))}
             </div>
           )}

@@ -19,7 +19,7 @@ const ProductCard = ({ producto, onAgregar }) => {
         {producto.stock !== undefined && producto.stock === 0 && (
           <div className={style.outOfStock}>Agotado</div>
         )}
-        {producto.precioAnterior && (
+        {producto.precioAnterior && producto.precioAnterior > producto.precio && (
           <div className={style.offerBadge}>¡Oferta!</div>
         )}
       </div>
@@ -37,7 +37,7 @@ const ProductCard = ({ producto, onAgregar }) => {
         )}
 
         <div className={style.priceContainer}>
-          {producto.precioAnterior ? (
+          {producto.precioAnterior && producto.precioAnterior > producto.precio ? (
             <>
               <span className={style.oldPrice}>${producto.precioAnterior.toLocaleString('es-CL')}</span>
               <span className={style.price}>${producto.precio.toLocaleString('es-CL')}</span>
