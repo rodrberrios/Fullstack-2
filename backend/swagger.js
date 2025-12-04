@@ -34,6 +34,10 @@ const options = {
                 name: 'Categories',
                 description: 'Endpoints para gestión de categorías',
             },
+            {
+                name: 'Contacts',
+                description: 'Endpoints para gestión de contacto y consultas',
+            },
         ],
         components: {
             schemas: {
@@ -145,6 +149,35 @@ const options = {
                         descripcion: {
                             type: 'string',
                             description: 'Descripción de la categoría',
+                        },
+                    },
+                },
+                Contact: {
+                    type: 'object',
+                    properties: {
+                        id: {
+                            type: 'string',
+                            description: 'ID único del mensaje',
+                        },
+                        nombre: {
+                            type: 'string',
+                            description: 'Nombre del remitente',
+                        },
+                        email: {
+                            type: 'string',
+                            description: 'Email de contacto',
+                        },
+                        mensaje: {
+                            type: 'string',
+                            description: 'Contenido del mensaje',
+                        },
+                        fecha: {
+                            type: 'string',
+                            description: 'Fecha de envío',
+                        },
+                        estado: {
+                            type: 'string',
+                            description: 'Estado del mensaje (pendiente/respondido)',
                         },
                     },
                 },

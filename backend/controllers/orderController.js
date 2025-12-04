@@ -122,10 +122,37 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+// Obtener órdenes por usuario (email)
+const getOrdersByUser = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const ordersRef = db.collection('compras');
+        const snapshot = await ordersRef.where('usuario', '==', email).get();
+
+        if (snapshot.empty) {
+            return res.status(200).json([]);
+        }
+
+        const orders = [];
+        snapshot.forEach(doc => {
+            orders.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error('Error al obtener órdenes del usuario:', error);
+        res.status(500).json({ error: 'Error al obtener órdenes', details: error.message });
+    }
+};
+
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    getOrdersByUser
 };

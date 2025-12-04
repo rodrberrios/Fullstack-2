@@ -5,7 +5,8 @@ const {
     getOrderById,
     createOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    getOrdersByUser
 } = require('../controllers/orderController');
 
 /**
@@ -185,5 +186,33 @@ router.put('/:id', updateOrder);
  *         description: Error del servidor
  */
 router.delete('/:id', deleteOrder);
+
+/**
+ * @swagger
+ * /api/orders/user/{email}:
+ *   get:
+ *     summary: Obtener historial de compras por usuario
+ *     tags: [Orders]
+ *     description: Retorna el historial de compras realizadas por un usuario específico (Perfil Cliente)
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Email del usuario
+ *     responses:
+ *       200:
+ *         description: Historial de compras obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Order'
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/user/:email', getOrdersByUser);
 
 module.exports = router;

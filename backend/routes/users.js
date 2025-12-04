@@ -109,7 +109,7 @@ router.post('/', createUser);
  *   put:
  *     summary: Actualizar usuario
  *     tags: [Users]
- *     description: Actualiza los datos de un usuario existente
+ *     description: Actualiza los datos de un usuario existente. Usado en "Mi Perfil" para Clientes y Vendedores.
  *     parameters:
  *       - in: path
  *         name: id
