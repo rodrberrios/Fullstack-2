@@ -29,8 +29,8 @@ const Aside = () => {
           <ul className={style.nav__list}>
             <li className={style.nav__item}>
               <Link
-                to="/PerfilAdmin"
-                className={`${style.nav__link} ${isActiveLink('/PerfilAdmin') ? style.active : ''}`}
+                to="/dashboard"
+                className={`${style.nav__link} ${isActiveLink('/dashboard') ? style.active : ''}`}
               >
                 Dashboard
               </Link>
@@ -94,8 +94,8 @@ const Aside = () => {
           <ul className={style.nav__list}>
             <li className={style.nav__item}>
               <Link
-                to="/InfoPerfilAdmin"
-                className={`${style.nav__link} ${isActiveLink('/InfoPerfilAdmin') ? style.active : ''}`}
+                to="/perfilAdmin"
+                className={`${style.nav__link} ${isActiveLink('/perfilAdmin') ? style.active : ''}`}
               >
                 Perfil
               </Link>

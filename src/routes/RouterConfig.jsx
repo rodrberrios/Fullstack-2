@@ -23,6 +23,7 @@ import PerfilVendedor from "../components/pages/PerfilVendedor";
 import VendedorProductos from "../components/pages/VendedorProductos";
 import VendedorOrdenes from "../components/pages/VendedorOrdenes";
 import DashboardVendedor from "../components/pages/DashboardVendedor";
+import DashboardAdmin from "../components/pages/DashboardAdmin";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 const RouterConfig = () => (
@@ -38,6 +39,11 @@ const RouterConfig = () => (
             <Route path="/blog" element={<Blog />} />
 
             {/* Rutas de Admin */}
+            <Route path="/dashboard" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                    <DashboardAdmin />
+                </ProtectedRoute>
+            } />
             <Route path="/perfilAdmin" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                     <PerfilAdmin />
