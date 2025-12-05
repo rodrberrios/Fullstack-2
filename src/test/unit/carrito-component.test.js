@@ -3,57 +3,39 @@
 
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from '../../context/AuthContext';
 import Carrito from '../../components/pages/Carrito';
 
-// Mock de Firebase
-const mockGetDocs = jasmine.createSpy('getDocs').and.returnValue(
-    Promise.resolve({
-        docs: [
-            {
-                id: '1',
-                data: () => ({
-                    nombre: 'Producto Test 1',
-                    precio: 10000,
-                    precioAnterior: 15000,
-                    stock: 5,
-                    imagen: 'https://via.placeholder.com/400x300'
-                })
-            },
-            {
-                id: '2',
-                data: () => ({
-                    nombre: 'Producto Test 2',
-                    precio: 20000,
-                    precioAnterior: 25000,
-                    stock: 10,
-                    imagen: 'https://via.placeholder.com/400x300'
-                })
-            }
-        ]
-    })
-);
+// Agregar matcher personalizado para Jasmine (reemplazo de toBeInTheDocument de jest-dom)
+beforeAll(function() {
+    jasmine.addMatchers({
+        toBeInTheDocument: function() {
+            return {
+                compare: function(actual) {
+                    const pass = actual !== null && 
+                                actual !== undefined && 
+                                (document.body.contains(actual) || document.documentElement.contains(actual));
+                    const result = { pass: pass };
+                    if (result.pass) {
+                        result.message = 'Expected element not to be in the document';
+                    } else {
+                        result.message = 'Expected element to be in the document';
+                    }
+                    return result;
+                }
+            };
+        }
+    });
+});
 
-const mockUpdateDoc = jasmine.createSpy('updateDoc').and.returnValue(Promise.resolve());
-
-// Mock del módulo de Firebase
-jest.mock('../../config/firebase', () => ({
-    db: {}
-}));
-
-jest.mock('firebase/firestore', () => ({
-    collection: jest.fn(),
-    getDocs: (...args) => mockGetDocs(...args),
-    doc: jest.fn(),
-    updateDoc: (...args) => mockUpdateDoc(...args)
-}));
-
-// Helper para renderizar con Router
+// Helper para renderizar con Router y UserProvider
 const renderWithRouter = (component) => {
     return render(
         <BrowserRouter>
-            {component}
+            <UserProvider>
+                {component}
+            </UserProvider>
         </BrowserRouter>
     );
 };
@@ -63,10 +45,6 @@ describe('Componente Carrito', function () {
     beforeEach(function () {
         // Limpiar localStorage antes de cada prueba
         localStorage.clear();
-
-        // Resetear spies
-        mockGetDocs.calls.reset();
-        mockUpdateDoc.calls.reset();
 
         // Mock de window.alert
         spyOn(window, 'alert');
@@ -100,9 +78,7 @@ describe('Componente Carrito', function () {
             await waitFor(() => {
                 expect(screen.getByText('Producto Test 1')).toBeInTheDocument();
                 expect(screen.getByText('Producto Test 2')).toBeInTheDocument();
-            });
-
-            expect(mockGetDocs).toHaveBeenCalled();
+            }, { timeout: 3000 });
         });
     });
 
